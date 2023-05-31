@@ -329,6 +329,8 @@
           source = ../configs/terminals/wezterm;
           recursive = true;
         };
+        ".icons".source = ../configs/desktop/icons;
+        ".themes".source = ../configs/desktop/themes;
         ".config/gtkrc".source = ../configs/desktop/gtkrc;
         ".config/gtkrc-2.0".source = ../configs/desktop/gtkrc-2.0;
         ".config/gtk-2.0" = {
