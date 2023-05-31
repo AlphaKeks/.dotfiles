@@ -304,7 +304,67 @@
         qemu qemu_kvm libvirt dnsmasq vde2 netcat-openbsd bridge-utils dconf pciutils virt-manager
       ];
 
-      file = {};
+      file = {
+        ".vim" = {
+          source = ../configs/editors/vim;
+          recursive = true;
+        };
+        ".zlogin".source = ../configs/shells/zsh/zlogin;
+        ".zshenv".source = ../configs/shells/zsh/zshenv;
+        ".zshrc".source = ../configs/shells/zsh/zshrc;
+        ".bashrc".source = ../configs/shells/bash/bashrc;
+        ".config/btop" = {
+          source = ../configs/cli/btop;
+          recursive = true;
+        };
+        ".config/neofetch" = {
+          source = ../configs/cli/neofetch;
+          recursive = true;
+        };
+        ".config/tmux" = {
+          source = ../configs/cli/tmux;
+          recursive = true;
+        };
+        ".config/wezterm" = {
+          source = ../configs/terminals/wezterm;
+          recursive = true;
+        };
+        ".config/gtkrc".source = ../configs/desktop/gtkrc;
+        ".config/gtkrc-2.0".source = ../configs/desktop/gtkrc-2.0;
+        ".config/gtk-2.0" = {
+          source = ../configs/desktop/gtk-2.0;
+          recursive = true;
+        };
+        ".config/gtk-3.0" = {
+          source = ../configs/desktop/gtk-3.0;
+          recursive = true;
+        };
+        ".config/gtk-4.0" = {
+          source = ../configs/desktop/gtk-4.0;
+          recursive = true;
+        };
+        ".config/awesome" = {
+          source = ../configs/desktop/awesome;
+          recursive = true;
+        };
+        ".config/picom" = {
+          source = ../configs/desktop/picom;
+          recursive = true;
+        };
+        ".config/rofi" = {
+          source = ../configs/desktop/rofi;
+          recursive = true;
+        };
+        ".config/clippy" = {
+          source = ../configs/tools/clippy;
+          recursive = true;
+        };
+        ".config/rustfmt" = {
+          source = ../configs/tools/rustfmt;
+          recursive = true;
+        };
+        ".config/starship.toml".source = ../configs/shells/prompts/starship.toml;
+      };
     };
 
     programs = {
