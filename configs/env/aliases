@@ -1,0 +1,79 @@
+#!/bin/sh
+
+# https://GitHub.com/AlphaKeks/.dotfiles
+
+# QoL
+alias ls="ls -hl --color=auto"
+alias l="exa -gl --icons"
+alias la="exa -agl --icons"
+alias mkdir="mkdir -p"
+alias grep="grep --color=auto"
+alias rm="rm -I"
+alias mv="mv -I"
+alias cp="cp -I"
+
+# Navigation
+alias ..="cd .."
+alias .1="cd .."
+alias .2="cd ../.."
+alias .3="cd ../../"
+alias .4="cd ../../.."
+alias .5="cd ../../../.."
+alias ~="cd ~"
+
+# Git
+alias g="git"
+alias gs="git status"
+alias gl="git log --graph"
+alias gd="git diff"
+alias gw="git worktree"
+alias ga="git add"
+alias gA="git add ."
+alias gc="git commit"
+alias gca="git commit -a"
+alias gcm="git commit -m"
+alias gcam="git commit -am"
+alias gpl="git pull"
+alias gps="git push"
+alias gb="git branch"
+alias gbn="git branch -b"
+alias gbd="git branch -d"
+alias gbD="git branch -D"
+
+# Dev
+alias vim="nvim"
+alias lg="lazygit"
+
+# Rust
+alias c="cargo"
+alias cn="cargo new"
+alias cnb="cargo new --bin"
+alias cnl="cargo new --lib"
+alias cb="cargo build"
+alias cbr="cargo build --release"
+alias cr="cargo run"
+alias crr="cargo run --release"
+alias ca="cargo add"
+ct() { cargo test $@ -- --nocapture; }
+cta() { cargo test --workspace --tests --all-features $@ -- --nocapture; }
+ctt() { RUST_LOG=TRACE cta $@; }
+ctd() { RUST_LOG=DEBUG cta $@; }
+cti() { RUST_LOG=INFO  cta $@; }
+ctw() { RUST_LOG=WARN  cta $@; }
+cte() { RUST_LOG=ERROR cta $@; }
+
+# Random shit
+airplay() {
+  sudo avahi-daemon &
+  uxplay
+}
+
+ts-init() {
+  npm init -y
+  npm i -D typescript ts-node @types/node
+  cp $CONFIG/tsconfig.json .
+  mkdir src dist
+  touch src/main.ts
+}
+
+# vim: et ts=2 sw=2 sts=2 ai si ft=sh
