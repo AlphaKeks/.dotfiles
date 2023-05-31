@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# https://GitHub.com/AlphaKeks/.dotfiles
+
+# Only run in interactive mode.
+[[ $- != *i* ]] && return
+
+# vim bindings
+set -o vi
+
+# Prompt
+eval "$(starship init bash)"
+
+# Load aliases
+source $DOTFILES/configs/env/aliases
+
+# vim: et ts=2 sw=2 sts=2 ai si ft=bash
