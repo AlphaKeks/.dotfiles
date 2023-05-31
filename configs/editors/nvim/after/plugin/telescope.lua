@@ -14,7 +14,7 @@ local filebrowser = telescope.extensions.file_browser.file_browser
 
 telescope.setup({
   defaults = {
-    path_display = { "smart" },
+    path_display = { "shorten" },
     prompt_prefix = "  ",
 
     mappings = {
@@ -82,6 +82,7 @@ nn("<Leader>ff", function()
     hidden = true,
     follow = true,
     show_untracked = true,
+    file_ignore_patterns = { "zsh/plugins/*" },
   }))
 end)
 
