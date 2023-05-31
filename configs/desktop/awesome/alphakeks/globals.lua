@@ -3,18 +3,6 @@
 local awful = require("awful")
 local naughty = require("naughty")
 
-function try(command, title)
-  awful.spawn.easy_async(command, function(stdout, stderr, reason, code)
-    if code ~= 0 then
-      naughty.notify({
-        preset = presets.critical,
-        title = title or "command failed",
-        text = reason,
-      })
-    end
-  end)
-end
-
 Programs = {
   editor = os.getenv("EDITOR") or "vim",
   terminal = os.getenv("TERMINAL") or "wezterm",

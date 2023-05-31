@@ -329,6 +329,7 @@
           source = ../configs/terminals/wezterm;
           recursive = true;
         };
+        ".Xresources".source = ../configs/desktop/.Xresources;
         ".icons".source = ../configs/desktop/icons;
         ".themes".source = ../configs/desktop/themes;
         ".config/gtkrc".source = ../configs/desktop/gtkrc;
