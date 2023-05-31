@@ -51,19 +51,19 @@ awful.keyboard.append_global_keybindings({
   end),
 
   awful.key({ Keys.mod, Keys.shift }, "h", function()
-    awful.client.sawp.global_bydirection("left")
+    awful.client.swap.global_bydirection("left")
   end),
 
   awful.key({ Keys.mod, Keys.shift }, "j", function()
-    awful.client.sawp.global_bydirection("down")
+    awful.client.swap.global_bydirection("down")
   end),
 
   awful.key({ Keys.mod, Keys.shift }, "k", function()
-    awful.client.sawp.global_bydirection("up")
+    awful.client.swap.global_bydirection("up")
   end),
 
   awful.key({ Keys.mod, Keys.shift }, "l", function()
-    awful.client.sawp.global_bydirection("right")
+    awful.client.swap.global_bydirection("right")
   end),
 })
 
