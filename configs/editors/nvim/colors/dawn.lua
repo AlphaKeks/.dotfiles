@@ -834,6 +834,10 @@ hi("@variable", {
   link = "Variable",
 })
 
+hi("@variable.builtin", {
+  fg = Dawn.red,
+})
+
 hi("@text.literal", {
   fg = Dawn.blue,
   bold = true,
