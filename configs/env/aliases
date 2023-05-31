@@ -62,6 +62,9 @@ cti() { RUST_LOG=INFO  cta $@; }
 ctw() { RUST_LOG=WARN  cta $@; }
 cte() { RUST_LOG=ERROR cta $@; }
 
+# NixOS
+alias rebuild="sudo nixos-rebuild switch --flake $DOTFILES/nix"
+
 # Random shit
 airplay() {
   sudo avahi-daemon &
