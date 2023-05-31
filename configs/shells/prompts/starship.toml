@@ -1,7 +1,7 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
 add_newline = false
-format = "$directory $character "
+format = "$directory $nix_shell$character "
 right_format = "$git_status $git_branch $time"
 
 [directory]
@@ -18,5 +18,8 @@ format = "[$symbol$branch]($style)"
 style = "yellow"
 
 [time]
-disabled = false
 format = "[$time](grey)"
+
+[nix_shell]
+format = "$symbol"
+symbol = "❄️ "

@@ -49,6 +49,7 @@ local lazy_opts = {
     "nvim-telescope/telescope-ui-select.nvim",
     "lvimuser/lsp-inlayhints.nvim",
     "numToStr/Comment.nvim",
+    "jose-elias-alvarez/null-ls.nvim",
   },
   concurrency = 69,
   install = {
