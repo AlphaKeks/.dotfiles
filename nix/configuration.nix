@@ -1,5 +1,4 @@
 # https://GitHub.com/AlphaKeks/.dotfiles
-#
 # Documentation: `nixos-help` or `man 5 configuration.nix`
 
 { inputs, lib, config, pkgs, ... }: let user = "alphakeks"; in {
@@ -299,7 +298,7 @@
         osu-git steam
 
         # Dev
-        rustup lazygit
+        lazygit rustup nodePackages_latest.typescript-language-server taplo nil
 
         # Virtualisation
         qemu qemu_kvm libvirt dnsmasq vde2 netcat-openbsd bridge-utils dconf pciutils virt-manager
