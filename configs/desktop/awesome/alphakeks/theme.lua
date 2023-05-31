@@ -1,5 +1,6 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
+local beautiful = require("beautiful")
 local dpi = require("beautiful.xresources").apply_dpi
 
 beautiful.init({

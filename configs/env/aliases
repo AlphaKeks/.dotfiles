@@ -9,8 +9,6 @@ alias la="exa -agl --icons"
 alias mkdir="mkdir -p"
 alias grep="grep --color=auto"
 alias rm="rm -I"
-alias mv="mv -I"
-alias cp="cp -I"
 
 # Navigation
 alias ..="cd .."

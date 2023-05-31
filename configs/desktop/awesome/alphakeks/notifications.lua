@@ -1,5 +1,9 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
+local awful = require("awful")
+local naughty = require("naughty")
+local ruled = require("ruled")
+
 ruled.notification.connect_signal("request::rules", function()
   ruled.notification.append_rule({
     rule = {},

@@ -1,5 +1,8 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
+local awful = require("awful")
+local ruled = require("ruled")
+
 ruled.client.connect_signal("request::rules", function()
   ruled.client.append_rule({
     id = "global",
@@ -77,5 +80,8 @@ end)
 client.connect_signal("property::maximized", function(c)
   c.maximized = false
 end)
+
+-- yes please autofocus
+require("awful.autofocus")
 
 -- vim: et ts=2 sw=2 sts=2 ai si ft=lua

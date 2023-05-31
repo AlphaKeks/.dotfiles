@@ -1,7 +1,9 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
+local awful = require("awful")
+
 local programs = {
-  ["picom"] = "picom -b --config " .. os.getenv("CONFIG") .. "/picom/picom.conf",
+  ["picom"] = "picom -b --config " .. os.getenv("HOME") .. "/.config/picom/picom.conf",
   ["flameshot"] = "flameshot",
   ["signal-desktop"] = "signal-desktop",
   ["discord"] = "discord",

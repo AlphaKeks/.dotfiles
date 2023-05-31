@@ -1,6 +1,6 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
-local layout = awful.layout
+local layout = require("awful").layout
 
 layout.layouts = {
   layout.suit.tile.left,

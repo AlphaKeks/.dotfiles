@@ -8,16 +8,12 @@ function vn(lhs, rhs, opts)
   vim.keymap.set("v", lhs, rhs, opts or {})
 end
 
-function in(lhs, rhs, opts)
-  vim.keymap.set("i", lhs, rhs, opts or {})
-end
-
 function Print(...)
   vim.print(vim.inspect(...))
   return ...
 end
 
-au = vim.api.nvim_create_autocmd
+autocmd = vim.api.nvim_create_autocmd
 augroup = vim.api.nvim_create_augroup
 
 function usercmd(name, callback, opts)

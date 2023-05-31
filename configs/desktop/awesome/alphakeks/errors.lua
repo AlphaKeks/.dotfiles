@@ -1,5 +1,7 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
+local naughty = require("naughty")
+
 local presets = naughty.config.presets
 local errors = awesome.startup_errors
 
@@ -11,10 +13,6 @@ if errors then
     title = "Errors occurred during startup.",
     text = errors,
   })
-
-  local write_errors = "echo '" .. errors .. "' >> /tmp/awesome.log"
-
-  try(write_errors, "Failed to write error log to /tmp/awesome.log")
 end
 
 do

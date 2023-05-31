@@ -1,5 +1,7 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
+local awful = require("awful")
+
 awful.keyboard.append_global_keybindings({
 
   --[[ Awesome ]]--
@@ -118,7 +120,7 @@ client.connect_signal("request::default_keybindings", function()
 end)
 
 client.connect_signal("request::default_mousebindings", function()
-  awful.mouse.append_client_mousebindigns({
+  awful.mouse.append_client_mousebindings({
     awful.button({ }, 1, function(c)
       c:activate({ context = "mouse_click" })
     end),

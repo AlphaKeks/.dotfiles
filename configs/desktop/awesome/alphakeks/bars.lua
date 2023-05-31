@@ -1,5 +1,10 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
+local awful = require("awful")
+local gears = require("gears")
+local wibox = require("wibox")
+local beautiful = require("beautiful")
+
 local function create_tags(screen)
   awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, screen, awful.layout.layouts[1])
 end
@@ -57,7 +62,7 @@ awful.screen.connect_for_each_screen(function(screen)
   })
 
   screen.wibar:setup({
-    layout = wibox.layout.align_horizontal,
+    layout = wibox.layout.align.horizontal,
     {
       layout = wibox.layout.fixed.horizontal,
       widgets.launcher,

@@ -1,11 +1,7 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
-awful = require("awful")
-naughty = require("naughty")
-gears = require("gears")
-wibox = require("wibox")
-beautiful = require("beautiful")
-ruled = require("ruled")
+local awful = require("awful")
+local naughty = require("naughty")
 
 function try(command, title)
   awful.spawn.easy_async(command, function(stdout, stderr, reason, code)
