@@ -2,6 +2,8 @@
 
 # https://GitHub.com/AlphaKeks/.dotfiles
 
+source $HOME/.dotfiles/configs/env/vars
+
 export ZHIST=$DOTFILES/configs/shells/zsh/.zhist
 export ZDIR=$DOTFILES/configs/shells/zsh
 export ZSHRC=$ZDIR/zshrc
