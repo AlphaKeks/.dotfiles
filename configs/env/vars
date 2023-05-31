@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# https://GitHub.com/AlphaKeks/.dotfiles
+
+# Basic shell stuff
+export PATH=$PATH:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/share/nvim/mason/bin
+export EDITOR="vim"
+export TERM="screen-256color"
+
+# Useful globals
+export KEYBOARD="alpha"
+export TERMINAL="wezterm"
+export BROWSER="firefox"
+export DOTFILES="$HOME/.dotfiles"
+export CONFIGS="$HOME/.config"
+
+# Rust
+export CARGO_TARGET_DIR="/mnt/dev/cargo-global-target"
+export RUST_BACKTRACE="full"
+
+# Exa
+export EXA_COLORS="ur=34:uw=34:ux=34:gr=34:gw=34:gx=34:tr=34:tw=34:tx=34:uu=35:gu=35"
+
+# FZF
+export FZF_DEFAULT_OPTS="--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+
+# X
+export XCURSOR_SIZE=24
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+# vim: et ts=2 sw=2 sts=2 ai si ft=sh
