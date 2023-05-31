@@ -5,6 +5,7 @@ local awful = require("awful")
 local programs = {
   ["picom"] = "picom -b --config " .. os.getenv("HOME") .. "/.config/picom/picom.conf",
   ["flameshot"] = "flameshot",
+  ["easyeffects"] = "easyeffects --gapplication-service",
   ["signal-desktop"] = "signal-desktop",
   ["discord"] = "discord",
   -- ["bitwarden"] = "bitwarden",

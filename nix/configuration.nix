@@ -188,6 +188,7 @@
       gcc gnumake cmake
       git curl killall
       vim
+      xclip
     ];
   };
 
@@ -292,7 +293,7 @@
         zsh neovim wezterm tmux firefox
         btop neofetch pavucontrol
         luajitPackages.lgi picom rofi flameshot
-        discord signal-desktop xfce.thunar
+        discord signal-desktop xfce.thunar easyeffects
 
         # Games
         osu-git steam
