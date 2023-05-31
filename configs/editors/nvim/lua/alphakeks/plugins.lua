@@ -47,7 +47,6 @@ local lazy_opts = {
       dependencies = { "nvim-tree/nvim-web-devicons" },
     },
     "nvim-telescope/telescope-ui-select.nvim",
-    "williamboman/mason.nvim",
     "lvimuser/lsp-inlayhints.nvim",
     "numToStr/Comment.nvim",
   },
