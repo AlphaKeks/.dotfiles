@@ -1,0 +1,82 @@
+// https://GitHub.com/AlphaKeks/.dotfiles
+
+* {
+  bg-col: #11111b;
+  bg-col-light: #1e1e2e;
+  border-col: #11111b;
+  selected-col: #7480c2;
+
+  blue: #7480c2;
+  fg-col: #cdd6f4;
+  fg-col2: #cdd6f4;
+  grey: #45475a;
+  red: #f38ba8;
+
+  text-color: @fg-col;
+  background-color: @bg-col;
+  font: "Iosevka Nerd Font 16";
+}
+
+window {
+  border-radius: 0.3em;
+  width: 20%;
+  padding: 10;
+  height: 19%;
+  anchor: center;
+  location: center;
+  fullscreen: false;
+}
+
+configuration {
+  modes: [ run, drun, window ];
+  combi-modes: [ window, drun, run ];
+  dpi: 96;
+  terminal: "wezterm";
+  click-to-exit: true;
+  disable-history: false;
+  show-icons: false;
+  drun-match-fields: "all";
+  no-lazy-grab: true;
+  scroll-method: 0;
+  no-drun-show-actions: true;
+
+  drun-display-format: "{name}";
+
+  inputchange {
+    action: "kb-row-first";
+  }
+
+  timeout {
+    delay: 15;
+    action: "kb-cancel";
+  }
+
+  run {
+    display-name: "Commands";
+  }
+
+  drun {
+    display-name: "> ";
+    delay: 5;
+    action: "kb-cancel";
+    match-fields: "name,generic,exec,categories,keywords";
+    parse-user: true;
+    parse-system: true;
+  }
+
+  window {
+    display-name: "Active";
+    close-on-delete: false;
+    thumbnail: true;
+  }
+}
+
+element selected {
+  background-color: @selected-col;
+}
+
+element-text {
+  vertical-align: 0.5;
+}
+
+// vim: et ts=2 sw=2 sts=2 ai si ft=rasi
