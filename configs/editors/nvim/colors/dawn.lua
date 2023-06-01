@@ -229,6 +229,7 @@ hi("SpellRare")
 
 hi("StatusLine", {
   fg = Dawn.lavender,
+  bg = Dawn.mantle,
 })
 
 hi("StatusLineNC", {

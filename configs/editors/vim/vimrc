@@ -11,7 +11,7 @@ set autoindent
 set autoread
 set background=dark
 set breakindent
-set breakindentopt=shift:3
+set breakindentopt=shift:4
 set colorcolumn=100
 set complete=.
 set completeopt=menu,menuone,preview,noinsert,noselect

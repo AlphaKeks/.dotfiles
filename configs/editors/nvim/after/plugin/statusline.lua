@@ -142,14 +142,10 @@ function Winbar()
   return string.format("%%#StatusWinbar#%s", path)
 end
 
-local dawn_installed, dawn = pcall(require, "dawn")
-
-if dawn_installed then
-  vim.api.nvim_set_hl(0, "StatusSeparator", { fg = dawn.palette.lavender })
-  vim.api.nvim_set_hl(0, "StatusMode", { fg = dawn.palette.text, bold = true })
-  vim.api.nvim_set_hl(0, "StatusGitBranch", { fg = dawn.palette.mauve })
-  vim.api.nvim_set_hl(0, "StatusWinbar", { link = "WinBar" })
-end
+vim.api.nvim_set_hl(0, "StatusSeparator", { fg = Dawn.lavender, bg = Dawn.mantle })
+vim.api.nvim_set_hl(0, "StatusMode", { fg = Dawn.text, bg = Dawn.mantle, bold = true })
+vim.api.nvim_set_hl(0, "StatusGitBranch", { fg = Dawn.mauve, bg = Dawn.mantle })
+vim.api.nvim_set_hl(0, "StatusWinbar", { link = "WinBar" })
 
 vim.opt.statusline = "%{%v:lua.LeftStatusline()%} %= %{%v:lua.RightStatusline()%}"
 vim.opt.winbar = "%{%v:lua.Winbar()%}"
