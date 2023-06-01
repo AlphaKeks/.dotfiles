@@ -42,6 +42,7 @@ alias gbD="git branch -D"
 # Dev
 alias vim="nvim"
 alias lg="lazygit"
+ns() { nix-shell --command "zsh" $@; }
 
 # Rust
 alias c="cargo"
@@ -60,6 +61,7 @@ ctd() { RUST_LOG=DEBUG cta $@; }
 cti() { RUST_LOG=INFO  cta $@; }
 ctw() { RUST_LOG=WARN  cta $@; }
 cte() { RUST_LOG=ERROR cta $@; }
+alias nsr="ns -p pkg-config openssl protobuf"
 
 # NixOS
 alias rebuild="sudo nixos-rebuild switch --flake $DOTFILES/nix"

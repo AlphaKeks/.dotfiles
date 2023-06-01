@@ -301,7 +301,8 @@
         lazygit rustup nodePackages_latest.typescript-language-server taplo nil
 
         # Virtualisation
-        qemu qemu_kvm libvirt dnsmasq vde2 netcat-openbsd bridge-utils dconf pciutils virt-manager
+        qemu qemu_kvm libvirt dnsmasq vde2 netcat-openbsd
+        bridge-utils dconf pciutils virt-manager looking-glass-client
       ];
 
       file = {
