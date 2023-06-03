@@ -5,12 +5,12 @@ local term = require("wezterm")
 return {
   default_prog = { "zsh" },
   color_scheme = "Catppuccin Mocha",
-  -- font = term.font_with_fallback {
-  --   "Iosevka Nerd Font",
-  --   -- "Liga SFMono Nerd Font",
-  --   "JetBrains Mono",
-  --   "Fira Code Nerd Font",
-  -- },
+  colors = {
+    background = "11111b",
+  },
+  font = term.font_with_fallback {
+    "JetBrains Mono Regular",
+  },
   font_size = 18,
   line_height = 1,
   use_fancy_tab_bar = false,
