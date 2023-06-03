@@ -73,6 +73,10 @@
       device = "/dev/disk/by-uuid/6e4111f2-64d7-414c-8a80-ebe24e64a6a8";
       fsType = "btrfs";
     };
+    "/mnt/docker" = {
+      device = "/dev/disk/by-uuid/7d1f58a5-e564-4ba1-aa60-017c4b1a3c43";
+      fsType = "ext4";
+    };
     "/mnt/vms" = {
       device = "/dev/disk/by-uuid/981bfb49-39c3-4c5c-bc47-5db792baabde";
       fsType = "btrfs";
@@ -135,7 +139,7 @@
         setSocketVariable = true;
         daemon = {
           settings = {
-            data-root = "/mnt/dev/docker";
+            data-root = "/mnt/docker";
           };
         };
       };
@@ -187,7 +191,7 @@
       gcc gnumake cmake
       git curl killall
       vim
-      xclip
+      xclip mate.mate-polkit
     ];
   };
 
@@ -258,6 +262,26 @@
     };
   };
 
+  systemd = {
+    user = {
+      services = {
+        mate-polkit = {
+          description = "polkit-mate-authentication-agent-1";
+          wantedBy = [ "graphical-session.target" ];
+          wants = [ "graphical-session.target" ];
+          after = [ "graphical-session.target" ];
+          serviceConfig = {
+            Type = "simple";
+            ExecStart = "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1";
+            Restart = "on-failure";
+            RestartSec = 1;
+            TimeoutStopSec = 10;
+          };
+        };
+      };
+    };
+  };
+
   users.users.${user} = {
     isNormalUser = true;
     initialPassword = "bensmom";
@@ -290,7 +314,7 @@
       packages = with pkgs; [
         # Basic shit
         zsh neovim wezterm tmux firefox
-        btop neofetch pavucontrol
+        btop neofetch pavucontrol tokei gparted
         luajitPackages.lgi picom rofi flameshot
         discord signal-desktop xfce.thunar easyeffects
 
@@ -298,7 +322,7 @@
         osu-git steam
 
         # Dev
-        lazygit rustup nodePackages_latest.typescript-language-server taplo nil
+        lazygit rustup nodePackages_latest.typescript-language-server taplo nil docker-compose
 
         # Virtualisation
         qemu qemu_kvm libvirt dnsmasq vde2 netcat-openbsd
