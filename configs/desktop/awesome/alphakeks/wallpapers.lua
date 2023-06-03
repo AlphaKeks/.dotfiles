@@ -7,7 +7,7 @@ local wibox = require("wibox")
 local wallpapers = {
   "/home/alphakeks/Pictures/Wallpapers/catppuccinxdawn2.png",
   "/home/alphakeks/Pictures/Wallpapers/hashtags-black.png",
-  "/home/alphakeks/Pictures/Wallpapers/lofi_dawn_croptop_schnose.png",
+  "/home/alphakeks/Pictures/Wallpapers/lofi_dawn_tshirt_schnose.png",
   "/home/alphakeks/Pictures/Wallpapers/hashtags-black.png",
 }
 
