@@ -7,10 +7,18 @@
 
 vim.cmd([[
   set background=dark
-  highlight clear
-  syntax reset
   let g:colors_name="dawn"
 ]])
+
+local function hi(group)
+  return function(opts)
+    if opts then
+      vim.api.nvim_set_hl(0, group, opts)
+    end
+  end
+end
+
+-- {{{ Color palette
 
 Dawn = {
   rosewater = "#F5E0DC",
@@ -47,924 +55,630 @@ Dawn = {
   poggers   = "#7480C2",
 }
 
-local function hi(group, opts)
-  opts = opts or {}
-  vim.api.nvim_set_hl(0, group, opts)
-end
+-- }}}
 
---[[-------------------------------------------EDITOR-------------------------------------------]]--
+-- {{{ Editor
 
-hi("ColorColumn", {
-  bg = Dawn.surface0,
-})
-
-hi("Conceal", {
+hi "Conceal" {
+  fg = Dawn.sapphire,
   bg = Dawn.none,
-  fg = Dawn.poggers,
   bold = true,
-})
+}
 
-hi("Cursor", {
-  fg = Dawn.base,
+hi "ColorColumn" {
+  bg = Dawn.base,
+}
+
+hi "CursorColumn" {
+  link = "ColorColumn",
+}
+
+hi "CursorLine" {
+  link = "CursorColumn",
+}
+
+hi "Search" {
+  fg = Dawn.crust,
   bg = Dawn.yellow,
-})
+}
 
-hi("lCursor", {
+hi "CurSearch" {
+  link = "Search",
+}
+
+hi "IncSearch" {
+  link = "Search",
+}
+
+hi "Substitute" {
+  link = "Search",
+}
+
+hi "Cursor" {
+  fg = Dawn.crust,
+  bg = Dawn.text,
+}
+
+hi "lCursor" {
   link = "Cursor",
-})
+}
 
-hi("CursorIM", {
+hi "CursorIM" {
   link = "Cursor",
-})
+}
 
-hi("CursorColumn", {
-  link = "ColorColumn",
-})
+hi "TermCursor" {
+  link = "Cursor",
+}
 
-hi("CursorLine", {
-  link = "ColorColumn",
-})
+hi "TermCursorNC" {
+  link = "TermCursor",
+}
 
-hi("Directory")
+hi "DiagnosticOk"
 
-hi("EndOfBuffer", {
-  fg = Dawn.poggers,
-})
+hi "DiagnosticInfo" {
+  fg = Dawn.teal,
+}
 
-hi("ErrorMsg", {
+hi "DiagnosticHint" {
+  fg = Dawn.green,
+}
+
+hi "DiagnosticWarn" {
+  fg = Dawn.yellow,
+}
+
+hi "DiagnosticError" {
   fg = Dawn.red,
+}
+
+hi "DiagnosticDeprecated" {
+  fg = Dawn.surface0,
+  italic = true,
+}
+
+hi "Directory" {
+  fg = Dawn.blue,
   bold = true,
-})
+}
 
-hi("VertSplit", {
-  fg = Dawn.text,
+hi "DiffAdd" {
+  fg = Dawn.green,
   bg = Dawn.none,
-})
+}
 
-hi("Folded", {
-  fg = Dawn.slate,
-  bg = Dawn.none,
-  bold = true,
-})
-
-hi("FoldColumn", {
-  bg = Dawn.transparent and Dawn.none or Dawn.base,
-})
-
-hi("SignColumn", {
-  bg = Dawn.transparent and Dawn.none or Dawn.base,
-})
-
-hi("Substitute", {
-  fg = Dawn.text,
-  bg = Dawn.red,
-})
-
-hi("LineNr", {
-  fg = Dawn.overlay1,
-  bg = Dawn.none,
-})
-
-hi("CursorLineNr", {
+hi "DiffChange" {
   fg = Dawn.yellow,
   bg = Dawn.none,
+}
+
+hi "DiffDelete" {
+  fg = Dawn.red,
+  bg = Dawn.none,
+}
+
+hi "DiffText" {
+  fg = Dawn.blue,
+  bg = Dawn.none,
+}
+
+hi "EndOfBuffer" {
+  fg = Dawn.slate,
+  bg = Dawn.none,
+}
+
+hi "ErrorMsg" {
+  fg = Dawn.red,
   bold = true,
-})
+}
 
-hi("MatchParen", {
-  fg = Dawn.peach,
-  bg = Dawn.surface1,
-})
-
-hi("ModeMsg", {
-  fg = Dawn.text,
-  bold = true,
-})
-
-hi("MsgSeparator")
-
-hi("MoreMsg", {
-  fg = Dawn.subtext0,
-  bold = true,
-  italic = true,
-})
-
-hi("NonText", {
-  fg = Dawn.subtext0,
-})
-
-hi("Normal", {
-  fg = Dawn.text,
-  bg = Dawn.transparent and Dawn.none or Dawn.base,
-})
-
-hi("NormalNC", {
-  link = "Normal",
-})
-
-hi("NormalFloat", {
+hi "WinSeparator" {
   fg = Dawn.text,
   bg = Dawn.none,
-})
+}
 
-hi("FloatBorder", {
-  fg = Dawn.lavender,
-  bg = Dawn.transparent and Dawn.none or Dawn.base,
-})
-
-hi("FloatTitle", {
-  fg = Dawn.subtext0,
-})
-
-hi("Pmenu", {
-  fg = Dawn.surface2,
-  bg = Dawn.mantle,
-})
-
-hi("PmenuSel", {
-  fg = Dawn.sky,
-  bg = Dawn.surface2,
-})
-
-hi("PmenuSbar", {
-  bg = Dawn.surface0,
-})
-
-hi("PmenuThumb", {
-  bg = Dawn.overlay0,
-})
-
-hi("Question", {
-  fg = Dawn.green,
-})
-
-hi("QuickFixLine", {
-  link = "Visual",
-})
-
-hi("Search", {
-  fg = Dawn.crust,
-  bg = Dawn.yellow,
-})
-
-hi("IncSearch", {
-  fg = Dawn.crust,
-  bg = Dawn.poggers,
-})
-
-hi("CurSearch")
-
-hi("SpecialKey", {
-  fg = Dawn.mauve,
+hi "Folded" {
+  fg = Dawn.slate,
   italic = true,
-})
+}
 
-hi("SpellBad")
+hi "FoldColumn"
 
-hi("SpellCap")
+hi "CursorLineFold" {
+  link = "FoldColumn",
+}
 
-hi("SpellLocal")
-
-hi("SpellRare")
-
-hi("StatusLine", {
-  fg = Dawn.lavender,
-  bg = Dawn.mantle,
-})
-
-hi("StatusLineNC", {
-  fg = Dawn.none,
-})
-
-hi("TabLine", {
-  fg = Dawn.subtext0,
+hi "SignColumn" {
   bg = Dawn.crust,
-})
+}
 
-hi("TabLineFill", {
-  fg = Dawn.none,
+hi "CursorLineSign" {
+  link = "SignColumn",
+}
+
+hi "LineNr" {
+  fg = Dawn.overlay0,
   bg = Dawn.none,
-})
+}
 
-hi("TabLineSel", {
-  fg = Dawn.poggers,
-  bg = Dawn.mantle,
-  bold = true,
-})
-
-hi("Title", {
-  fg = Dawn.poggers,
-})
-
-hi("Visual", {
-  bg = Dawn.surface2,
-})
-
-hi("VisualNOS")
-
-hi("WarningMsg", {
-  fg = Dawn.yellow,
-  italic = true,
-})
-
-hi("Whitespace", {
-  fg = Dawn.surface2,
-})
-
-hi("WildMenu", {
-  fg = Dawn.sky,
-  bg = Dawn.surface2,
-})
-
-hi("WinBar", {
-  fg = Dawn.pink,
-  italic = true,
-})
-
-hi("DiagnosticOk", {
-  fg = Dawn.green,
-  bg = Dawn.none,
-})
-
-hi("DiagnosticHint", {
-  fg = Dawn.teal,
-  bg = Dawn.none,
-})
-
-hi("DiagnosticInfo", {
-  fg = Dawn.blue,
-  bg = Dawn.none,
-})
-
-hi("DiagnosticWarn", {
-  fg = Dawn.yellow,
-  bg = Dawn.none,
-})
-
-hi("DiagnosticError", {
-  fg = Dawn.red,
-  bg = Dawn.none,
-})
-
-hi("DiagnosticDeprecated", {
-  link = "Comment",
-})
-
-hi("DiagnosticUnnecessary", {
-  link = "Comment",
-})
-
-hi("DiagnosticSignOk", {
-  link = "DiagnosticOk",
-})
-
-hi("DiagnosticSignHint", {
-  link = "DiagnosticHint",
-})
-
-hi("DiagnosticSignInfo", {
-  link = "DiagnosticInfo",
-})
-
-hi("DiagnosticSignWarn", {
-  link = "DiagnosticWarn",
-})
-
-hi("DiagnosticSignError", {
-  link = "DiagnosticError",
-})
-
-hi("DiagnosticFloatingOk", {
-  link = "DiagnosticOk",
-})
-
-hi("DiagnosticFloatingHint", {
-  link = "DiagnosticHint",
-})
-
-hi("DiagnosticFloatingInfo", {
-  link = "DiagnosticInfo",
-})
-
-hi("DiagnosticFloatingWarn", {
-  link = "DiagnosticWarn",
-})
-
-hi("DiagnosticFloatingError", {
-  link = "DiagnosticError",
-})
-
-hi("DiagnosticUnderlineOk", {
-  link = "DiagnosticOk",
-})
-
-hi("DiagnosticUnderlineHint", {
-  link = "DiagnosticHint",
-})
-
-hi("DiagnosticUnderlineInfo", {
-  link = "DiagnosticInfo",
-})
-
-hi("DiagnosticUnderlineWarn", {
-  link = "DiagnosticWarn",
-})
-
-hi("DiagnosticUnderlineError", {
-  link = "DiagnosticError",
-})
-
-hi("DiagnosticVirtualTextOk", {
-  link = "DiagnosticOk",
-})
-
-hi("DiagnosticVirtualTextHint", {
-  link = "DiagnosticHint",
-})
-
-hi("DiagnosticVirtualTextInfo", {
-  link = "DiagnosticInfo",
-})
-
-hi("DiagnosticVirtualTextWarn", {
-  link = "DiagnosticWarn",
-})
-
-hi("DiagnosticVirtualTextError", {
-  link = "DiagnosticError",
-})
-
---[[-------------------------------------------EDITOR-------------------------------------------]]--
-
---[[-------------------------------------------SYNTAX-------------------------------------------]]--
-
-hi("Comment", {
-  fg = Dawn.slate,
-  bg = Dawn.none,
-  italic = true,
-})
-
-hi("SpecialComment", {
-  link = "Special",
-})
-
-hi("Constant", {
-  fg = Dawn.red,
-  bold = true,
-})
-
-hi("String", {
-  fg = Dawn.green,
-})
-
-hi("Character", {
-  fg = Dawn.teal,
-})
-
-hi("Number", {
-  fg = Dawn.red,
-})
-
-hi("Float", {
-  link = "Number",
-})
-
-hi("Boolean", {
-  fg = Dawn.red,
-})
-
-hi("Identifier", {
-  fg = Dawn.lavender,
-})
-
-hi("Function", {
-  fg = Dawn.blue,
-  italic = true,
-})
-
-hi("Statement", {
-  link = "Keyword",
-})
-
-hi("Conditional", {
-  fg = Dawn.mauve,
-})
-
-hi("Repeat", {
-  fg = Dawn.mauve,
-})
-
-hi("Label", {
-  fg = Dawn.sapphire,
-})
-
-hi("Operator", {
-  fg = Dawn.yellow,
-})
-
-hi("Keyword", {
-  fg = Dawn.mauve,
-})
-
-hi("PreProc", {
-  fg = Dawn.text,
-  bold = true,
-})
-
-hi("Include", {
-  fg = Dawn.mauve,
-})
-
-hi("Define", {
-  link = "PreProc",
-})
-
-hi("Macro", {
-  fg = Dawn.mauve,
-  italic = true,
-})
-
-hi("PreCondit", {
-  link = "PreProc",
-})
-
-hi("StorageClass", {
-  fg = Dawn.yellow,
-  bold = true,
-})
-
-hi("Structure", {
-  link = "Type",
-})
-
-hi("Special", {
-  fg = Dawn.mauve,
-  italic = true,
-})
-
-hi("Type", {
-  fg = Dawn.poggers,
-  bold = true,
-  italic = true,
-})
-
-hi("Typedef", {
-  link = "Type",
-})
-
-hi("SpecialChar", {
-  fg = Dawn.sky,
-  italic = true,
-})
-
-hi("Tag", {
-  link = "Special",
-})
-
-hi("Delimiter", {
-  fg = Dawn.overlay2,
-})
-
-hi("Variable", {
-  fg = Dawn.text,
-})
-
-hi("Underlined", {
-  italic = true,
-  underline = true,
-  undercurl = true,
-})
-
-hi("Bold", {
-  bold = true,
-})
-
-hi("Italic", {
-  italic = true,
-})
-
-hi("Error", {
-  fg = Dawn.red,
-  bold = true,
-})
-
-hi("Todo", {
-  fg = Dawn.yellow,
-  bold = true,
-})
-
-hi("qfLineNr", {
+hi "LineNrAbove" {
   link = "LineNr",
-})
+}
 
-hi("qfFileName", {
-  fg = Dawn.blue,
+hi "LineNrBelow" {
+  link = "LineNr",
+}
+
+hi "CursorLineNr" {
+  fg = Dawn.sky,
+  bg = Dawn.none,
   bold = true,
-})
+}
 
-hi("debugPC")
+hi "MatchParen" {
+  fg = Dawn.peach,
+  bg = Dawn.overlay0,
+}
 
-hi("debugBreakpoint", {
+hi "ModeMsg" {
   fg = Dawn.mauve,
-})
-
-hi("DiffAdd", {
-  fg = Dawn.green,
-})
-
-hi("DiffChange", {
-  fg = Dawn.yellow,
-})
-
-hi("DiffDelete", {
-  fg = Dawn.red,
-})
-
---[[-------------------------------------------SYNTAX-------------------------------------------]]--
-
---[[--------------------------------------------RUST--------------------------------------------]]--
-
-hi("rustFoldBraces", {
-  link = "Delimiter",
-})
-
-hi("rustBoxPlacementBalance", {
-  link = "Delimiter",
-})
-
-hi("@storageclass.lifetime.rust", {
-  fg = Dawn.sapphire,
-})
-
-hi("@lsp.typemod.builtinAttribute.attribute.rust", {
-  fg = Dawn.red,
-})
-
-hi("@lsp.type.formatSpecifier.rust", {
-  link = "@punctuation.bracket",
-})
-
-hi("@lsp.type.variable.rust", {
-  link = "@variable",
-})
-
-hi("@lsp.typemod.operator.controlFlow.rust", {
-  fg = Dawn.sapphire,
-  bold = true,
-})
-
-hi("@lsp.typemod.keyword.injected.rust", {
-  link = "@keyword",
-})
-
-hi("@lsp.typemod.operator.injected.rust", {
-  link = "@operator",
-})
-
-hi("@lsp.typemod.number.injected.rust", {
-  link = "@number",
-})
-
-hi("@lsp.typemod.generic.injected.rust", {
-  link = "@punctuation",
-})
-
-hi("@lsp.typemod.string.injected.rust", {
-  link = "@string",
-})
-
-hi("@lsp.typemod.builtinType.injected.rust", {
-  link = "@type.builtin",
-})
-
-hi("@lsp.typemod.boolean.injected.rust", {
-  link = "@boolean",
-})
-
-hi("@lsp.typemod.lifetime.injected.rust", {
-  link = "rustLifetime",
-})
-
-hi("@lsp.type.selfKeyword.rust", {
-  fg = Dawn.red,
-  bold = true,
-})
-
-hi("@lsp.typemod.namespace.attribute.rust", {
-  fg = Dawn.peach,
-  bold = true,
-})
-
-hi("@lsp.type.number.rust", {
-  link = "@number",
-})
-
-hi("@lsp.typemod.character.injected.rust", {
-  link = "@character",
-})
-
-hi("@lsp.typemod.punctuation.injected.rust", {
-  link = "@punctuation",
-})
-
-hi("@lsp.typemod.keyword.crateRoot.rust", {
-  fg = Dawn.pink,
-  bold = true,
-})
-
---[[--------------------------------------------RUST--------------------------------------------]]--
-
---[[--------------------------------------------LUA --------------------------------------------]]--
-
-hi("luaParen", {
-  link = "Delimiter",
-})
-
-hi("luaTableBlock", {
-  fg = Dawn.lavender,
-})
-
---[[--------------------------------------------LUA --------------------------------------------]]--
-
---[[-----------------------------------------TREESITTER-----------------------------------------]]--
-
-hi("@boolean", {
-  link = "Boolean",
-})
-
-hi("@character", {
-  link = "Character",
-})
-
-hi("@character.special", {
-  link = "SpecialChar",
-})
-
-hi("@comment", {
-  link = "Comment",
-})
-
-hi("@conceal", {
-  link = "Conceal",
-})
-
-hi("@conditional", {
-  link = "Conditional",
-})
-
-hi("@constant", {
-  link = "Constant",
-})
-
-hi("@constant.builtin", {
-  link = "Constant",
-})
-
-hi("@constant.macro", {
-  link = "Macro",
-})
-
-hi("@constructor", {
-  link = "@punctuation.bracket",
-})
-
-hi("@debug")
-
-hi("@define", {
-  link = "Define",
-})
-
-hi("@exception", {
-  fg = Dawn.red,
+  bg = Dawn.none,
   italic = true,
-})
+}
 
-hi("@field", {
-  fg = Dawn.lavender,
-})
+hi "MsgArea" {
+  link = "Normal",
+}
 
-hi("@float", {
-  link = "Float",
-})
+hi "MsgSeparator"
 
-hi("@function", {
-  link = "Function",
-})
-
-hi("@function.builtin", {
-  link = "Function",
-})
-
-hi("@function.macro", {
-  link = "Macro",
-})
-
-hi("@include", {
-  link = "Include",
-})
-
-hi("@keyword", {
-  link = "Keyword",
-})
-
-hi("@label", {
-  link = "Label",
-})
-
-hi("@macro", {
-  link = "Macro",
-})
-
-hi("@method", {
-  link = "Function",
-})
-
-hi("@namespace", {
-  fg = Dawn.blue,
-})
-
-hi("@number", {
-  link = "Number",
-})
-
-hi("@operator", {
-  link = "Operator",
-})
-
-hi("@parameter", {
-  fg = Dawn.maroon,
-})
-
-hi("@preproc", {
-  link = "PreProc",
-})
-
-hi("@property", {
-  link = "@field",
-})
-
-hi("@punctuation", {
-  fg = Dawn.overlay2,
-})
-
-hi("@repeat", {
-  link = "Repeat",
-})
-
-hi("@storageclass", {
-  link = "StorageClass",
-})
-
-hi("@string", {
-  link = "String",
-})
-
-hi("@string.escape", {
-  fg = Dawn.pink,
-})
-
-hi("@string.special", {
-  link = "Special",
-})
-
-hi("@tag", {
-  link = "Tag",
-})
-
-hi("@variable", {
-  link = "Variable",
-})
-
-hi("@variable.builtin", {
-  fg = Dawn.red,
-})
-
-hi("@text.literal", {
-  fg = Dawn.blue,
+hi "MoreMsg" {
+  fg = Dawn.subtext1,
   bold = true,
-})
+}
 
-hi("@text.reference", {
-  link = "@text.literal",
-})
+hi "NonText" {
+  fg = Dawn.surface2,
+}
 
-hi("@text.title", {
-  link = "@text.literal",
-})
+hi "Normal" {
+  fg = Dawn.text,
+  bg = Dawn.crust,
+}
 
-hi("@text.todo", {
-  link = "Todo",
-})
+hi "NormalNC" {
+  link = "Normal",
+}
 
-hi("@text.underline", {
-  link = "Underlined",
-})
+hi "NormalFloat" {
+  fg = Dawn.text,
+  bg = Dawn.base,
+}
 
-hi("@text.uri", {
-  link = "@text.underline",
-})
+hi "FloatBorder" {
+  fg = Dawn.lavender,
+  bg = Dawn.none,
+}
 
-hi("@type", {
-  link = "Type",
-})
+hi "FloatShadow"
+hi "FloatShadowThrough"
 
-hi("@type.builtin", {
-  fg = Dawn.poggers,
-})
+hi "FloatTitle" {
+  fg = Dawn.blue,
+  bg = Dawn.base,
+  bold = true,
+}
 
-hi("@type.definition", {
-  link = "Type",
-})
+hi "Pmenu" {
+  fg = Dawn.surface2,
+  bg = Dawn.base,
+}
 
---[[-----------------------------------------TREESITTER-----------------------------------------]]--
+hi "PmenuSel" {
+  fg = Dawn.text,
+  bg = Dawn.surface0,
+  bold = true,
+}
 
---[[--------------------------------------------LSP---------------------------------------------]]--
+hi "PmenuKind"
+hi "PmenuKindSel"
+hi "PmenuExtra"
+hi "PmenuExtraSel"
 
-hi("@lsp.type.class", {
-  link = "@type",
-})
+hi "PmenuSbar" {
+  bg = Dawn.mantle,
+}
 
-hi("@lsp.type.comment", {
-  link = "@comment",
-})
+hi "PmenuThumb" {
+  bg = Dawn.surface0,
+}
 
-hi("@lsp.type.decorator", {
-  fg = Dawn.rosewater,
-})
+hi "Question" {
+  fg = Dawn.green,
+}
 
-hi("@lsp.type.enum", {
-  link = "@type",
-})
+hi "QuickFixLine"
 
-hi("@lsp.type.enumMember", {
+hi "SpecialKey" {
+  fg = Dawn.mauve,
+  italic = true,
+}
+
+hi "SpellBad" {
+  fg = Dawn.red,
+  bold = true,
+}
+
+hi "SpellCap"
+hi "SpellLocal"
+hi "SpellRare"
+
+hi "StatusLine" {
+  fg = Dawn.lavender,
+  bg = Dawn.mantle,
+}
+
+hi "StatusLineNC" {
+  fg = Dawn.none,
+  bg = Dawn.mantle,
+}
+
+hi "TabLine" {
+  fg = Dawn.surface0,
+  bg = Dawn.crust,
+}
+
+hi "TabLineFill" {
+  fg = Dawn.surface0,
+  bg = Dawn.crust,
+}
+
+hi "TabLineSel" {
+  fg = Dawn.lavender,
+  bg = Dawn.base,
+}
+
+hi "Title" {
+  fg = Dawn.green,
+  bold = true,
+}
+
+hi "Visual" {
+  bg = Dawn.surface1,
+}
+
+hi "VisualNOS" {
+  link = "Visual",
+}
+
+hi "WarningMsg" {
+  fg = Dawn.yellow,
+  bold = true,
+}
+
+hi "Whitespace" {
+  fg = Dawn.surface0,
+}
+
+hi "WildMenu"
+
+hi "WinBar" {
+  fg = Dawn.sapphire,
+  italic = true,
+}
+
+hi "WinBarNC" {
+  link = "WinBar",
+}
+
+-- }}}
+
+-- {{{ Syntax
+
+hi "Boolean" {
+  fg = Dawn.red,
+}
+
+hi "Character" {
+  fg = Dawn.teal,
+}
+
+hi "SpecialChar" {
+  fg = Dawn.teal,
+  italic = true,
+}
+
+hi "Comment" {
+  fg = Dawn.slate,
+  italic = true,
+}
+
+hi "SpecialComment" {
+  link = "Comment",
+}
+
+hi "Conditional" {
+  fg = Dawn.mauve,
+}
+
+hi "Constant" {
   fg = Dawn.peach,
   bold = true,
-})
+}
 
-hi("@lsp.type.function", {
-  link = "@function",
-})
+hi "Debug"
 
-hi("@lsp.type.interface", {
+hi "Define" {
+  fg = Dawn.pink,
+}
+
+hi "Delimiter" {
+  fg = Dawn.subtext0,
+}
+
+hi "Error" {
+  fg = Dawn.red,
+  bold = true,
+}
+
+hi "Exception" {
+  fg = Dawn.red,
+  bold = true,
+}
+
+hi "Float" {
+  link = "Number",
+}
+
+hi "Function" {
+  fg = Dawn.blue,
+}
+
+hi "Identifier" {
+  fg = Dawn.text,
+}
+
+hi "Ignore"
+
+hi "Include" {
+  fg = Dawn.mauve,
+}
+
+hi "Keyword" {
+  fg = Dawn.mauve,
+}
+
+hi "Label" {
+  fg = Dawn.sapphire,
+}
+
+hi "Macro" {
+  fg = Dawn.mauve,
+  italic = true,
+}
+
+hi "Number" {
+  fg = Dawn.red,
+}
+
+hi "Operator" {
+  fg = Dawn.yellow,
+}
+
+hi "PreCondit" {
+  fg = Dawn.pink,
+  bold = true,
+}
+
+hi "PreProc" {
+  fg = Dawn.pink,
+  bold = true,
+}
+
+hi "Repeat" {
+  fg = Dawn.mauve,
+}
+
+hi "StorageClass" {
+  fg = Dawn.sapphire,
+}
+
+hi "Structure" {
+  link = "Type",
+}
+
+hi "Special" {
+  fg = Dawn.mauve,
+  bold = true,
+}
+
+hi "Statement"
+
+hi "String" {
+  fg = Dawn.green,
+}
+
+hi "Tag" {
+  fg = Dawn.sapphire,
+  bold = true,
+}
+
+hi "Todo" {
+  fg = Dawn.yellow,
+  bold = true,
+}
+
+hi "Type" {
+  fg = Dawn.poggers,
+  bold = true,
+  italic = true,
+}
+
+hi "Typedef" {
+  link = "Type",
+}
+
+hi "Underlined" {
+  underline = true,
+}
+
+hi "Variable" {
+  fg = Dawn.text,
+}
+
+-- }}}
+
+--- {{{ Treesitter
+
+hi "@constant.builtin" {
+  link = "@constant",
+}
+
+hi "@field" {
+  fg = Dawn.lavender,
+}
+
+hi "@namespace" {
+  fg = Dawn.blue,
+}
+
+hi "@type.qualifier" {
+  link = "@operator",
+}
+
+hi "@parameter" {
+  fg = Dawn.red,
+}
+
+hi "@punctiation" {
+  link = "Delimiter",
+}
+
+hi "@variable" {
+  link = "Variable",
+}
+
+hi "@variable.builtin" {
+  fg = Dawn.maroon,
+}
+
+-- }}}
+
+-- {{{ Semantic Highlights
+
+hi "@lsp.mod.attribute" {
+  link = "@identifier",
+}
+
+hi "@lsp.mod.controlFlow" {
+  fg = Dawn.sapphire,
+  bold = true,
+}
+
+hi "@lsp.mod.crateRoot.rust" {
+  fg = Dawn.pink,
+  bold = true,
+}
+
+hi "@lsp.mod.library" {
+  link = "@namespace",
+}
+
+hi "@lsp.type.formatSpecifier" {
+  link = "@punctiation",
+}
+
+hi "@lsp.type.namespace" {
+  link = "@namespace",
+}
+
+hi "@lsp.type.parameter" {
+  link = "@parameter",
+}
+
+hi "@lsp.type.property" {
+  link = "@attribute",
+}
+
+hi "@lsp.type.selfKeyword" {
+  fg = Dawn.red,
+  bold = true,
+}
+
+hi "@lsp.type.variable" {
+  link = "@variable",
+}
+
+hi "@lsp.typemod.attributeBracket" {
+  link = "@punctuation",
+}
+
+hi "@lsp.typemod.decorator" {
+  fg = Dawn.flamingo,
+}
+
+hi "@lsp.typemod.derive" {
+  fg = Dawn.rosewater,
+  italic = true,
+}
+
+hi "@lsp.typemod.enum" {
+  link = "@type",
+}
+
+hi "@lsp.typemod.enumMember" {
+  link = "@lsp.type.enumMember",
+}
+
+hi "@lsp.typemod.interface" {
   fg = Dawn.flamingo,
   bold = true,
-})
+  italic = true,
+}
 
-hi("@lsp.type.macro", {
+hi "@lsp.typemod.keyword.async" {
+  link = "Keyword",
+}
+
+hi "@lsp.typemod.macro" {
   link = "@macro",
-})
+}
 
-hi("@lsp.type.method", {
+hi "@lsp.typemod.method" {
   link = "@function",
-})
+}
 
-hi("@lsp.type.namespace", {
+hi "@lsp.typemod.keyword.controlFlow" {
+  link = "@conditional",
+}
+
+hi "@lsp.typemod.namespace" {
   link = "@namespace",
-})
+}
 
-hi("@lsp.type.parameter", {
-  fg = Dawn.red,
-})
+hi "@lsp.typemod.operator.attribute" {
+  link = "@punctuation",
+}
 
-hi("@lsp.type.property", {
-  link = "@field",
-})
-
-hi("@lsp.type.struct", {
+hi "@lsp.typemod.struct" {
   link = "@type",
-})
+}
 
-hi("@lsp.type.type", {
-  link = "@type",
-})
+-- }}}
 
-hi("@lsp.type.typeParameter", {
-  link = "@type",
-})
+-- {{{ Telescope
 
-hi("@lsp.type.variable", {
-  link = "@variable",
-})
-
-hi("@lsp.typemod.variable.callable.rust", {
-  link = "@function",
-})
-
---[[--------------------------------------------LSP---------------------------------------------]]--
-
---[[------------------------------------------TELESCOPE-----------------------------------------]]--
-
-hi("TelescopeSelection", {
+hi "TelescopeSelection" {
   fg = Dawn.red,
   bg = Dawn.none,
-})
+}
 
-hi("TelescopeSelectionCaret", {
+hi "TelescopeSelectionCaret" {
   fg = Dawn.poggers,
   bg = Dawn.none,
-})
+}
 
---[[------------------------------------------TELESCOPE-----------------------------------------]]--
+-- }}}
 
-
--- vim: et ts=2 sw=2 sts=2 ai si ft=lua
+-- vim: et ts=2 sw=2 sts=2 ai si ft=lua fdm=marker fdl=0
