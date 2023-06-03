@@ -60,6 +60,7 @@ autocmd("LspAttach", {
 
 vim.lsp.setup("rust_analyzer", {
   on_attach = function(client, buffer)
+    -- client.server_capabilities.semanticTokensProvider = nil
     format_on_save(".rs")
   end,
   cmd = { "/mnt/dev/cargo-global-target/release/rust-analyzer" },
