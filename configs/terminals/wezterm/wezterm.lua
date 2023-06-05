@@ -6,12 +6,20 @@ return {
   default_prog = { "zsh" },
   color_scheme = "Catppuccin Mocha",
   colors = {
-    background = "11111b",
+    background = "#181825",
   },
-  font = term.font_with_fallback {
-    "JetBrains Mono Regular",
+  font = term.font({ family = "JetBrains Mono" }),
+  font_size = 14,
+  font_rules = {
+    {
+      intensity = "Normal",
+      italic = true,
+      font = term.font({
+        family = "JetBrains Mono Italic",
+        style = "Italic",
+      }),
+    },
   },
-  font_size = 18,
   line_height = 1,
   use_fancy_tab_bar = false,
   hide_tab_bar_if_only_one_tab = true,
