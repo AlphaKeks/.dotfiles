@@ -189,7 +189,7 @@
   environment = {
     systemPackages = with pkgs; [
       gcc gnumake cmake
-      git curl killall
+      git curl killall zip unzip
       vim
       xclip mate.mate-polkit
     ];
@@ -392,6 +392,10 @@
           recursive = true;
         };
         ".config/starship.toml".source = ../configs/shells/prompts/starship.toml;
+        ".local/share/fonts" = {
+          source = ../configs/desktop/fonts;
+          recursive = true;
+        };
       };
     };
 
