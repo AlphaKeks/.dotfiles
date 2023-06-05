@@ -78,16 +78,20 @@ nn("<C-f>", function()
 end)
 
 nn("<Leader>ff", function()
-  pickers.git_files(ivy({
+  local opts = ivy({
     hidden = true,
     follow = true,
     show_untracked = true,
     file_ignore_patterns = { "zsh/plugins/*" },
-  }))
+  })
+
+  if not pcall(pickers.git_files, opts) then
+    pickers.find_files(opts)
+  end
 end)
 
 nn("<Leader>fb", function()
-  pickers.buffers(ivy({
+  pcall(pickers.buffers, ivy({
     initial_mode = "normal",
   }))
 end)
@@ -117,9 +121,23 @@ nn("<Leader>fi", function()
 end)
 
 nn("<Leader>fg", function()
-  pickers.git_commits(ivy({
+  pcall(pickers.git_commits, {
     initial_mode = "normal",
-  }))
+    layout_config = {
+      height = 0.9,
+      width = 0.9,
+    },
+  })
+end)
+
+nn("<Leader>gs", function()
+  pcall(pickers.git_status, {
+    initial_mode = "normal",
+    layout_config = {
+      height = 0.9,
+      width = 0.9,
+    },
+  })
 end)
 
 nn("<Leader>e", function()

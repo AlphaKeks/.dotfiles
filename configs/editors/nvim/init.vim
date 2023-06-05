@@ -2,9 +2,9 @@
 
 source ~/.vim/vimrc
 
-" set guicursor+=i:ver20
+set guicursor+=i:ver20
 set laststatus=3
-set noshowmatch
+" set noshowmatch
 set undodir=~/.config/nvim/undo
 
 colorscheme dawn

@@ -42,13 +42,13 @@ autocmd("LspAttach", {
       vim.lsp.buf.format()
     end)
 
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-      vim.lsp.handlers.hover, { border = "single" }
-    )
-
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-      vim.lsp.handlers.signature_help, { border = "single" }
-    )
+    -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+    --   vim.lsp.handlers.hover, { border = "single" }
+    -- )
+    --
+    -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+    --   vim.lsp.handlers.signature_help, { border = "single" }
+    -- )
 
     local inlay_hints_installed, inlay_hints = pcall(require, "lsp-inlayhints")
     if inlay_hints_installed then

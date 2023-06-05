@@ -190,7 +190,7 @@ hi "CursorLineFold" {
 }
 
 hi "SignColumn" {
-  bg = Dawn.crust,
+  bg = Dawn.mantle,
 }
 
 hi "CursorLineSign" {
@@ -244,7 +244,7 @@ hi "NonText" {
 
 hi "Normal" {
   fg = Dawn.text,
-  bg = Dawn.crust,
+  bg = Dawn.mantle,
 }
 
 hi "NormalNC" {
@@ -253,12 +253,12 @@ hi "NormalNC" {
 
 hi "NormalFloat" {
   fg = Dawn.text,
-  bg = Dawn.base,
+  bg = Dawn.crust,
 }
 
 hi "FloatBorder" {
   fg = Dawn.lavender,
-  bg = Dawn.none,
+  bg = Dawn.crust,
 }
 
 hi "FloatShadow"
@@ -266,7 +266,7 @@ hi "FloatShadowThrough"
 
 hi "FloatTitle" {
   fg = Dawn.blue,
-  bg = Dawn.base,
+  bg = Dawn.crust,
   bold = true,
 }
 
@@ -287,7 +287,7 @@ hi "PmenuExtra"
 hi "PmenuExtraSel"
 
 hi "PmenuSbar" {
-  bg = Dawn.mantle,
+  bg = Dawn.crust,
 }
 
 hi "PmenuThumb" {
@@ -316,12 +316,12 @@ hi "SpellRare"
 
 hi "StatusLine" {
   fg = Dawn.lavender,
-  bg = Dawn.mantle,
+  bg = Dawn.crust,
 }
 
 hi "StatusLineNC" {
   fg = Dawn.none,
-  bg = Dawn.mantle,
+  bg = Dawn.crust,
 }
 
 hi "TabLine" {
@@ -336,7 +336,7 @@ hi "TabLineFill" {
 
 hi "TabLineSel" {
   fg = Dawn.lavender,
-  bg = Dawn.base,
+  bg = Dawn.mantle,
 }
 
 hi "Title" {
@@ -500,8 +500,7 @@ hi "String" {
 }
 
 hi "Tag" {
-  fg = Dawn.sapphire,
-  bold = true,
+  fg = Dawn.maroon,
 }
 
 hi "Todo" {
@@ -529,18 +528,35 @@ hi "Variable" {
 
 -- }}}
 
---- {{{ Treesitter
+-- {{{ Treesitter
+
+hi "@attribute" {
+  fg = Dawn.maroon,
+}
 
 hi "@constant.builtin" {
   link = "@constant",
+}
+
+hi "@constructor.lua" {
+  link = "@punctuation.bracket.lua",
 }
 
 hi "@field" {
   fg = Dawn.lavender,
 }
 
+hi "@function.builtin" {
+  fg = Dawn.peach,
+  italic = true,
+}
+
 hi "@namespace" {
   fg = Dawn.blue,
+}
+
+hi "@tag.delimiter" {
+  link = "Delimiter",
 }
 
 hi "@type.qualifier" {
@@ -548,7 +564,11 @@ hi "@type.qualifier" {
 }
 
 hi "@parameter" {
-  fg = Dawn.red,
+  fg = Dawn.maroon,
+}
+
+hi "@property" {
+  link = "@attribute",
 }
 
 hi "@punctiation" {
@@ -571,9 +591,12 @@ hi "@lsp.mod.attribute" {
   link = "@identifier",
 }
 
+hi "@lsp.mod.constant" {
+  link = "@constant",
+}
+
 hi "@lsp.mod.controlFlow" {
   fg = Dawn.sapphire,
-  bold = true,
 }
 
 hi "@lsp.mod.crateRoot.rust" {
@@ -585,12 +608,32 @@ hi "@lsp.mod.library" {
   link = "@namespace",
 }
 
+hi "@lsp.type.boolean" {
+  link = "@boolean",
+}
+
+hi "@lsp.type.builtinType" {
+  link = "@type.builtin",
+}
+
 hi "@lsp.type.formatSpecifier" {
   link = "@punctiation",
 }
 
+hi "@lsp.type.keyword" {
+  link = "@keyword",
+}
+
 hi "@lsp.type.namespace" {
   link = "@namespace",
+}
+
+hi "@lsp.type.number" {
+  link = "@number",
+}
+
+hi "@lsp.type.operator" {
+  link = "@operator",
 }
 
 hi "@lsp.type.parameter" {
@@ -601,9 +644,21 @@ hi "@lsp.type.property" {
   link = "@attribute",
 }
 
+hi "@lsp.type.punctuation" {
+  link = "@punctuation",
+}
+
 hi "@lsp.type.selfKeyword" {
   fg = Dawn.red,
   bold = true,
+}
+
+hi "@lsp.type.selfTypeKeyword" {
+  link = "@type",
+}
+
+hi "@lsp.type.typeAlias" {
+  link = "@type",
 }
 
 hi "@lsp.type.variable" {
@@ -665,9 +720,27 @@ hi "@lsp.typemod.struct" {
   link = "@type",
 }
 
+hi "@lsp.typemod.typeAlias" {
+  link = "@type",
+}
+
+hi "@lsp.typemod.variable.constant" {
+  link = "@constant",
+}
+
 -- }}}
 
 -- {{{ Telescope
+
+hi "TelescopeBorder" {
+  fg = Dawn.poggers,
+  bg = Dawn.none,
+}
+
+hi "TelescopeNormal" {
+  fg = Dawn.lavender,
+  bg = Dawn.none,
+}
 
 hi "TelescopeSelection" {
   fg = Dawn.red,

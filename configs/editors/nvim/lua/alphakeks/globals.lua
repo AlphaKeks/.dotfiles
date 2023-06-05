@@ -4,10 +4,6 @@ function nn(lhs, rhs, opts)
   vim.keymap.set("n", lhs, rhs, opts or {})
 end
 
-function vn(lhs, rhs, opts)
-  vim.keymap.set("v", lhs, rhs, opts or {})
-end
-
 function Print(...)
   vim.print(vim.inspect(...))
   return ...

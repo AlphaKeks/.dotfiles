@@ -142,9 +142,9 @@ function Winbar()
   return string.format("%%#StatusWinbar#%s", path)
 end
 
-vim.api.nvim_set_hl(0, "StatusSeparator", { fg = Dawn.lavender, bg = Dawn.mantle })
-vim.api.nvim_set_hl(0, "StatusMode", { fg = Dawn.text, bg = Dawn.mantle, bold = true })
-vim.api.nvim_set_hl(0, "StatusGitBranch", { fg = Dawn.mauve, bg = Dawn.mantle })
+vim.api.nvim_set_hl(0, "StatusSeparator", { fg = Dawn.lavender, bg = Dawn.crust })
+vim.api.nvim_set_hl(0, "StatusMode", { fg = Dawn.text, bg = Dawn.crust, bold = true })
+vim.api.nvim_set_hl(0, "StatusGitBranch", { fg = Dawn.mauve, bg = Dawn.crust })
 vim.api.nvim_set_hl(0, "StatusWinbar", { link = "WinBar" })
 
 vim.opt.statusline = "%{%v:lua.LeftStatusline()%} %= %{%v:lua.RightStatusline()%}"
