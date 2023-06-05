@@ -19,4 +19,8 @@ for process, program in pairs(programs) do
   ))
 end
 
+-- delete all the stuff in ~/tmp
+awful.spawn.with_shell("rm -rf " .. os.getenv("HOME") .. "/tmp/*")
+awful.spawn.with_shell("rm -rf " .. os.getenv("HOME") .. "/tmp/.*")
+
 -- vim: et ts=2 sw=2 sts=2 ai si ft=lua
