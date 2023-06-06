@@ -189,7 +189,7 @@
   environment = {
     systemPackages = with pkgs; [
       gcc gnumake cmake
-      git curl killall zip unzip
+      git curl killall bc zip unzip
       vim
       xclip mate.mate-polkit
     ];

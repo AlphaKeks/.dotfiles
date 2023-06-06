@@ -1,7 +1,7 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
-vim.diagnostic.config({
-  underline = false,
+vim.diagnostic.config {
+  underline = true,
 
   virtual_text = {
     severity = vim.diagnostic.severity.ERROR,
@@ -15,11 +15,11 @@ vim.diagnostic.config({
     focusable = true,
     source = "always",
     prefix = "",
-    border = "single",
+    border = "solid",
   },
-})
+}
 
-vim.keymap.set("n", "gl", vim.diagnostic.open_float)
-vim.keymap.set("n", "gL", vim.diagnostic.goto_next)
+nn("gl", vim.diagnostic.open_float)
+nn("gL", vim.diagnostic.goto_next)
 
 -- vim: et ts=2 sw=2 sts=2 ai si ft=lua

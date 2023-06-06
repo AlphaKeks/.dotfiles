@@ -42,8 +42,7 @@ local modes = {
 }
 
 local function mode()
-  local current_mode = vim.fn.mode()
-  return (modes)[current_mode] or "UNK"
+  return modes[vim.fn.mode()] or "UNK"
 end
 
 local function git_status()
@@ -63,17 +62,17 @@ local function git_status()
     return ""
   end
 
-  local added = git_diff("added")
+  local added = git_diff "added"
   if added:len() > 0 then
     git_status = git_status .. " %#GitsignsAdd#+" .. tostring(added)
   end
 
-  local changed = git_diff("changed")
+  local changed = git_diff "changed"
   if changed:len() > 0 then
     git_status = git_status .. " %#GitsignsChange#~" .. tostring(changed)
   end
 
-  local removed = git_diff("removed")
+  local removed = git_diff "removed"
   if removed:len() > 0 then
     git_status = git_status .. " %#GitsignsDelete#-" .. tostring(removed)
   end
@@ -138,7 +137,7 @@ function RightStatusline()
 end
 
 function Winbar()
-  local path = vim.fn.expand("%:p:~")
+  local path = vim.fn.expand "%:p:~"
   return string.format("%%#StatusWinbar#%s", path)
 end
 

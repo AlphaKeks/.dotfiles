@@ -2,7 +2,7 @@
 
 local mason_installed, mason = pcall(require, "mason")
 if mason_installed then
-  mason.setup({})
+  mason.setup {}
 end
 
 local function setup_keymaps(buffer)
@@ -69,7 +69,9 @@ vim.lsp.setup("rust_analyzer", {
       cargo = {
         features = "all",
       },
+
       checkOnSave = true,
+
       check = {
         command = "clippy",
         allTargets = true,
@@ -81,8 +83,8 @@ vim.lsp.setup("rust_analyzer", {
   },
 })
 
-vim.lsp.setup("tsserver")
-vim.lsp.setup("taplo")
-vim.lsp.setup("nil_ls")
+vim.lsp.setup "tsserver"
+vim.lsp.setup "taplo"
+vim.lsp.setup "nil_ls"
 
 -- vim: et ts=2 sw=2 sts=2 ai si ft=lua

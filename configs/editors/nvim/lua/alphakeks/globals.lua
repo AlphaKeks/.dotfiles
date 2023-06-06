@@ -1,7 +1,7 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
 function nn(lhs, rhs, opts)
-  vim.keymap.set("n", lhs, rhs, opts or {})
+  vim.keymap.set("n", lhs, rhs, opts or { silent = true })
 end
 
 function Print(...)
@@ -20,8 +20,8 @@ vim.lsp.setup = function(server, opts)
   local lspconfig_installed, lspconfig = pcall(require, "lspconfig")
 
   if not lspconfig_installed then
-    vim.notify("Language server could not be setup.")
-    vim.notify("nvim-lspconfig is not installed.")
+    vim.notify "Language server could not be setup."
+    vim.notify "nvim-lspconfig is not installed."
     return
   end
 

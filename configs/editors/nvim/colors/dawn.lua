@@ -5,10 +5,10 @@
 -- License:       MIT
 -- Color palette: https://github.com/catppuccin/nvim
 
-vim.cmd([[
+vim.cmd [[
   set background=dark
   let g:colors_name="dawn"
-]])
+]]
 
 local function hi(group)
   return function(opts)
@@ -133,6 +133,31 @@ hi "DiagnosticError" {
   fg = Dawn.red,
 }
 
+hi "DiagnosticUnderlineOk" {
+  fg = Dawn.none,
+  underline = false,
+}
+
+hi "DiagnosticUnderlineInfo" {
+  fg = Dawn.none,
+  underline = false,
+}
+
+hi "DiagnosticUnderlineHint" {
+  fg = Dawn.none,
+  underline = false,
+}
+
+hi "DiagnosticUnderlineWarn" {
+  fg = Dawn.none,
+  underline = false,
+}
+
+hi "DiagnosticUnderlineError" {
+  fg = Dawn.none,
+  underline = false,
+}
+
 hi "DiagnosticDeprecated" {
   fg = Dawn.surface0,
   italic = true,
@@ -254,11 +279,13 @@ hi "NormalNC" {
 hi "NormalFloat" {
   fg = Dawn.text,
   bg = Dawn.crust,
+  blend = 20,
 }
 
 hi "FloatBorder" {
   fg = Dawn.lavender,
   bg = Dawn.crust,
+  blend = 20,
 }
 
 hi "FloatShadow"
@@ -268,6 +295,7 @@ hi "FloatTitle" {
   fg = Dawn.blue,
   bg = Dawn.crust,
   bold = true,
+  blend = 20,
 }
 
 hi "Pmenu" {
@@ -557,6 +585,11 @@ hi "@namespace" {
 
 hi "@tag.delimiter" {
   link = "Delimiter",
+}
+
+hi "@text.reference" {
+  fg = Dawn.sky,
+  italic = true,
 }
 
 hi "@type.qualifier" {
