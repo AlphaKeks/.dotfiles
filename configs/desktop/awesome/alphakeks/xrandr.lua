@@ -1,10 +1,10 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
 local commands = {
-  "xrandr --output DisplayPort-2 --mode 1920x1080 --rate 240.30 --primary --dpi 96",
-  "xrandr --output DisplayPort-3 --mode 1920x1080 --rate 60.00 --dpi 96 --left-of DisplayPort-2",
-  "xrandr --output DisplayPort-4 --mode 1920x1080 --rate 60.00 --dpi 96 --above DisplayPort-2",
-  "xrandr --output HDMI-A-2 --mode 1920x1080 --rate 60.00 --dpi 96 --right-of DisplayPort-2",
+  "xrandr --output DisplayPort-0 --mode 1920x1080 --rate 240.30 --primary --dpi 96",
+  "xrandr --output DisplayPort-1 --mode 1920x1080 --rate 60.00 --dpi 96 --left-of DisplayPort-0",
+  "xrandr --output DisplayPort-2 --mode 1920x1080 --rate 60.00 --dpi 96 --above DisplayPort-0",
+  "xrandr --output HDMI-A-0 --mode 1920x1080 --rate 60.00 --dpi 96 --right-of DisplayPort-0",
   "xrdb -merge $HOME/.Xresources",
 }
 
