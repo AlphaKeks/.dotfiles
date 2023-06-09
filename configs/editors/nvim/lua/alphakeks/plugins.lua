@@ -29,28 +29,19 @@ local lazy_opts = {
 
   spec = {
     "neovim/nvim-lspconfig",
+    "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope.nvim",
+    "nvim-telescope/telescope-file-browser.nvim",
+    "nvim-telescope/telescope-ui-select.nvim",
+    "nvim-tree/nvim-web-devicons",
     "nvim-treesitter/nvim-treesitter",
     "nvim-treesitter/nvim-treesitter-textobjects",
-    {
-      "hrsh7th/nvim-cmp",
-      dependencies = {
-        "L3MON4D3/LuaSnip",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-nvim-lsp",
-      },
-    },
-    {
-      "nvim-telescope/telescope.nvim",
-      dependencies = { "nvim-lua/plenary.nvim" },
-    },
-    {
-      "nvim-telescope/telescope-file-browser.nvim",
-      dependencies = { "nvim-tree/nvim-web-devicons" },
-    },
-    "nvim-telescope/telescope-ui-select.nvim",
-    "lvimuser/lsp-inlayhints.nvim",
     "numToStr/Comment.nvim",
-    "jose-elias-alvarez/null-ls.nvim",
+    "hrsh7th/nvim-cmp",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-nvim-lsp",
+    "L3MON4D3/LuaSnip",
+    "lvimuser/lsp-inlayhints.nvim",
   },
 
   concurrency = 69,
@@ -62,7 +53,7 @@ local lazy_opts = {
 
   ui = {
     wrap = true,
-    border = "single",
+    border = "solid",
     browser = "firefox",
   },
 

@@ -15,7 +15,7 @@ local function setup_keymaps(buffer)
   bmap("n", "<Leader><Leader>", vim.lsp.buf.hover)
   bmap("n", "ga", vim.lsp.buf.code_action)
   bmap("n", "gr", vim.lsp.buf.rename)
-  bmap("n", "fr", vim.lsp.buf.references)
+  bmap("n", "gR", vim.lsp.buf.references)
   bmap("n", "gi", vim.lsp.buf.implementation)
   bmap("i", "<C-h>", vim.lsp.buf.signature_help)
 end

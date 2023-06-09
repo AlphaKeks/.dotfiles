@@ -236,7 +236,7 @@ hi "LineNrBelow" {
 }
 
 hi "CursorLineNr" {
-  fg = Dawn.sky,
+  fg = Dawn.yellow,
   bg = Dawn.none,
   bold = true,
 }
