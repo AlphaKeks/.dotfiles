@@ -127,8 +127,8 @@ tnoremap <C-Esc> <C-\><C-n>
 nnoremap <Leader>t :tabedit \| terminal<CR>a
 
 nnoremap <Leader>qo :copen<CR>
-nnoremap <Leader>qn :cnext<CR>
-nnoremap <Leader>qp :cprev<CR>
+nnoremap <C-j> :cnext<CR>
+nnoremap <C-k> :cprev<CR>
 
 nnoremap <Leader>ff :find *
 nnoremap <Leader>fl :grep 
