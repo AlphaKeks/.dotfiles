@@ -130,12 +130,12 @@
 
       daemon = {
         settings = {
-          data-root = "/mnt/dev/docker";
+          data-root = "/mnt/docker";
         };
       };
 
       rootless = {
-        enable = true;
+        enable = false;
         setSocketVariable = true;
         daemon = {
           settings = {
@@ -247,6 +247,12 @@
         symbolsFile = ../configs/X11/xkb/symbols/alpha;
       };
 
+      libinput = {
+        mouse = {
+          middleEmulation = false;
+        };
+      };
+
       displayManager = {
         gdm = {
           enable = true;
@@ -285,7 +291,7 @@
   users.users.${user} = {
     isNormalUser = true;
     initialPassword = "bensmom";
-    extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
+    extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" ];
     shell = pkgs.zsh;
     packages = [];
   };
@@ -316,17 +322,22 @@
         zsh neovim wezterm tmux firefox
         btop neofetch pavucontrol tokei gparted
         luajitPackages.lgi picom rofi flameshot
-        discord signal-desktop xfce.thunar easyeffects
+        discord signal-desktop xfce.thunar easyeffects gimp
 
         # Games
-        osu-git steam
+        osu-git steam minecraft
 
         # Dev
-        lazygit rustup nodePackages_latest.typescript-language-server taplo nil docker-compose
+        lazygit rustup nodePackages_latest.typescript-language-server taplo nil just jq
+        docker-compose podman-compose
+        postgresql delta
 
         # Virtualisation
         qemu qemu_kvm libvirt dnsmasq vde2 netcat-openbsd
         bridge-utils dconf pciutils virt-manager looking-glass-client
+
+        # Twitch
+        obs-studio showmethekey
       ];
 
       file = {
