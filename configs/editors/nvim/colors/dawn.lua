@@ -579,6 +579,10 @@ hi "@function.builtin" {
   italic = true,
 }
 
+hi "@identifier" {
+  link = "Identifier",
+}
+
 hi "@namespace" {
   fg = Dawn.blue,
 }
@@ -653,6 +657,10 @@ hi "@lsp.type.formatSpecifier" {
   link = "@punctiation",
 }
 
+hi "@lsp.type.generic" {
+  link = "@type",
+}
+
 hi "@lsp.type.keyword" {
   link = "@keyword",
 }
@@ -690,12 +698,20 @@ hi "@lsp.type.selfTypeKeyword" {
   link = "@type",
 }
 
+hi "@lsp.type.string" {
+  link = "@string",
+}
+
 hi "@lsp.type.typeAlias" {
   link = "@type",
 }
 
 hi "@lsp.type.variable" {
   link = "@variable",
+}
+
+hi "@lsp.typemod.property" {
+  link = "@attribute",
 }
 
 hi "@lsp.typemod.attributeBracket" {
@@ -717,6 +733,10 @@ hi "@lsp.typemod.enum" {
 
 hi "@lsp.typemod.enumMember" {
   link = "@lsp.type.enumMember",
+}
+
+hi "@lsp.typemod.generic.attribute" {
+  link = "@attribute",
 }
 
 hi "@lsp.typemod.interface" {
@@ -782,6 +802,14 @@ hi "TelescopeSelection" {
 
 hi "TelescopeSelectionCaret" {
   fg = Dawn.poggers,
+  bg = Dawn.none,
+}
+
+-- }}}
+
+-- {{{ lir.nvim
+
+hi "LirFloatBorder" {
   bg = Dawn.none,
 }
 

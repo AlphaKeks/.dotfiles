@@ -31,7 +31,7 @@ local lazy_opts = {
     "neovim/nvim-lspconfig",
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope.nvim",
-    "nvim-telescope/telescope-file-browser.nvim",
+    -- "nvim-telescope/telescope-file-browser.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
     "nvim-tree/nvim-web-devicons",
     "nvim-treesitter/nvim-treesitter",
@@ -42,6 +42,7 @@ local lazy_opts = {
     "hrsh7th/cmp-nvim-lsp",
     "L3MON4D3/LuaSnip",
     "lvimuser/lsp-inlayhints.nvim",
+    "tamago324/lir.nvim",
   },
 
   concurrency = 69,

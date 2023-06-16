@@ -63,7 +63,7 @@ vim.lsp.setup("rust_analyzer", {
     -- client.server_capabilities.semanticTokensProvider = nil
     format_on_save(".rs")
   end,
-  cmd = { "/mnt/dev/cargo-global-target/release/rust-analyzer" },
+  cmd = { "/home/alphakeks/.local/bin/rust-analyzer/release/rust-analyzer" },
   settings = {
     ["rust-analyzer"] = {
       cargo = {
