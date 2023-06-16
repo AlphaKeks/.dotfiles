@@ -48,6 +48,17 @@ ruled.client.connect_signal("request::rules", function()
   })
 
   ruled.client.append_rule({
+    id = "schnose-gsi-client",
+    rule = {
+      class = "schnose-gsi-client",
+    },
+    properties = {
+      screen = 4,
+      tag = "9",
+    },
+  })
+
+  ruled.client.append_rule({
     id = "floating",
     rule_any = {
       class = {

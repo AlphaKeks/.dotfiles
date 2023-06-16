@@ -28,4 +28,7 @@ source $ZDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Load aliases
 source $DOTFILES/configs/env/aliases
 
+# Nix
+eval "$(direnv hook zsh)"
+
 # vim: et ts=2 sw=2 sts=2 ai si ft=zsh

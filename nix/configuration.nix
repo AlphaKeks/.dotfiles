@@ -24,6 +24,11 @@
       options = "--delete-older-than 7d";
     };
 
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
+
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
@@ -190,8 +195,9 @@
     systemPackages = with pkgs; [
       gcc gnumake cmake
       git curl killall bc zip unzip
-      vim
-      xclip mate.mate-polkit
+      vim-full
+      xclip mate.mate-polkit xorg.libX11
+      gnupg pinentry pinentry-gnome xdg-desktop-portal xdg-desktop-portal-gtk gtk3
     ];
   };
 
@@ -202,6 +208,14 @@
 
     zsh = {
       enable = true;
+    };
+
+    gnupg = {
+      agent = {
+        enable = true;
+        pinentryFlavor = "gnome3";
+        enableSSHSupport = true;
+      };
     };
   };
 
@@ -291,7 +305,7 @@
   users.users.${user} = {
     isNormalUser = true;
     initialPassword = "bensmom";
-    extraGroups = [ "wheel" "networkmanager" "libvirtd" "docker" ];
+    extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
     shell = pkgs.zsh;
     packages = [];
   };
@@ -322,12 +336,14 @@
         zsh neovim wezterm tmux firefox
         btop neofetch pavucontrol tokei gparted
         luajitPackages.lgi picom rofi flameshot
-        discord signal-desktop xfce.thunar easyeffects gimp
+        discord signal-desktop xfce.thunar easyeffects gimp yt-dlp
+        pass
 
         # Games
         osu-git steam minecraft
 
         # Dev
+        direnv nix-direnv
         lazygit rustup nodePackages_latest.typescript-language-server taplo nil just jq
         docker-compose podman-compose
         postgresql delta
@@ -341,10 +357,6 @@
       ];
 
       file = {
-        ".vim" = {
-          source = ../configs/editors/vim;
-          recursive = true;
-        };
         ".zlogin".source = ../configs/shells/zsh/zlogin;
         ".zshenv".source = ../configs/shells/zsh/zshenv;
         ".zshrc".source = ../configs/shells/zsh/zshrc;
@@ -413,6 +425,17 @@
     programs = {
       home-manager = {
         enable = true;
+      };
+
+      zsh = {
+        enable = true;
+      };
+
+      direnv = {
+        enable = true;
+        nix-direnv = {
+          enable = true;
+        };
       };
     };
 
