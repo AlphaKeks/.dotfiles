@@ -382,10 +382,6 @@
         ".themes".source = ../configs/desktop/themes;
         ".config/gtkrc".source = ../configs/desktop/gtkrc;
         ".config/gtkrc-2.0".source = ../configs/desktop/gtkrc-2.0;
-        ".config/gtk-2.0" = {
-          source = ../configs/desktop/gtk-2.0;
-          recursive = true;
-        };
         ".config/gtk-3.0" = {
           source = ../configs/desktop/gtk-3.0;
           recursive = true;
