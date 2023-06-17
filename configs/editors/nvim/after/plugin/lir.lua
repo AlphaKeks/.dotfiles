@@ -35,6 +35,7 @@ lir.setup {
     ["<BS>"] = actions.up,
     ["q"] = actions.quit,
     ["a"] = actions.newfile,
+    ["A"] = actions.mkdir,
     ["r"] = actions.rename,
     ["y"] = actions.yank_path,
     ["."] = actions.toggle_show_hidden,
@@ -43,8 +44,11 @@ lir.setup {
 }
 
 nn("<Leader>e", function()
-  local cwd = vim.fn.expand "%:h"
-  return vim.print(":edit %:h<CR>")
-end, { silent = true, expr = true })
+  local cwd = vim.fn.expand("%:h")
+  if cwd:len() == 0 then
+    cwd = vim.fn.getcwd()
+  end
+  return vim.print(":edit " .. cwd .. "<CR>")
+end, { expr = true })
 
 -- vim: et ts=2 sw=2 sts=2 ai si ft=lua
