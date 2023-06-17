@@ -1,0 +1,24 @@
+/* Put URL bar and tabs on the bottom */
+body {
+	flex-direction: column-reverse !important;
+}
+
+/* Put tabs below the address bar */
+#navigator-toolbox {
+	flex-direction: column-reverse !important;
+}
+
+/* Put search / url suggestions on top of the text input */
+#urlbar[breakout] {
+	display: flex !important;
+	flex-direction: column-reverse !important;
+}
+#urlbar[breakout][breakout-extend] {
+	bottom: 0 !important;
+	top: unset !important;
+}
+
+/* Hide window controls */
+.titlebar-buttonbox-container {
+	display: none !important;
+}
