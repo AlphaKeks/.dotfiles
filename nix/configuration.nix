@@ -410,6 +410,10 @@
           source = ../configs/tools/rustfmt;
           recursive = true;
         };
+        ".config/lazygit" = {
+          source = ../configs/tools/lazygit;
+          recursive = true;
+        };
         ".config/starship.toml".source = ../configs/shells/prompts/starship.toml;
         ".local/share/fonts" = {
           source = ../configs/desktop/fonts;
