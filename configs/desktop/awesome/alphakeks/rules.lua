@@ -95,4 +95,3 @@ end)
 -- yes please autofocus
 require("awful.autofocus")
 
--- vim: et ts=2 sw=2 sts=2 ai si ft=lua

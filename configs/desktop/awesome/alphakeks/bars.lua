@@ -79,4 +79,3 @@ awful.screen.connect_for_each_screen(function(screen)
   })
 end)
 
--- vim: et ts=2 sw=2 sts=2 ai si ft=lua

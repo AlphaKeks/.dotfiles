@@ -96,4 +96,3 @@ hi link StatusLineTermNC StatusLineNC
 hi link Terminal Normal
 hi link Ignore Comment
 
-" vim: et ts=2 sw=2 sts=2 ai si ft=vim

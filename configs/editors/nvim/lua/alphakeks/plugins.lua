@@ -74,4 +74,3 @@ local lazy_opts = {
 
 lazy.setup(lazy_opts)
 
--- vim: et ts=2 sw=2 sts=2 ai si ft=lua

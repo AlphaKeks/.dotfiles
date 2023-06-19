@@ -149,4 +149,3 @@ vim.api.nvim_set_hl(0, "StatusWinbar", { link = "WinBar" })
 vim.opt.statusline = "%{%v:lua.LeftStatusline()%} %= %{%v:lua.RightStatusline()%}"
 vim.opt.winbar = "%{%v:lua.Winbar()%}"
 
--- vim: et ts=2 sw=2 sts=2 ai si ft=lua

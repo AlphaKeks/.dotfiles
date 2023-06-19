@@ -28,4 +28,3 @@ export FZF_DEFAULT_OPTS="--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38b
 export XCURSOR_SIZE=24
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-# vim: et ts=2 sw=2 sts=2 ai si ft=sh

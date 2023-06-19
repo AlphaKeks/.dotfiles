@@ -12,4 +12,3 @@ for _, command in ipairs(commands) do
   os.execute(command)
 end
 
--- vim: et ts=2 sw=2 sts=2 ai si ft=lua

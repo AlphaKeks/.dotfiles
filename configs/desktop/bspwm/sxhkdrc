@@ -48,4 +48,3 @@ super + ctrl + {h,j,k,l}
 super + {_,shift + }{1-9,0}
   bspc {desktop -f,node -d} focused:^{1-9,10}
 
-# vim: et ts=2 sw=2 sts=2 ai si ft=conf

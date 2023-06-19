@@ -51,4 +51,3 @@ nn("<Leader>e", function()
   return vim.print(":edit " .. cwd .. "<CR>")
 end, { expr = true })
 
--- vim: et ts=2 sw=2 sts=2 ai si ft=lua

@@ -22,4 +22,3 @@ vim.diagnostic.config {
 nn("gl", vim.diagnostic.open_float)
 nn("gL", vim.diagnostic.goto_next)
 
--- vim: et ts=2 sw=2 sts=2 ai si ft=lua

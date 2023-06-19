@@ -17,4 +17,3 @@ background = "#1E1E2E"
 foreground = "#CDD6F4"
 frame_color = "#FAB387"
 
-# vim: et ts=2 sw=2 sts=2 ai si ft=ini

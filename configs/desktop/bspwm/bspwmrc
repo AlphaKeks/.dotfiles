@@ -72,4 +72,3 @@ $HOME/.local/bin/schnoseCloud-linux-x64/schnoseCloud &
 
 rm -rf $HOME/tmp/*
 
-# vim: et ts=2 sw=2 sts=2 ai si ft=sh

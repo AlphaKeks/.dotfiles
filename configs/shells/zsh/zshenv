@@ -8,4 +8,3 @@ export ZHIST=$DOTFILES/configs/shells/zsh/.zhist
 export ZDIR=$DOTFILES/configs/shells/zsh
 export ZSHRC=$ZDIR/zshrc
 
-# vim: et ts=2 sw=2 sts=2 ai si ft=sh

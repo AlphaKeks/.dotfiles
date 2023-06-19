@@ -17,4 +17,3 @@ if [ "$(tty)" = "/dev/tty1" ]; then
   fi
 fi
 
-# vim: et ts=2 sw=2 sts=2 ai si ft=sh

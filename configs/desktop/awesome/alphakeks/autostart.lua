@@ -23,4 +23,3 @@ end
 awful.spawn.with_shell("rm -rf " .. os.getenv("HOME") .. "/tmp/*")
 awful.spawn.with_shell("rm -rf " .. os.getenv("HOME") .. "/tmp/.*")
 
--- vim: et ts=2 sw=2 sts=2 ai si ft=lua
