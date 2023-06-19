@@ -1,0 +1,32 @@
+gui:
+  windowSize: 'normal'
+  scrollHeight: 2
+  sidePanelWidth: 0.2
+  expandFocusedSidePanel: true
+  mainPanelSplitMode: 'horizontal'
+  language: 'en'
+  theme:
+    activeBorderColor:
+      - '#7480c2'
+      - bold
+    inactiveBorderColor:
+      - '#cdd6f4'
+      - bold
+    selectedLineBgColor:
+      - '#313244'
+    selectedRangeBgColor:
+      - '#313244'
+    cherryPickedCommitBgColor:
+      - '#313244'
+    cherryPickedCommitFgColor:
+      - '#ff00ff'
+  mouseEvents: false
+  showListFooter: false
+  showRandomTip: false
+  showBottomLine: false
+  showCommandLog: false
+  showIcons: true
+  splitDiff: 'auto'
+  border: 'rounded'
+os:
+  editPreset: 'nvim'
