@@ -69,15 +69,15 @@ alias rebuild="sudo nixos-rebuild switch --flake $DOTFILES/nix"
 
 # Random shit
 airplay() {
-  sudo avahi-daemon &
-  uxplay
+	sudo avahi-daemon &
+	uxplay
 }
 
 ts-init() {
-  npm init -y
-  npm i -D typescript ts-node @types/node
-  cp $CONFIG/tsconfig.json .
-  mkdir src dist
-  touch src/main.ts
+	npm init -y
+	npm i -D typescript ts-node @types/node
+	cp $CONFIG/tsconfig.json .
+	mkdir src dist
+	touch src/main.ts
 }
 

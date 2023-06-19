@@ -1,15 +1,15 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
-local lazy_path = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.loop.fs_stat(lazy_path) then
-  vim.fn.system {
-    "git", "clone", "--branch=stable",
-    "https://github.com/folke/lazy.nvim",
-    lazy_path,
-  }
+	vim.fn.system({
+		"git", "clone", "--branch=stable",
+		"https://github.com/folke/lazy.nvim",
+		lazy_path,
+	})
 
-  vim.notify "Installed lazy.nvim"
+	vim.notify("Installed lazy.nvim")
 end
 
 vim.opt.rtp:prepend(lazy_path)
@@ -17,59 +17,57 @@ vim.opt.rtp:prepend(lazy_path)
 local lazy_installed, lazy = pcall(require, "lazy")
 
 if not lazy_installed then
-  vim.notify "lazy.nvim is not installed."
-  vim.notify "Plugins will be disabled."
-  return
+	vim.notify("lazy.nvim is not installed.")
+	vim.notify("Plugins will be disabled.")
+	return
 end
 
 local lazy_opts = {
-  defaults = {
-    lazy = false,
-  },
+	defaults = {
+		lazy = false,
+	},
 
-  spec = {
-    "neovim/nvim-lspconfig",
-    "nvim-lua/plenary.nvim",
-    "nvim-telescope/telescope.nvim",
-    -- "nvim-telescope/telescope-file-browser.nvim",
-    "nvim-telescope/telescope-ui-select.nvim",
-    "nvim-tree/nvim-web-devicons",
-    "nvim-treesitter/nvim-treesitter",
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    "numToStr/Comment.nvim",
-    "hrsh7th/nvim-cmp",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-nvim-lsp",
-    "L3MON4D3/LuaSnip",
-    "lvimuser/lsp-inlayhints.nvim",
-    "tamago324/lir.nvim",
-  },
+	spec = {
+		"neovim/nvim-lspconfig",
+		"nvim-lua/plenary.nvim",
+		"nvim-telescope/telescope.nvim",
+		"nvim-telescope/telescope-ui-select.nvim",
+		"nvim-tree/nvim-web-devicons",
+		"nvim-treesitter/nvim-treesitter",
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		"numToStr/Comment.nvim",
+		"hrsh7th/nvim-cmp",
+		"hrsh7th/cmp-path",
+		"hrsh7th/cmp-nvim-lsp",
+		"L3MON4D3/LuaSnip",
+		"lvimuser/lsp-inlayhints.nvim",
+		"tamago324/lir.nvim",
+	},
 
-  concurrency = 69,
+	concurrency = 69,
 
-  install = {
-    missing = true,
-    colorscheme = { "catppuccin", "habamax", "quiet" },
-  },
+	install = {
+		missing = true,
+		colorscheme = { "catppuccin", "habamax", "quiet" },
+	},
 
-  ui = {
-    wrap = true,
-    border = "solid",
-    browser = "firefox",
-  },
+	ui = {
+		wrap = true,
+		border = "solid",
+		browser = "firefox",
+	},
 
-  performance = {
-    cache = {
-      enabled = true,
-    },
+	performance = {
+		cache = {
+			enabled = true,
+		},
 
-    reset_packpath = true,
+		reset_packpath = true,
 
-    rtp = {
-      reset = false,
-    },
-  },
-
+		rtp = {
+			reset = false,
+		},
+	},
 }
 
 lazy.setup(lazy_opts)

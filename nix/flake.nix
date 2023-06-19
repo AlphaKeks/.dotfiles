@@ -1,33 +1,33 @@
 # https://GitHub.com/AlphaKeks/.dotfiles
 
 {
-  inputs = {
-    nixpkgs = {
-      url = "github:nixos/nixpkgs/nixos-unstable";
-    };
+	inputs = {
+		nixpkgs = {
+			url = "github:nixos/nixpkgs/nixos-unstable";
+		};
 
-    hardware = {
-      url = "github:nixos/nixos-hardware";
-    };
+		hardware = {
+			url = "github:nixos/nixos-hardware";
+		};
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+		home-manager = {
+			url = "github:nix-community/home-manager";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 
-    osu = {
-      url = "https://github.com/ppy/osu/releases/latest/download/osu.AppImage";
-      flake = false;
-    };
-  };
+		osu = {
+			url = "https://github.com/ppy/osu/releases/latest/download/osu.AppImage";
+			flake = false;
+		};
+	};
 
-  outputs = { nixpkgs, hardware, home-manager, ...} @ inputs: {
-    nixosConfigurations = {
-      btw = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
-        modules = [ ./configuration.nix ];
-      };
-    };
-  };
+	outputs = { nixpkgs, hardware, home-manager, ...} @ inputs: {
+		nixosConfigurations = {
+			btw = nixpkgs.lib.nixosSystem {
+				specialArgs = { inherit inputs; };
+				modules = [ ./configuration.nix ];
+			};
+		};
+	};
 }
 

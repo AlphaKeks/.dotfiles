@@ -10,10 +10,10 @@ SESSION="X11"
 WAYLAND_WM="Hyprland"
 
 if [ "$(tty)" = "/dev/tty1" ]; then
-  if [ "$SESSION" = "X11" ]; then
-    startx
-  elif [ "$SESSION" = "Wayland" ]; then
-    exec dbus-launch --sh-syntax --exit-with-session $WAYLAND_WM
-  fi
+	if [ "$SESSION" = "X11" ]; then
+		startx
+	elif [ "$SESSION" = "Wayland" ]; then
+		exec dbus-launch --sh-syntax --exit-with-session $WAYLAND_WM
+	fi
 fi
 

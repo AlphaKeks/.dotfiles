@@ -1,33 +1,34 @@
 /* https://GitHub.com/AlphaKeks/.dotfiles */
 
 {
-  "output": "DP-1",
-  "layer": "top",
-  "height": 24,
-  "position": "bottom",
-  "modules-left": [
-    "clock",
-    "wlr/workspaces"
-  ],
-  "modules-center": [],
-  "modules-right": [
-    "pulseaudio",
-    "cpu",
-    "memory",
-    "tray"
-  ],
-  "clock": {
-    "format": "{:%d/%m/%Y - %H:%M}"
-  },
-  "cpu": {
-    "format": "  {usage}%"
-  },
-  "memory": {
-    "format": "  {}%"
-  },
-  "tray": {
-    "icon-size": 16,
-    "spacing": 10
-  }
+	"output": "DP-1",
+	"layer": "top",
+	"height": 24,
+	"position": "bottom",
+	"modules-left": [
+		"clock",
+		"wlr/workspaces"
+	],
+	"modules-center": [],
+	"modules-right": [
+		"pulseaudio",
+		"cpu",
+		"memory",
+		"tray"
+	],
+	"clock": {
+		"format": "{:%d/%m/%Y - %H:%M}"
+	},
+	"cpu": {
+		"format": "  {usage}%"
+	},
+	"memory": {
+		"format": "  {}%"
+	},
+	"tray": {
+		"icon-size": 16,
+		"spacing": 10
+	}
 }
 
+/* vim: ft=json */

@@ -1,17 +1,18 @@
 // https://GitHub.com/AlphaKeks/.dotfiles
 
 configuration {
-  modes: [ run, drun, window ];
-  dpi: 96;
-  terminal: "wezterm";
-  click-to-exit: true;
-  disable-history: false;
-  drun-match-fields: "all";
-  no-lazy-grab: true;
-  scroll-method: 0;
-  no-drun-show-actions: true;
-  drun-display-format: "{icon} {name} {generic}";
+	modes: [ run, drun, window ];
+	dpi: 96;
+	terminal: "wezterm";
+	click-to-exit: true;
+	disable-history: false;
+	drun-match-fields: "all";
+	no-lazy-grab: true;
+	scroll-method: 0;
+	no-drun-show-actions: true;
+	drun-display-format: "{icon} {name} {generic}";
 }
 
 @theme "alpha"
 
+// vim: ft=rasi

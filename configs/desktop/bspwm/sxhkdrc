@@ -2,49 +2,49 @@
 
 # reload sxhkd
 super + Escape
-  pkill -USR1 -x sxhkd
+	pkill -USR1 -x sxhkd
 
 # kill window
 super + q
-  bspc node --close
+	bspc node --close
 
 # terminal
 super + Return
-  wezterm
+	wezterm
 
 # rofi
 super + @space
-  rofi -show
+	rofi -show
 
 # browser
 super + b
-  $BROWSER
+	$BROWSER
 
 # file manager
 super + e
-  thunar
+	thunar
 
 # music
 super + m
-  ~/.local/bin/scripts/rofi-beats.sh
+	~/.local/bin/scripts/rofi-beats.sh
 
 # toggle between tiling, floating and fullscreen
 super + {t, f, shift + f}
-  bspc node --state {tiled,floating,fullscreen}
+	bspc node --state {tiled,floating,fullscreen}
 
 # change focus
 super + {h,j,k,l}
-  bspc node --focus {west,south,north,east}
+	bspc node --focus {west,south,north,east}
 
 # swap windows
 super + shift + {h,j,k,l}
-  bspc node --swap {west,south,north,east}
+	bspc node --swap {west,south,north,east}
 
 # send windows to other monitor
 super + ctrl + {h,j,k,l}
-  bspc node --to-monitor {west,south,north,east} --follow
+	bspc node --to-monitor {west,south,north,east} --follow
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-  bspc {desktop -f,node -d} focused:^{1-9,10}
+	bspc {desktop -f,node -d} focused:^{1-9,10}
 

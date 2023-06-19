@@ -1,54 +1,55 @@
 // https://GitHub.com/AlphaKeks/.dotfiles
 
 * {
-  selected-col: #1e1e2e;
-  text-color: #cdd6f4;
-  background-color: #11111b;
-  font: "JetBrains Mono 16";
+	selected-col: #1e1e2e;
+	text-color: #cdd6f4;
+	background-color: #11111b;
+	font: "JetBrains Mono 16";
 }
 
 window {
-  border-radius: 0.3em;
-  width: 20%;
-  padding: 10;
-  height: 20%;
-  anchor: south;
-  location: center;
-  fullscreen: false;
+	border-radius: 0.3em;
+	width: 20%;
+	padding: 10;
+	height: 20%;
+	anchor: south;
+	location: center;
+	fullscreen: false;
 }
 
 configuration {
-  modes: [ run, drun, window ];
-  dpi: 96;
-  terminal: "wezterm";
-  click-to-exit: true;
-  disable-history: false;
-  show-icons: false;
-  drun-match-fields: "all";
-  no-lazy-grab: true;
-  scroll-method: 0;
-  no-drun-show-actions: true;
+	modes: [ run, drun, window ];
+	dpi: 96;
+	terminal: "wezterm";
+	click-to-exit: true;
+	disable-history: false;
+	show-icons: false;
+	drun-match-fields: "all";
+	no-lazy-grab: true;
+	scroll-method: 0;
+	no-drun-show-actions: true;
 
-  drun {
-    display-name: "> ";
-    delay: 5;
-    action: "kb-cancel";
-    match-fields: "name,generic,exec,categories,keywords";
-    parse-user: true;
-    parse-system: true;
-  }
+	drun {
+		display-name: "> ";
+		delay: 5;
+		action: "kb-cancel";
+		match-fields: "name,generic,exec,categories,keywords";
+		parse-user: true;
+		parse-system: true;
+	}
 
 }
 
 element selected {
-  background-color: @selected-col;
+	background-color: @selected-col;
 }
 
 element-text {
-  vertical-align: 0.5;
+	vertical-align: 0.5;
 }
 
 element-text selected {
-  background-color: @selected-col;
+	background-color: @selected-col;
 }
 
+// vim: ft=rasi

@@ -42,14 +42,14 @@ bspc rule -a schnosecloud-nativefier-51a909 desktop=nextcloud
 
 # corners for floating windows
 corners() {
-  bspc subscribe node_state | while read -r _ _ _ node state status; do
-    if [[ "$state" == "floating" ]]; then
-      case "$status" in
-        off) xprop -id "$node" -remove _PICOM_CORNERS;;
-        on) xprop -id "$node" -f _PICOM_CORNERS 32c -set _PICOM_CORNERS 1;;
-      esac
-    fi
-  done
+	bspc subscribe node_state | while read -r _ _ _ node state status; do
+		if [[ "$state" == "floating" ]]; then
+			case "$status" in
+				off) xprop -id "$node" -remove _PICOM_CORNERS;;
+				on) xprop -id "$node" -f _PICOM_CORNERS 32c -set _PICOM_CORNERS 1;;
+			esac
+		fi
+	done
 }
 
 corners &

@@ -39,17 +39,17 @@ require("alphakeks.autostart")
 -- fancy ass titlebars
 local nice = require("plugins.nice")
 nice({
-  titlebar_color = Colors.crust,
-  titlebar_height = 24,
-  button_size = 14,
-  mb_resize = nice.MB_MIDDLE,
-  mb_contextmenu = nice.MB_RIGHT,
-  titlebar_items = {
-    left = {},
-    middle = "title",
-    right = { "maximize", "close" },
-  },
-  maximize_color = Colors.green,
-  close_color = Colors.red,
+	titlebar_color = Colors.crust,
+	titlebar_height = 24,
+	button_size = 14,
+	mb_resize = nice.MB_MIDDLE,
+	mb_contextmenu = nice.MB_RIGHT,
+	titlebar_items = {
+		left = {},
+		middle = "title",
+		right = { "maximize", "close" },
+	},
+	maximize_color = Colors.green,
+	close_color = Colors.red,
 })
 

@@ -3,22 +3,22 @@
 local comment_installed, comment = pcall(require, "Comment")
 
 if not comment_installed then
-  return
+	return
 end
 
-comment.setup {
-  toggler = {
-    line = "<Leader>cc",
-    block = "<Leader>cb",
-  },
+comment.setup({
+	toggler = {
+		line = "<Leader>cc",
+		block = "<Leader>cb",
+	},
 
-  opleader = {
-    line = "<Leader>c",
-  },
+	opleader = {
+		line = "<Leader>c",
+	},
 
-  mappings = {
-    basic = true,
-    extra = false,
-  },
-}
+	mappings = {
+		basic = true,
+		extra = false,
+	},
+})
 
