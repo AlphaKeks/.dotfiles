@@ -333,7 +333,7 @@
 
 			packages = with pkgs; [
 				# Basic shit
-				zsh neovim wezterm tmux firefox
+				zsh /* neovim */ wezterm tmux firefox
 				btop neofetch pavucontrol tokei gparted
 				luajitPackages.lgi picom rofi flameshot
 				discord signal-desktop xfce.thunar easyeffects gimp yt-dlp
@@ -343,6 +343,7 @@
 				osu-git steam minecraft
 
 				# Dev
+				inputs.neovim-nightly.defaultPackage.x86_64-linux # neovim nightly
 				direnv nix-direnv
 				lazygit rustup nodePackages_latest.typescript-language-server taplo nil just jq
 				docker-compose podman-compose

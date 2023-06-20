@@ -12,12 +12,20 @@
 
 		home-manager = {
 			url = "github:nix-community/home-manager";
-			inputs.nixpkgs.follows = "nixpkgs";
+			inputs = {
+				nixpkgs = {
+					follows = "nixpkgs";
+				};
+			};
 		};
 
 		osu = {
 			url = "https://github.com/ppy/osu/releases/latest/download/osu.AppImage";
 			flake = false;
+		};
+
+		neovim-nightly = {
+			url = "github:neovim/neovim?dir=contrib";
 		};
 	};
 
