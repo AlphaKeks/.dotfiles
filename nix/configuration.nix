@@ -378,6 +378,7 @@
 					source = ../configs/terminals/wezterm;
 					recursive = true;
 				};
+				".xprofile".source = ../configs/desktop/.xprofile;
 				".Xresources".source = ../configs/desktop/.Xresources;
 				".icons".source = ../configs/desktop/icons;
 				".themes".source = ../configs/desktop/themes;
