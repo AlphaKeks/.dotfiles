@@ -27,7 +27,29 @@ local function format_on_save(pattern)
 			if vim.endswith(args.match, pattern) then
 				vim.lsp.buf.format()
 			end
-		end
+		end,
+	})
+end
+
+local inlay_hints_group = augroup("inlay-hints-toggle", { clear = true })
+
+local function inlay_hints_on()
+	pcall(vim.lsp.buf.inlay_hint, 0, true)
+end
+
+local function inlay_hints_off()
+	pcall(vim.lsp.buf.inlay_hint, 0, false)
+end
+
+local function inlay_hints_toggle()
+	autocmd("InsertLeave", {
+		group = inlay_hints_group,
+		callback = inlay_hints_on,
+	})
+	
+	autocmd("InsertEnter", {
+		group = inlay_hints_group,
+		callback = inlay_hints_off,
 	})
 end
 
@@ -49,12 +71,6 @@ autocmd("LspAttach", {
 		-- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 		--	 vim.lsp.handlers.signature_help, { border = "single" }
 		-- )
-
-		local inlay_hints_installed, inlay_hints = pcall(require, "lsp-inlayhints")
-		if inlay_hints_installed then
-			local client = vim.lsp.get_client_by_id(args.data.client_id)
-			inlay_hints.on_attach(client, args.buf)
-		end
 	end,
 })
 
@@ -62,6 +78,8 @@ vim.lsp.setup("rust_analyzer", {
 	on_attach = function(client, buffer)
 		-- client.server_capabilities.semanticTokensProvider = nil
 		format_on_save(".rs")
+		inlay_hints_on()
+		inlay_hints_toggle()
 	end,
 	cmd = { "/home/alphakeks/.local/bin/rust-analyzer/release/rust-analyzer" },
 	settings = {

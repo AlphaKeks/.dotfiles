@@ -298,6 +298,10 @@ hi "FloatTitle" {
 	blend = 20,
 }
 
+hi "LspInlayHint" {
+	link = "Comment",
+}
+
 hi "Pmenu" {
 	fg = Dawn.surface2,
 	bg = Dawn.base,
