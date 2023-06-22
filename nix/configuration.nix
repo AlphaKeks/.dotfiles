@@ -280,6 +280,12 @@
 				};
 			};
 		};
+
+		gnome = {
+			gnome-keyring = {
+				enable = true;
+			};
+		};
 	};
 
 	systemd = {
@@ -323,6 +329,44 @@
 						inherit (final) lib stdenv fetchurl fetchzip appimageTools;
 					};
 				})
+
+				(final: prev: {
+					inkdrop = prev.callPackage ./pkgs/inkdrop.nix {
+						inherit (final)
+							stdenv
+							lib
+							libxkbcommon
+							libdrm
+							alsaLib
+							atk
+							at-spi2-atk
+							cairo
+							cups
+							dbus
+							dpkg
+							expat
+							fontconfig
+							freetype
+							fetchurl
+							gdk-pixbuf
+							glib
+							gtk2
+							gtk3
+							libpulseaudio
+							makeWrapper
+							nspr
+							nss
+							pango
+							udev
+							xorg
+							libuuid
+							at-spi2-core
+							libsecret
+							coreutils
+							mesa
+							gnome;
+					};
+				})
 			];
 		};
 
@@ -345,9 +389,11 @@
 				# Dev
 				inputs.neovim-nightly.defaultPackage.x86_64-linux # neovim nightly
 				direnv nix-direnv
+				gh
 				lazygit rustup nodePackages_latest.typescript-language-server taplo nil just jq
 				docker-compose podman-compose
 				postgresql delta
+				inkdrop
 
 				# Virtualisation
 				qemu qemu_kvm libvirt dnsmasq vde2 netcat-openbsd
