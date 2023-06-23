@@ -105,6 +105,11 @@ vim.lsp.setup("rust_analyzer", {
 				invocationLocation = "workspace",
 				extraArgs = { "--tests" },
 			},
+
+			rustfmt = {
+				-- Nightly formatting
+				overrideCommand = { "rustfmt", "+nightly", "--emit", "stdout" },
+			},
 		},
 	},
 })
