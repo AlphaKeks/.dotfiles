@@ -600,6 +600,22 @@ hi "@text.reference" {
 	italic = true,
 }
 
+hi "@text.todo.comment" {
+	link = "Todo",
+}
+
+hi "@text.note.comment" {
+	fg = Dawn.blue,
+}
+
+hi "@text.warning.comment" {
+	fg = Dawn.peach,
+}
+
+hi "@text.danger.comment" {
+	fg = Dawn.red,
+}
+
 hi "@type.qualifier" {
 	link = "@operator",
 }
