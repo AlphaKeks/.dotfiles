@@ -41,14 +41,16 @@ local function inlay_hints_off()
 	pcall(vim.lsp.buf.inlay_hint, 0, false)
 end
 
-local function inlay_hints_toggle()
+local function inlay_hints_toggle(buffer)
 	autocmd("InsertLeave", {
 		group = inlay_hints_group,
+		buffer = buffer,
 		callback = inlay_hints_on,
 	})
 	
 	autocmd("InsertEnter", {
 		group = inlay_hints_group,
+		buffer = buffer,
 		callback = inlay_hints_off,
 	})
 end
@@ -76,10 +78,16 @@ autocmd("LspAttach", {
 
 vim.lsp.setup("rust_analyzer", {
 	on_attach = function(client, buffer)
-		-- client.server_capabilities.semanticTokensProvider = nil
+		-- disable semantic highlights
+		--[[ client.server_capabilities.semanticTokensProvider = nil ]]
+
 		format_on_save(".rs")
+
+		-- neovim 0.10
+		--[[
 		inlay_hints_on()
-		inlay_hints_toggle()
+		inlay_hints_toggle(buffer)
+		]]
 	end,
 	cmd = { "/home/alphakeks/.local/bin/rust-analyzer/release/rust-analyzer" },
 	settings = {
