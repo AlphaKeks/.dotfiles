@@ -48,6 +48,17 @@ ruled.client.connect_signal("request::rules", function()
 	})
 
 	ruled.client.append_rule({
+		id = "inkdrop",
+		rule = {
+			class = "inkdrop",
+		},
+		properties = {
+			screen = 2,
+			tag = "3",
+		},
+	})
+
+	ruled.client.append_rule({
 		id = "schnose-gsi-client",
 		rule = {
 			class = "schnose-gsi-client",
