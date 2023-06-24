@@ -22,7 +22,7 @@ if not lazy_installed then
 	return
 end
 
-local lazy_opts = {
+lazy.setup({
 	defaults = {
 		lazy = false,
 	},
@@ -67,7 +67,5 @@ local lazy_opts = {
 			reset = false,
 		},
 	},
-}
-
-lazy.setup(lazy_opts)
+})
 
