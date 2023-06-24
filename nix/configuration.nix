@@ -194,7 +194,7 @@
 	environment = {
 		systemPackages = with pkgs; [
 			gcc gnumake cmake
-			git curl killall bc zip unzip
+			git curl wget killall bc zip unzip
 			vim-full
 			xclip mate.mate-polkit xorg.libX11
 			gnupg pinentry pinentry-gnome xdg-desktop-portal xdg-desktop-portal-gtk gtk3
