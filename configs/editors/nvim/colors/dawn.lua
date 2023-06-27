@@ -591,6 +591,11 @@ hi "@namespace" {
 	fg = Dawn.blue,
 }
 
+hi "@number.comment" {
+	fg = Dawn.text,
+	italic = true,
+}
+
 hi "@tag.delimiter" {
 	link = "Delimiter",
 }

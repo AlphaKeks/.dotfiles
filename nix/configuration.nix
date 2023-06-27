@@ -140,11 +140,11 @@
 			};
 
 			rootless = {
-				enable = false;
+				enable = true;
 				setSocketVariable = true;
 				daemon = {
 					settings = {
-						data-root = "/mnt/docker";
+						data-root = "/mnt/dev/docker-rootless";
 					};
 				};
 			};
@@ -422,6 +422,14 @@
 				};
 				".config/wezterm" = {
 					source = ../configs/terminals/wezterm;
+					recursive = true;
+				};
+				".config/alacritty" = {
+					source = ../configs/terminals/alacritty;
+					recursive = true;
+				};
+				".config/kitty" = {
+					source = ../configs/terminals/kitty;
 					recursive = true;
 				};
 				".xprofile".source = ../configs/desktop/.xprofile;
