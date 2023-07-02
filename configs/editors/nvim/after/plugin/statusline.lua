@@ -107,29 +107,29 @@ local function diagnostics()
 end
 
 -- for neovim nightly
---
--- local function lsp_info()
--- 	return "%#StatusMode#" .. vim.lsp.status():gsub("%%", "%%%%")
--- end
 
 local function lsp_info()
-	local progress = vim.lsp.util.get_progress_messages()
-	if not progress[1] then
-		return ""
-	end
-
-	local message = progress[1].title or ""
-
-	if progress[1].message then
-		message = string.format("%s %s", message, progress[1].message)
-	end
-
-	if progress[1].percentage then
-		message = string.format("%s (%s%%%%)", message, progress[1].percentage)
-	end
-
-	return "%#StatusMode#" .. message
+	return "%#StatusMode#" .. vim.lsp.status():gsub("%%", "%%%%")
 end
+
+-- local function lsp_info()
+-- 	local progress = vim.lsp.util.get_progress_messages()
+-- 	if not progress[1] then
+-- 		return ""
+-- 	end
+--
+-- 	local message = progress[1].title or ""
+--
+-- 	if progress[1].message then
+-- 		message = string.format("%s %s", message, progress[1].message)
+-- 	end
+--
+-- 	if progress[1].percentage then
+-- 		message = string.format("%s (%s%%%%)", message, progress[1].percentage)
+-- 	end
+--
+-- 	return "%#StatusMode#" .. message
+-- end
 
 function LeftStatusline()
 	local sep = "%#StatusSeparator#█"

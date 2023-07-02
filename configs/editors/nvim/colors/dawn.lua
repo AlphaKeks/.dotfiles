@@ -83,15 +83,18 @@ hi "Search" {
 }
 
 hi "CurSearch" {
-	link = "Search",
+	fg = Dawn.crust,
+	bg = Dawn.red,
 }
 
 hi "IncSearch" {
-	link = "Search",
+	fg = Dawn.crust,
+	bg = Dawn.poggers,
 }
 
 hi "Substitute" {
-	link = "Search",
+	fg = Dawn.crust,
+	bg = Dawn.poggers,
 }
 
 hi "Cursor" {
@@ -279,13 +282,13 @@ hi "NormalNC" {
 hi "NormalFloat" {
 	fg = Dawn.text,
 	bg = Dawn.crust,
-	blend = 20,
+	blend = 10,
 }
 
 hi "FloatBorder" {
 	fg = Dawn.lavender,
 	bg = Dawn.crust,
-	blend = 20,
+	blend = 10,
 }
 
 hi "FloatShadow"
@@ -295,7 +298,7 @@ hi "FloatTitle" {
 	fg = Dawn.blue,
 	bg = Dawn.crust,
 	bold = true,
-	blend = 20,
+	blend = 10,
 }
 
 hi "LspInlayHint" {
@@ -571,7 +574,9 @@ hi "@constant.builtin" {
 }
 
 hi "@constructor.lua" {
-	link = "@punctuation.bracket.lua",
+	fg = Dawn.sky,
+	bold = true,
+	-- link = "@punctuation.bracket.lua",
 }
 
 hi "@field" {

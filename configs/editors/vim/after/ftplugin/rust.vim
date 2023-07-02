@@ -1,6 +1,7 @@
 " https://GitHub.com/AlphaKeks/.dotfiles
 
 setlocal noexpandtab
+setlocal formatoptions=crqn2lj
 
 compiler cargo
 

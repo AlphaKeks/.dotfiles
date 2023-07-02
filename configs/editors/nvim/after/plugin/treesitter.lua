@@ -12,6 +12,7 @@ treesitter.setup({
 		"vim",
 		"lua",
 		"rust",
+		"comment",
 	},
 
 	auto_install = true,

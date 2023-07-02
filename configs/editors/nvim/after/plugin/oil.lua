@@ -20,6 +20,7 @@ oil.setup({
 	win_options = {
 		wrap = true,
 		cursorcolumn = true,
+		colorcolumn = "",
 	},
 
 	default_file_explorer = true,
@@ -36,7 +37,7 @@ oil.setup({
 		["g."] = "actions.toggle_hidden",
 	},
 
-	use_default_keymaps = true,
+	use_default_keymaps = false,
 
 	view_options = {
 		show_hidden = true,

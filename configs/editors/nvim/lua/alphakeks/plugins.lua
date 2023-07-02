@@ -47,7 +47,7 @@ lazy.setup({
 
 	install = {
 		missing = true,
-		colorscheme = { "catppuccin", "habamax", "quiet" },
+		colorscheme = { "dawn", "catppuccin", "habamax", "quiet" },
 	},
 
 	ui = {

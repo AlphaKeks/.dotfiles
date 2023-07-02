@@ -4,7 +4,9 @@ require("alphakeks.globals")
 
 autocmd("TextYankPost", {
 	callback = function()
-		vim.highlight.on_yank { timeout = 69 }
+		vim.highlight.on_yank({
+			timeout = 69
+		})
 	end,
 })
 
