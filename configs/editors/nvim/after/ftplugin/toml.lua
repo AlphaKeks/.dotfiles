@@ -1,6 +1,16 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
-local Lsp = require("alphakeks.lsp")
+local lsp = require("alphakeks.lsp")
 
-vim.lsp.start(require("alphakeks.lsp").configs.toml())
+vim.lsp.start({
+	name = "taplo",
+
+	cmd = { "taplo", "lsp", "stdio" },
+
+	capabilities = lsp.capabilities,
+
+	root_dir = vim.fs.dirname(
+		vim.fs.find({ "*.toml" }, { upward = true })[1]
+	),
+})
 
