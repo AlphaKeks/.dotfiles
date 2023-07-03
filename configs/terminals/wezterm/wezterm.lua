@@ -8,18 +8,19 @@ return {
 	colors = {
 		background = "#181825",
 	},
-	font = term.font({ family = "JetBrains Mono" }),
-	font_size = 14,
-	font_rules = {
-		{
-			intensity = "Normal",
-			italic = true,
-			font = term.font({
-				family = "JetBrains Mono Italic",
-				style = "Italic",
-			}),
-		},
-	},
+	-- font = term.font({ family = "JetBrains Mono" }),
+	font = term.font({ family = "MonoLisa-Regular" }),
+	font_size = 16,
+	-- font_rules = {
+	-- 	{
+	-- 		intensity = "Normal",
+	-- 		italic = true,
+	-- 		font = term.font({
+	-- 			family = "JetBrains Mono Italic",
+	-- 			style = "Italic",
+	-- 		}),
+	-- 	},
+	-- },
 	line_height = 1,
 	use_fancy_tab_bar = false,
 	hide_tab_bar_if_only_one_tab = true,
