@@ -1,100 +1,136 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
-vim.opt.showmode = false
+Statusline = {
+	separator = "%#StatusSeparator#█",
 
-local modes = {
-	['n']     = 'NORMAL',
-	['no']    = 'O-PENDING',
-	['nov']   = 'O-PENDING',
-	['noV']   = 'O-PENDING',
-	['no\22'] = 'O-PENDING',
-	['niI']   = 'NORMAL',
-	['niR']   = 'NORMAL',
-	['niV']   = 'NORMAL',
-	['nt']    = 'NORMAL',
-	['ntT']   = 'NORMAL',
-	['v']     = 'VISUAL',
-	['vs']    = 'VISUAL',
-	['V']     = 'V-LINE',
-	['Vs']    = 'V-LINE',
-	['\22']   = 'V-BLOCK',
-	['\22s']  = 'V-BLOCK',
-	['s']     = 'SELECT',
-	['S']     = 'S-LINE',
-	['\19']   = 'S-BLOCK',
-	['i']     = 'INSERT',
-	['ic']    = 'INSERT',
-	['ix']    = 'INSERT',
-	['R']     = 'REPLACE',
-	['Rc']    = 'REPLACE',
-	['Rx']    = 'REPLACE',
-	['Rv']    = 'V-REPLACE',
-	['Rvc']   = 'V-REPLACE',
-	['Rvx']   = 'V-REPLACE',
-	['c']     = 'COMMAND',
-	['cv']    = 'EX',
-	['ce']    = 'EX',
-	['r']     = 'REPLACE',
-	['rm']    = 'MORE',
-	['r?']    = 'CONFIRM',
-	['!']     = 'SHELL',
-	['t']     = 'TERMINAL',
+	modes = {
+		["n"] = "NORMAL",
+		["no"] = "O-PENDING",
+		["nov"] = "O-PENDING",
+		["noV"] = "O-PENDING",
+		["no\22"] = "O-PENDING",
+		["niI"] = "NORMAL",
+		["niR"] = "NORMAL",
+		["niV"] = "NORMAL",
+		["nt"] = "NORMAL",
+		["ntT"] = "NORMAL",
+		["v"] = "VISUAL",
+		["vs"] = "VISUAL",
+		["V"] = "V-LINE",
+		["Vs"] = "V-LINE",
+		["\22"] = "V-BLOCK",
+		["\22s"] = "V-BLOCK",
+		["s"] = "SELECT",
+		["S"] = "S-LINE",
+		["\19"] = "S-BLOCK",
+		["i"] = "INSERT",
+		["ic"] = "INSERT",
+		["ix"] = "INSERT",
+		["R"] = "REPLACE",
+		["Rc"] = "REPLACE",
+		["Rx"] = "REPLACE",
+		["Rv"] = "V-REPLACE",
+		["Rvc"] = "V-REPLACE",
+		["Rvx"] = "V-REPLACE",
+		["c"] = "COMMAND",
+		["cv"] = "EX",
+		["ce"] = "EX",
+		["r"] = "REPLACE",
+		["rm"] = "MORE",
+		["r?"] = "CONFIRM",
+		["!"] = "SHELL",
+		["t"] = "TERMINAL",
+	},
+
+	diagnostic_opts = {
+		{ severity = 4, name = "Hint", icon = "  " },
+		{ severity = 3, name = "Info", icon = "  " },
+		{ severity = 2, name = "Warn", icon = "  " },
+		{ severity = 1, name = "Error", icon = "  " },
+	},
+
+	lsp_messages = {},
 }
 
-local function mode()
-	return modes[vim.fn.mode()] or "UNK"
+function Statusline:mode()
+	local mode = vim.fn.mode()
+	return self.modes[mode] or "UNK"
 end
 
-local function diagnostics()
+function Statusline:diagnostics()
 	local diagnostics = ""
 
-	local hints = vim.tbl_count(vim.diagnostic.get(0, { severity = 4 }))
-	if hints > 0 then
-		diagnostics = diagnostics .. "%#DiagnosticSignHint#" .. tostring(hints) .. "  "
-	end
-
-	local infos = vim.tbl_count(vim.diagnostic.get(0, { severity = 3 }))
-	if infos > 0 then
-		diagnostics = diagnostics .. "%#DiagnosticSignInfo#" .. tostring(infos) .. "  "
-	end
-
-	local warns = vim.tbl_count(vim.diagnostic.get(0, { severity = 2 }))
-	if warns > 0 then
-		diagnostics = diagnostics .. "%#DiagnosticSignWarn#" .. tostring(warns) .. "  "
-	end
-
-	local errors = vim.tbl_count(vim.diagnostic.get(0, { severity = 1 }))
-	if errors > 0 then
-		diagnostics = diagnostics .. "%#DiagnosticSignError#" .. tostring(errors) .. "  "
+	for _, opts in ipairs(self.diagnostic_opts) do
+		local count = vim.tbl_count(vim.diagnostic.get(0, { severity = opts.severity }))
+		if count > 0 then
+			diagnostics = string.format(
+				"%s%%#StatusDiagnosticSign%s#%s%s ",
+				diagnostics,
+				opts.name,
+				count,
+				opts.icon
+			)
+		end
 	end
 
 	return diagnostics
 end
 
-local function lsp_info()
-	return "%#StatusMode#" .. vim.lsp.status():gsub("%%", "%%%%")
+function Statusline:lsp_info()
+	local lsp_status = vim.lsp.status()
+
+	for message in vim.gsplit(lsp_status, ", ") do
+		table.insert(self.lsp_messages, message)
+	end
+
+	local latest_message = table.remove(self.lsp_messages, 1)
+
+	return "%#StatusMode#" .. latest_message:gsub("%%", "%%%%")
 end
 
-function LeftStatusline()
-	local sep = "%#StatusSeparator#█"
-	local mode = "%#StatusMode# " .. mode()
-	return string.format("%s%s", sep, mode)
+function Statusline:left()
+	return string.format("%s %s", self.separator, self:mode())
 end
 
-function RightStatusline()
-	return string.format("%s %s %%#StatusSeparator#█", lsp_info(), diagnostics())
+function Statusline:right()
+	return string.format(
+		"%s %s %s",
+		self:lsp_info(),
+		self:diagnostics(),
+		self.separator
+	)
 end
 
-function Winbar()
-	local path = vim.fn.expand("%:p:~")
+function Statusline:winbar()
+	local path = vim.fn.expand("%:p:.")
 	return string.format("%%#StatusWinbar#%s", path)
 end
 
-hi(0, "StatusSeparator", { fg = Dawn.lavender, bg = Dawn.crust })
-hi(0, "StatusMode", { fg = Dawn.text, bg = Dawn.crust, bold = true })
-hi(0, "StatusGitBranch", { fg = Dawn.mauve, bg = Dawn.crust })
-hi(0, "StatusWinbar", { link = "WinBar" })
+function Statusline:setup()
+	vim.opt.showmode = false
+	vim.opt.statusline = "%{%v:lua.LeftStatusline()%} %= %{%v:lua.RightStatusline()%}"
+	vim.opt.winbar = "%{%v:lua.Winbar()%}"
+	vim.api.nvim_set_hl(0, "StatusSeparator", { fg = Dawn.lavender, bg = Dawn.crust })
+	vim.api.nvim_set_hl(0, "StatusMode", { fg = Dawn.text, bg = Dawn.crust, bold = true })
+	vim.api.nvim_set_hl(0, "StatusGitBranch", { fg = Dawn.mauve, bg = Dawn.crust })
+	vim.api.nvim_set_hl(0, "StatusWinbar", { link = "WinBar" })
+	vim.api.nvim_set_hl(0, "StatusDiagnosticSignHint", { fg = Dawn.teal, bg = Dawn.crust })
+	vim.api.nvim_set_hl(0, "StatusDiagnosticSignInfo", { fg = Dawn.green, bg = Dawn.crust })
+	vim.api.nvim_set_hl(0, "StatusDiagnosticSignWarn", { fg = Dawn.yellow, bg = Dawn.crust })
+	vim.api.nvim_set_hl(0, "StatusDiagnosticSignError", { fg = Dawn.red, bg = Dawn.crust })
+end
 
-vim.opt.statusline = "%{%v:lua.LeftStatusline()%} %= %{%v:lua.RightStatusline()%}"
-vim.opt.winbar = "%{%v:lua.Winbar()%}"
+function LeftStatusline()
+	return Statusline:left()
+end
+
+function RightStatusline()
+	return Statusline:right()
+end
+
+function Winbar()
+	return Statusline:winbar()
+end
+
+Statusline:setup()
 
