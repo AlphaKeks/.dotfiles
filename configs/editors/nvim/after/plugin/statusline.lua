@@ -88,20 +88,20 @@ function Statusline:lsp_info()
 	return "%#StatusMode#" .. latest_message:gsub("%%", "%%%%")
 end
 
-function Statusline:left()
-	return string.format("%s %s", self.separator, self:mode())
+function LeftStatusline()
+	return string.format("%s %s", Statusline.separator, Statusline:mode())
 end
 
-function Statusline:right()
+function RightStatusline()
 	return string.format(
 		"%s %s %s",
-		self:lsp_info(),
-		self:diagnostics(),
-		self.separator
+		Statusline:lsp_info(),
+		Statusline:diagnostics(),
+		Statusline.separator
 	)
 end
 
-function Statusline:winbar()
+function Winbar()
 	local path = vim.fn.expand("%:p:.")
 	return string.format("%%#StatusWinbar#%s", path)
 end
@@ -110,6 +110,7 @@ function Statusline:setup()
 	vim.opt.showmode = false
 	vim.opt.statusline = "%{%v:lua.LeftStatusline()%} %= %{%v:lua.RightStatusline()%}"
 	vim.opt.winbar = "%{%v:lua.Winbar()%}"
+
 	vim.api.nvim_set_hl(0, "StatusSeparator", { fg = Dawn.lavender, bg = Dawn.crust })
 	vim.api.nvim_set_hl(0, "StatusMode", { fg = Dawn.text, bg = Dawn.crust, bold = true })
 	vim.api.nvim_set_hl(0, "StatusGitBranch", { fg = Dawn.mauve, bg = Dawn.crust })
@@ -118,18 +119,6 @@ function Statusline:setup()
 	vim.api.nvim_set_hl(0, "StatusDiagnosticSignInfo", { fg = Dawn.green, bg = Dawn.crust })
 	vim.api.nvim_set_hl(0, "StatusDiagnosticSignWarn", { fg = Dawn.yellow, bg = Dawn.crust })
 	vim.api.nvim_set_hl(0, "StatusDiagnosticSignError", { fg = Dawn.red, bg = Dawn.crust })
-end
-
-function LeftStatusline()
-	return Statusline:left()
-end
-
-function RightStatusline()
-	return Statusline:right()
-end
-
-function Winbar()
-	return Statusline:winbar()
 end
 
 Statusline:setup()

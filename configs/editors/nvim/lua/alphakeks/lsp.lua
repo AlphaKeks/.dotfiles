@@ -3,6 +3,7 @@
 local M = {
 	augroups = {
 		global = augroup("lsp-on-attach"),
+		progress = augroup("lsp-progress"),
 		format_on_save = augroup("lsp-format-on-save"),
 		inlay_hints = augroup("lsp-inlay-hints"),
 	},
@@ -129,6 +130,13 @@ autocmd("LspAttach", {
 		if client.server_capabilities.inlayHintProvider then
 			M.inlay_hints(args.buf)
 		end
+	end,
+})
+
+autocmd("LspProgress", {
+	group = M.augroups.progress,
+	callback = function()
+		vim.cmd.redrawstatus()
 	end,
 })
 
