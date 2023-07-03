@@ -377,17 +377,19 @@
 
 			packages = with pkgs; [
 				# Basic shit
-				zsh neovim wezterm tmux firefox
+				zsh wezterm tmux firefox
 				btop neofetch pavucontrol tokei gparted
 				luajitPackages.lgi picom rofi flameshot
 				discord signal-desktop xfce.thunar easyeffects gimp yt-dlp
 				pass
+				peek
 
 				# Games
 				osu-git steam minecraft
 
 				# Dev
-				# inputs.neovim-nightly.defaultPackage.x86_64-linux # neovim nightly
+				inputs.neovim-nightly.defaultPackage.x86_64-linux # neovim nightly
+				# neovim # neovim stable
 				direnv nix-direnv
 				gh
 				lazygit rustup nodePackages_latest.typescript-language-server taplo nil just jq
