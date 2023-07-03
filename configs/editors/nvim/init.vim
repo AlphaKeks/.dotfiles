@@ -12,5 +12,5 @@ set winblend=10
 
 colorscheme dawn
 
-lua require "alphakeks"
+lua require("alphakeks")
 

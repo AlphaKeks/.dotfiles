@@ -1,5 +1,6 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
+-- Load global variables
 require("alphakeks.globals")
 
 autocmd("TextYankPost", {
@@ -14,5 +15,48 @@ autocmd("TermOpen", {
 	command = "setl nonu rnu so=0",
 })
 
-require("alphakeks.plugins")
+-- Plugins
+local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+if not vim.loop.fs_stat(lazy_path) then
+	vim.fn.system({
+		"git", "clone", "--branch=stable",
+		"https://github.com/folke/lazy.nvim",
+		lazy_path,
+	})
+
+	vim.notify("Installed lazy.nvim", vim.log.levels.INFO)
+end
+
+vim.opt.rtp:prepend(lazy_path)
+
+local lazy_installed, lazy = pcall(require, "lazy")
+
+if not lazy_installed then
+	vim.notify("lazy.nvim is not installed.", vim.log.levels.WARN)
+	vim.notify("Plugins will be disabled.", vim.log.levels.WARN)
+	return
+end
+
+lazy.setup("plugins", {
+	defaults = {
+		lazy = false,
+	},
+
+	install = {
+		missing = true,
+		colorscheme = { "dawn", "catppuccin", "habamax" },
+	},
+
+	ui = {
+		wrap = true,
+		border = "solid",
+	},
+
+	performance = {
+		rtp = {
+			reset = false,
+		},
+	},
+})
 
