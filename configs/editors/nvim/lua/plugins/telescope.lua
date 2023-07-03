@@ -14,7 +14,7 @@ return {
 
 		telescope.setup({
 			defaults = {
-				path_display = { "shorten" },
+				path_display = { "smart" },
 				prompt_prefix = "  ",
 
 				mappings = {
@@ -60,10 +60,14 @@ return {
 				show_untracked = true,
 				file_ignore_patterns = {
 					"zsh/plugins/*",
+					"%.png",
+					"%.svg",
+					"%.ttf",
+					"%.otf",
 					"%.lock",
 					"%-lock.json",
 					"%.wasm",
-					".direnv/*"
+					".direnv/*",
 				},
 			})
 

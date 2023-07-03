@@ -3,7 +3,6 @@
 vim.cmd.source("~/.vim/after/ftplugin/rust.vim")
 
 local lsp = require("alphakeks.lsp")
-
 local capabilities = lsp.capabilities
 
 capabilities.experimental = {
@@ -11,9 +10,7 @@ capabilities.experimental = {
 }
 
 local custom_ra_path = os.getenv("HOME") .. "/.local/bin/rust-analyzer/release/rust-analyzer"
-
 local rustfmt_file = vim.fs.find({ "rustfmt.toml", ".rustfmt.toml" }, { upward = true })[1]
-
 local rustfmt = {}
 
 if rustfmt_file then
@@ -28,10 +25,11 @@ end
 
 vim.lsp.start({
 	name = "rust-analyzer",
-
 	cmd = { custom_ra_path },
-
 	capabilities = capabilities,
+	root_dir = vim.fs.dirname(
+		vim.fs.find({ "Cargo.toml" }, { upward = true })[1]
+	),
 
 	settings = {
 		["rust-analyzer"] = {
@@ -69,14 +67,8 @@ vim.lsp.start({
 		},
 	},
 
-	trace = "verbose",
-
-	root_dir = vim.fs.dirname(
-		vim.fs.find({ "Cargo.toml" }, { upward = true })[1]
-	),
-
 	on_attach = function(client, bufnr)
-		vim.print(client)
+		-- vim.print(client)
 
 		usercmd("CargoReload", function()
 			vim.lsp.buf_request(bufnr, "rust-analyzer/reloadWorkspace", nil, function(err)
@@ -88,5 +80,7 @@ vim.lsp.start({
 			end)
 		end)
 	end,
+
+	trace = "verbose",
 })
 

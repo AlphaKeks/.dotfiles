@@ -45,41 +45,6 @@ local function mode()
 	return modes[vim.fn.mode()] or "UNK"
 end
 
-local function git_status()
-	local git_status = ""
-
-	if vim.b.gitsigns_head then
-		git_status = string.format("%%#StatusGitBranch# %s", vim.b.gitsigns_head)
-	end
-
-	local function git_diff(type)
-		local gsd = vim.b.gitsigns_status_dict
-
-		if gsd and gsd[type] and gsd[type] > 0 then
-			return tostring(gsd[type])
-		end
-
-		return ""
-	end
-
-	local added = git_diff "added"
-	if added:len() > 0 then
-		git_status = git_status .. " %#GitsignsAdd#+" .. tostring(added)
-	end
-
-	local changed = git_diff "changed"
-	if changed:len() > 0 then
-		git_status = git_status .. " %#GitsignsChange#~" .. tostring(changed)
-	end
-
-	local removed = git_diff "removed"
-	if removed:len() > 0 then
-		git_status = git_status .. " %#GitsignsDelete#-" .. tostring(removed)
-	end
-
-	return git_status
-end
-
 local function diagnostics()
 	local diagnostics = ""
 
@@ -106,36 +71,14 @@ local function diagnostics()
 	return diagnostics
 end
 
--- for neovim nightly
-
 local function lsp_info()
 	return "%#StatusMode#" .. vim.lsp.status():gsub("%%", "%%%%")
 end
 
--- local function lsp_info()
--- 	local progress = vim.lsp.util.get_progress_messages()
--- 	if not progress[1] then
--- 		return ""
--- 	end
---
--- 	local message = progress[1].title or ""
---
--- 	if progress[1].message then
--- 		message = string.format("%s %s", message, progress[1].message)
--- 	end
---
--- 	if progress[1].percentage then
--- 		message = string.format("%s (%s%%%%)", message, progress[1].percentage)
--- 	end
---
--- 	return "%#StatusMode#" .. message
--- end
-
 function LeftStatusline()
 	local sep = "%#StatusSeparator#█"
 	local mode = "%#StatusMode# " .. mode()
-	local git = git_status()
-	return string.format("%s%s %s", sep, mode, git)
+	return string.format("%s%s", sep, mode)
 end
 
 function RightStatusline()
@@ -143,14 +86,14 @@ function RightStatusline()
 end
 
 function Winbar()
-	local path = vim.fn.expand "%:p:~"
+	local path = vim.fn.expand("%:p:~")
 	return string.format("%%#StatusWinbar#%s", path)
 end
 
-vim.api.nvim_set_hl(0, "StatusSeparator", { fg = Dawn.lavender, bg = Dawn.crust })
-vim.api.nvim_set_hl(0, "StatusMode", { fg = Dawn.text, bg = Dawn.crust, bold = true })
-vim.api.nvim_set_hl(0, "StatusGitBranch", { fg = Dawn.mauve, bg = Dawn.crust })
-vim.api.nvim_set_hl(0, "StatusWinbar", { link = "WinBar" })
+hi(0, "StatusSeparator", { fg = Dawn.lavender, bg = Dawn.crust })
+hi(0, "StatusMode", { fg = Dawn.text, bg = Dawn.crust, bold = true })
+hi(0, "StatusGitBranch", { fg = Dawn.mauve, bg = Dawn.crust })
+hi(0, "StatusWinbar", { link = "WinBar" })
 
 vim.opt.statusline = "%{%v:lua.LeftStatusline()%} %= %{%v:lua.RightStatusline()%}"
 vim.opt.winbar = "%{%v:lua.Winbar()%}"

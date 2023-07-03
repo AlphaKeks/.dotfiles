@@ -7,12 +7,12 @@ local M = {
 		inlay_hints = augroup("lsp-inlay-hints"),
 	},
 
-	configs = {},
+	capabilities = vim.lsp.protocol.make_client_capabilities(),
 }
 
 M.keymaps = function(bufnr)
 	local function bmap(modes, lhs, rhs)
-		vim.keymap.set(modes, lhs, rhs, { buffer = bufnr })
+		vim.keymap.set(modes, lhs, rhs, { buffer = bufnr, silent = true })
 	end
 
 	bmap("n", "gd", vim.lsp.buf.definition)
@@ -53,10 +53,7 @@ M.inlay_hints = function(bufnr)
 	})
 end
 
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-
 local cmp_installed, cmp_capabilities = pcall(require, "cmp_nvim_lsp")
-
 if cmp_installed then
 	M.capabilities = vim.tbl_deep_extend(
 		"force",
@@ -65,19 +62,18 @@ if cmp_installed then
 	)
 end
 
-M.configs.typescript = function()
-	return {
-		name = "tsserver",
-
-		cmd = { "typescript-language-server", "--stdio" },
-
-		capabilities = M.capabilities,
-
-		root_dir = vim.fs.dirname(
-			vim.fs.find({ ".git", "package.json" }, { upward = true })[1]
-		),
-	}
-end
+M.configs = {
+	typescript = function()
+		return {
+			name = "tsserver",
+			cmd = { "typescript-language-server", "--stdio" },
+			capabilities = M.capabilities,
+			root_dir = vim.fs.dirname(
+				vim.fs.find({ ".git", "package.json" }, { upward = true })[1]
+			),
+		}
+	end,
+}
 
 autocmd("LspAttach", {
 	group = M.augroups.global,
@@ -93,6 +89,36 @@ autocmd("LspAttach", {
 			end
 		end)
 
+		usercmd("LspLog", function(args)
+			local args = args.args
+			local log_path = os.getenv("HOME") .. "/.local/state/nvim/lsp.log"
+
+			if args:len() == 0 then
+				vim.cmd.edit(log_path)
+			elseif args == "edit" then
+				vim.cmd.edit(log_path)
+			elseif args == "clean" then
+				vim.fn.system({ "echo", "''", ">", log_path })
+			else
+				vim.notify("`" .. args .. "` is not a valid argument.", vim.log.levels.ERROR)
+			end
+		end, {
+			nargs = "?", complete = function()
+				return { "edit", "clean" }
+			end,
+		})
+
+		usercmd("LspInfo", function()
+			local servers = vim.lsp.get_active_clients()
+			local list = "Attached LSP Servers:"
+
+			for _, server in ipairs(servers) do
+				list = string.format("%s\n • %s (%s)", list, server.name, server.id)
+			end
+
+			print(list)
+		end)
+
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
 		-- print("LSP capabilities: " .. vim.inspect(client.server_capabilities))
 
@@ -100,7 +126,7 @@ autocmd("LspAttach", {
 			M.format_on_save(args.buf)
 		end
 
-		if client.server_capabilities.inlayHintProvider ~= nil then
+		if client.server_capabilities.inlayHintProvider then
 			M.inlay_hints(args.buf)
 		end
 	end,

@@ -44,7 +44,7 @@ set list
 set listchars=tab:│\ ,trail:-
 set matchtime=1
 set menuitems=10
-set more
+set nomore
 set mouse=
 set mousehide
 set number
@@ -56,7 +56,7 @@ set relativenumber
 set ruler
 set scrolloff=12
 set shiftwidth=4
-set shortmess=nxs
+set shortmess=nxsF
 set showcmd
 set showmatch
 set signcolumn=yes

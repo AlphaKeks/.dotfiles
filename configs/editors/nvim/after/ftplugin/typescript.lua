@@ -2,5 +2,7 @@
 
 vim.cmd.source("~/.vim/after/ftplugin/typescript.vim")
 
-vim.lsp.start(require("alphakeks.lsp").configs.typescript())
+local lsp = require("alphakeks.lsp")
+
+vim.lsp.start(lsp.configs.typescript())
 

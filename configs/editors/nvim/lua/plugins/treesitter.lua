@@ -1,4 +1,4 @@
-local treesitter = {
+ return {
 	"nvim-treesitter/nvim-treesitter",
 
 	dependencies = {
@@ -45,27 +45,3 @@ local treesitter = {
 	end,
 }
 
-local comment = {
-	"numToStr/Comment.nvim",
-	config = function()
-		local comment = require("Comment")
-
-		comment.setup({
-			toggler = {
-				line = "<Leader>cc",
-				block = "<Leader>cb",
-			},
-
-			opleader = {
-				line = "<Leader>c",
-			},
-
-			mappings = {
-				basic = true,
-				extra = false,
-			},
-		})
-	end,
-}
-
-return { treesitter, comment }

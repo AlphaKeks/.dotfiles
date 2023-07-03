@@ -21,8 +21,8 @@ return {
 
 			win_options = {
 				wrap = true,
-				cursorcolumn = true,
-				colorcolumn = "",
+				cursorcolumn = false,
+				cursorline = true,
 			},
 
 			default_file_explorer = true,
