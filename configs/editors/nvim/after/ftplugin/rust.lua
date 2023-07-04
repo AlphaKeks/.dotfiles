@@ -74,6 +74,7 @@ vim.lsp.start({
 			vim.lsp.buf_request(bufnr, "rust-analyzer/reloadWorkspace", nil, function(err)
 				if err then
 					vim.notify("error reloading workspace: " .. vim.inspect(err), vim.log.levels.ERROR)
+					return
 				end
 
 				vim.notify("Cargo workspace reloaded.", vim.log.levels.INFO)

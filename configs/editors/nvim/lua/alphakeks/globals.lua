@@ -9,3 +9,13 @@ function usercmd(name, callback, opts)
 	vim.api.nvim_create_user_command(name, callback, opts or {})
 end
 
+function Reload(...)
+	local plenary_installed, plenary = pcall(require, "plenary.reload")
+
+	if plenary_installed then
+		plenary.reload_module(...)
+	end
+
+	return require(...)
+end
+

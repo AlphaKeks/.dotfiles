@@ -43,15 +43,15 @@ M.inlay_hints = function(bufnr)
 		vim.notify("Failed to activate inlay hints.", vim.log.levels.ERROR)
 	end
 
-	autocmd({ "InsertEnter", "InsertLeave" }, {
-		group = M.augroups.inlay_hints,
-		buffer = bufnr,
-		callback = function()
-			if not pcall(vim.lsp.inlay_hint, bufnr) then
-				vim.notify("Failed to toggle inlay hints.", vim.log.levels.ERROR)
-			end
-		end,
-	})
+	-- autocmd({ "InsertEnter", "InsertLeave" }, {
+	-- 	group = M.augroups.inlay_hints,
+	-- 	buffer = bufnr,
+	-- 	callback = function()
+	-- 		if not pcall(vim.lsp.inlay_hint, bufnr) then
+	-- 			vim.notify("Failed to toggle inlay hints.", vim.log.levels.ERROR)
+	-- 		end
+	-- 	end,
+	-- })
 end
 
 local cmp_installed, cmp_capabilities = pcall(require, "cmp_nvim_lsp")
