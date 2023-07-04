@@ -1,4 +1,4 @@
- return {
+return {
 	"nvim-treesitter/nvim-treesitter",
 
 	dependencies = {
@@ -44,4 +44,3 @@
 		})
 	end,
 }
-

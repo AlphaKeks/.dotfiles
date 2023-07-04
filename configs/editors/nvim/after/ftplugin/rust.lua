@@ -84,4 +84,3 @@ vim.lsp.start({
 
 	trace = "verbose",
 })
-

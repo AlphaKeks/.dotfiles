@@ -61,4 +61,3 @@ lazy.setup("plugins", {
 		},
 	},
 })
-

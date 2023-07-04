@@ -13,4 +13,3 @@ vim.lsp.start({
 		vim.fs.find({ "*.toml" }, { upward = true })[1]
 	),
 })
-

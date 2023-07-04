@@ -43,9 +43,9 @@ Statusline = {
 	},
 
 	diagnostic_opts = {
-		{ severity = 4, name = "Hint", icon = "  " },
-		{ severity = 3, name = "Info", icon = "  " },
-		{ severity = 2, name = "Warn", icon = "  " },
+		{ severity = 4, name = "Hint",  icon = "  " },
+		{ severity = 3, name = "Info",  icon = "  " },
+		{ severity = 2, name = "Warn",  icon = "  " },
 		{ severity = 1, name = "Error", icon = "  " },
 	},
 
@@ -122,4 +122,3 @@ function Statusline:setup()
 end
 
 Statusline:setup()
-

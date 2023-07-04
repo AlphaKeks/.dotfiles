@@ -671,6 +671,11 @@ hi "@lsp.mod.crateRoot.rust" {
 	bold = true,
 }
 
+hi "@lsp.mod.defaultLibrary" {
+	fg = Dawn.poggers,
+	bold = true,
+}
+
 hi "@lsp.mod.library" {
 	link = "@namespace",
 }
@@ -765,6 +770,10 @@ hi "@lsp.typemod.enumMember" {
 	link = "@lsp.type.enumMember",
 }
 
+hi "@lsp.typemod.function.defaultLibrary" {
+	link = "@function.builtin",
+}
+
 hi "@lsp.typemod.generic.attribute" {
 	link = "@attribute",
 }
@@ -844,4 +853,3 @@ hi "LirFloatBorder" {
 }
 
 -- }}}
-

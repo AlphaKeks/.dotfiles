@@ -104,7 +104,8 @@ autocmd("LspAttach", {
 				vim.notify("`" .. args .. "` is not a valid argument.", vim.log.levels.ERROR)
 			end
 		end, {
-			nargs = "?", complete = function()
+			nargs = "?",
+			complete = function()
 				return { "edit", "clean" }
 			end,
 		})
@@ -141,4 +142,3 @@ autocmd("LspProgress", {
 })
 
 return M
-
