@@ -21,8 +21,4 @@ vim.lsp.start({
 	},
 
 	before_init = require("neodev.lsp").before_init,
-
-	on_attach = function()
-		print("lua_ls attached!")
-	end,
 })

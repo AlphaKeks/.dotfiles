@@ -68,6 +68,7 @@ return {
 					"%-lock.json",
 					"%.wasm",
 					".direnv/*",
+					"node_modules/*",
 				},
 			})
 
@@ -92,6 +93,18 @@ return {
 
 		vim.keymap.set("n", "<Leader>fd", function()
 			pickers.diagnostics(ivy())
+		end)
+
+		vim.keymap.set("n", "<Leader>fk", function()
+			pickers.keymaps(ivy())
+		end)
+
+		vim.keymap.set("n", "<Leader>fa", function()
+			pickers.autocommands(ivy())
+		end)
+
+		vim.keymap.set("n", "<Leader>ft", function()
+			pickers.filetypes(ivy())
 		end)
 
 		vim.keymap.set("n", "<Leader>fr", function()

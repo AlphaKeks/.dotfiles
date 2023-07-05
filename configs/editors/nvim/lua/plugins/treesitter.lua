@@ -27,6 +27,16 @@ return {
 				enable = true,
 			},
 
+			incremental_selection = {
+				enable = true,
+				keymaps = {
+					init_selection = "<C-Space>",
+					node_incremental = "<Leader>gn",
+					node_decremental = "<Leader>gN",
+					scope_incremental = "<Leader>gS",
+				},
+			},
+
 			textobjects = {
 				select = {
 					enable = true,
@@ -38,6 +48,8 @@ return {
 						["ac"] = "@class.outer",
 						["ia"] = "@parameter.inner",
 						["aa"] = "@parameter.outer",
+						["is"] = "@parameter.scope",
+						["as"] = "@parameter.scope",
 					},
 				},
 			},

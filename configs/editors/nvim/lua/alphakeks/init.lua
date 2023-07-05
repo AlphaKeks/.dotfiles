@@ -17,11 +17,11 @@ autocmd("TermOpen", {
 local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.loop.fs_stat(lazy_path) then
-	vim.fn.system({
+	vim.system({
 		"git", "clone", "--branch=stable",
 		"https://github.com/folke/lazy.nvim",
 		lazy_path,
-	})
+	}):wait()
 
 	vim.notify("Installed lazy.nvim", vim.log.levels.INFO)
 end

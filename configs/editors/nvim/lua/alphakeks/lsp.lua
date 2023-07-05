@@ -9,22 +9,23 @@ local M = {
 	},
 
 	capabilities = vim.lsp.protocol.make_client_capabilities(),
+
+	keymaps = function(bufnr)
+		local function bmap(modes, lhs, rhs)
+			vim.keymap.set(modes, lhs, rhs, { buffer = bufnr, silent = true })
+		end
+
+		bmap("n", "gd", vim.lsp.buf.definition)
+		bmap("n", "gD", vim.lsp.buf.type_definition)
+		bmap("n", "<Leader><Leader>", vim.lsp.buf.hover)
+		bmap("n", "ga", vim.lsp.buf.code_action)
+		bmap("n", "gr", vim.lsp.buf.rename)
+		bmap("n", "gR", vim.lsp.buf.references)
+		bmap("n", "gi", vim.lsp.buf.implementation)
+		bmap("n", "<Leader>gi", function() vim.lsp.inlay_hint(0) end)
+		bmap("i", "<C-h>", vim.lsp.buf.signature_help)
+	end,
 }
-
-M.keymaps = function(bufnr)
-	local function bmap(modes, lhs, rhs)
-		vim.keymap.set(modes, lhs, rhs, { buffer = bufnr, silent = true })
-	end
-
-	bmap("n", "gd", vim.lsp.buf.definition)
-	bmap("n", "gD", vim.lsp.buf.type_definition)
-	bmap("n", "<Leader><Leader>", vim.lsp.buf.hover)
-	bmap("n", "ga", vim.lsp.buf.code_action)
-	bmap("n", "gr", vim.lsp.buf.rename)
-	bmap("n", "gR", vim.lsp.buf.references)
-	bmap("n", "gi", vim.lsp.buf.implementation)
-	bmap("i", "<C-h>", vim.lsp.buf.signature_help)
-end
 
 M.format_on_save = function(bufnr)
 	autocmd("BufWritePre", {
@@ -43,6 +44,7 @@ M.inlay_hints = function(bufnr)
 		vim.notify("Failed to activate inlay hints.", vim.log.levels.ERROR)
 	end
 
+	-- Toggle inlay hints when entering / leaving insert mode
 	-- autocmd({ "InsertEnter", "InsertLeave" }, {
 	-- 	group = M.augroups.inlay_hints,
 	-- 	buffer = bufnr,
@@ -128,9 +130,9 @@ autocmd("LspAttach", {
 			M.format_on_save(args.buf)
 		end
 
-		if client.server_capabilities.inlayHintProvider then
-			M.inlay_hints(args.buf)
-		end
+		-- if client.server_capabilities.inlayHintProvider then
+		-- 	M.inlay_hints(args.buf)
+		-- end
 	end,
 })
 

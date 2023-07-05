@@ -246,7 +246,7 @@ hi "CursorLineNr" {
 
 hi "MatchParen" {
 	fg = Dawn.peach,
-	bg = Dawn.overlay0,
+	bg = Dawn.none,
 }
 
 hi "ModeMsg" {
@@ -786,6 +786,10 @@ hi "@lsp.typemod.interface" {
 
 hi "@lsp.typemod.keyword.async" {
 	link = "Keyword",
+}
+
+hi "@lsp.typemod.selfKeyword" {
+	link = "@lsp.type.selfKeyword",
 }
 
 hi "@lsp.typemod.macro" {

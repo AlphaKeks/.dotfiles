@@ -51,11 +51,10 @@ vim.lsp.start({
 			},
 
 			inlayHints = {
-				-- Pretty cool but annoying
-				-- expressionAdjustmentHints = {
-				-- 	enable = true,
-				-- 	mode = "prefix",
-				-- },
+				expressionAdjustmentHints = {
+					enable = true,
+					mode = "prefix",
+				},
 
 				lifetimeElisionHints = {
 					enable = true,
