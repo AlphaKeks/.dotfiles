@@ -473,6 +473,10 @@
 					source = ../configs/tools/lazygit;
 					recursive = true;
 				};
+				".config/bat" = {
+					source = ../configs/cli/bat;
+					recursive = true;
+				};
 				".config/starship.toml".source = ../configs/shells/prompts/starship.toml;
 				".local/share/fonts" = {
 					source = ../configs/desktop/fonts;

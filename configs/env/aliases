@@ -6,6 +6,7 @@
 alias ls="ls -hl --color=auto"
 alias l="exa -gl --icons"
 alias la="exa -agl --icons"
+alias cat="bat"
 alias mkdir="mkdir -p"
 alias grep="grep --color=auto"
 alias rm="rm -I"
