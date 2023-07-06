@@ -77,7 +77,7 @@ airplay() {
 ts-init() {
 	npm init -y
 	npm i -D typescript ts-node @types/node
-	cp $CONFIG/tsconfig.json .
+	cp $DOTFILES/configs/tools/typescript/tsconfig.json .
 	mkdir src dist
 	touch src/main.ts
 }
