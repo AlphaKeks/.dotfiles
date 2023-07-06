@@ -305,6 +305,20 @@ hi "LspInlayHint" {
 	link = "Comment",
 }
 
+hi "LspReferenceText" {
+	fg = Dawn.yellow,
+	bg = Dawn.surface0,
+	italic = true,
+}
+
+hi "LspReferenceRead" {
+	link = "LspReferenceText",
+}
+
+hi "LspReferenceWrite" {
+	link = "LspReferenceRead",
+}
+
 hi "Pmenu" {
 	fg = Dawn.surface2,
 	bg = Dawn.base,

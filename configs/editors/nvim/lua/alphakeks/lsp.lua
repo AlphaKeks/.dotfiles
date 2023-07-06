@@ -56,6 +56,34 @@ M.inlay_hints = function(bufnr)
 	-- })
 end
 
+M.highlight_word = function(bufnr)
+	autocmd({ "CursorMoved", "CursorMovedI" }, {
+		group = M.augroups.global,
+		buffer = bufnr,
+		callback = function()
+			local utils = require("nvim-treesitter.ts_utils")
+			local current_node = utils.get_node_at_cursor()
+
+			if not current_node then
+				return
+			end
+
+			local node_text = vim.treesitter.get_node_text(current_node, bufnr)
+
+			if vim.g.current_node ~= node_text then
+				vim.g.current_node = node_text
+				vim.lsp.buf.clear_references(bufnr)
+
+				local node_type = vim.treesitter.get_node():type()
+
+				if node_type == "identifier" or node_type == "property_identifier" then
+					vim.lsp.buf.document_highlight()
+				end
+			end
+		end,
+	})
+end
+
 local cmp_installed, cmp_capabilities = pcall(require, "cmp_nvim_lsp")
 if cmp_installed then
 	M.capabilities = vim.tbl_deep_extend(
@@ -133,6 +161,10 @@ autocmd("LspAttach", {
 		-- if client.server_capabilities.inlayHintProvider then
 		-- 	M.inlay_hints(args.buf)
 		-- end
+
+		if client.server_capabilities.documentHighlightProvider then
+			M.highlight_word(args.buf)
+		end
 	end,
 })
 

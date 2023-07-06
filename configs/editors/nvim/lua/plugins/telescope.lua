@@ -69,6 +69,7 @@ return {
 					"%.wasm",
 					".direnv/*",
 					"node_modules/*",
+					"dist/*",
 				},
 			})
 

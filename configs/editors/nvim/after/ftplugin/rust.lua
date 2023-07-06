@@ -67,7 +67,7 @@ vim.lsp.start({
 	},
 
 	on_attach = function(client, bufnr)
-		-- vim.print(client)
+		-- vim.print(client.server_capabilities)
 
 		usercmd("CargoReload", function()
 			vim.lsp.buf_request(bufnr, "rust-analyzer/reloadWorkspace", nil, function(err)
