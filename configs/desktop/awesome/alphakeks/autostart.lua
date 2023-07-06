@@ -19,7 +19,12 @@ for process, program in pairs(programs) do
 	))
 end
 
--- delete all the stuff in ~/tmp
+-- delete all the stuff in ~/tmp and friends
 awful.spawn.with_shell("rm -rf " .. os.getenv("HOME") .. "/tmp/*")
 awful.spawn.with_shell("rm -rf " .. os.getenv("HOME") .. "/tmp/.*")
 
+awful.spawn.with_shell("echo 'fn main() {\n\tprintln!(\"Hello, world!\");\n}' > " ..
+	os.getenv("HOME") .. "/Playground/Rust/balls/src/main.rs")
+
+awful.spawn.with_shell("echo 'async function main() {\n\tconsole.log(\"Hello, world!\");\n}\n\nmain();' > " ..
+	os.getenv("HOME") .. "/Playground/TypeScript/balls/src/main.ts")
