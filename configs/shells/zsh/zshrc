@@ -18,15 +18,18 @@ bindkey "^H" backward-kill-word
 bindkey "^r" history-incremental-search-backward
 KEYTIMEOUT=1
 
-# Prompt
-eval "$(starship init zsh)"
-
 # Load plugins
 source $ZDIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZDIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# case-insensitive autocompletion
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
 # Load aliases
 source $DOTFILES/configs/env/aliases
+
+# Prompt
+eval "$(starship init zsh)"
 
 # Nix
 eval "$(direnv hook zsh)"
