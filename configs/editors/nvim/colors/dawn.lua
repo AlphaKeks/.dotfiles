@@ -661,7 +661,7 @@ hi "@variable" {
 }
 
 hi "@variable.builtin" {
-	fg = Dawn.maroon,
+	fg = Dawn.rosewater,
 }
 
 -- }}}
@@ -686,8 +686,7 @@ hi "@lsp.mod.crateRoot.rust" {
 }
 
 hi "@lsp.mod.defaultLibrary" {
-	fg = Dawn.poggers,
-	bold = true,
+	link = "@variable.builtin",
 }
 
 hi "@lsp.mod.library" {

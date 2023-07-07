@@ -396,7 +396,7 @@
 				nodePackages_latest.typescript-language-server taplo nil lua-language-server
 				docker-compose podman-compose
 				postgresql delta
-				inkdrop
+				inkdrop obsidian
 
 				# Virtualisation
 				qemu qemu_kvm libvirt dnsmasq vde2 netcat-openbsd

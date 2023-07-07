@@ -1,8 +1,5 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
-local awful = require("awful")
-local naughty = require("naughty")
-
 Programs = {
 	editor = os.getenv("EDITOR") or "vim",
 	terminal = os.getenv("TERMINAL") or "wezterm",
@@ -56,4 +53,3 @@ Fonts = {
 	normal = "Quicksand 12",
 	monospace = "JetBrains Mono",
 }
-
