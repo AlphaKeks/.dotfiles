@@ -102,6 +102,20 @@ M.configs = {
 			root_dir = vim.fs.dirname(
 				vim.fs.find({ ".git", "package.json" }, { upward = true })[1]
 			),
+
+			init_options = {
+				hostInfo = "neovim",
+				preferences = {
+					includeInlayParameterNameHints = "all",
+					includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+					includeInlayFunctionParameterTypeHints = true,
+					includeInlayVariableTypeHints = true,
+					includeInlayPropertyDeclarationTypeHints = true,
+					includeInlayFunctionLikeReturnTypeHints = true,
+					includeInlayEnumMemberValueHints = true,
+					importModuleSpecifierPreference = "non-relative",
+				},
+			},
 		}
 	end,
 }
