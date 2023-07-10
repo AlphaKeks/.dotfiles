@@ -76,3 +76,18 @@ usercmd("Messages", function(opts)
 	Print(vim.g.messages, opts.args == "qf")
 	vim.g.messages = nil
 end, { nargs = "?" })
+
+---THIS DOES NOT WORK
+function Repl()
+	local function callback(text)
+		local result = vim.fn.luaeval(text)
+		local line = vim.fn.line("$")
+		vim.fn.append(line - 1, result or "")
+	end
+
+	vim.cmd.new()
+	vim.bo.buftype = "prompt"
+	vim.fn.prompt_setcallback(vim.fn.bufnr(), callback)
+	vim.keymap.set("n", "<ESC>", "<CMD>bw!<CR>", { buffer = true, silent = true })
+	vim.cmd.startinsert()
+end
