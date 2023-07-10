@@ -91,6 +91,12 @@ if cmp_installed then
 		M.capabilities,
 		cmp_capabilities.default_capabilities()
 	)
+else
+	M.capabilities = vim.tbl_deep_extend(
+		"force",
+		M.capabilities,
+		require("alphakeks.completion").capabilities
+	)
 end
 
 M.configs = {

@@ -13,6 +13,8 @@ autocmd("TermOpen", {
 	command = "setl nonu rnu so=0",
 })
 
+-- require("alphakeks.completion")
+
 -- Plugins
 local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
