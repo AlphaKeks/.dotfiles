@@ -1,6 +1,5 @@
 return {
 	"hrsh7th/nvim-cmp",
-
 	dependencies = {
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-nvim-lsp",
@@ -32,7 +31,7 @@ return {
 					if cmp.visible() then
 						cmp.select_prev_item()
 					elseif luasnip.jumpable(-1) then
-						luansip.jump(-1)
+						luasnip.jump(-1)
 					else
 						fallback()
 					end
@@ -46,7 +45,7 @@ return {
 
 			formatting = {
 				expandable_indicator = false,
-				format = function(entry, item)
+				format = function(_, item)
 					item.menu = ""
 					return item
 				end,
