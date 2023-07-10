@@ -392,7 +392,7 @@
 				# neovim # neovim stable
 				direnv nix-direnv
 				gh
-				lazygit rustup just jq
+				lazygit rustup just jq fzf
 				nodePackages_latest.typescript-language-server taplo nil lua-language-server
 				docker-compose podman-compose
 				postgresql delta
