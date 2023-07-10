@@ -1,6 +1,6 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
-vim.cmd.source("~/.vim/after/ftplugin/javascript.vim")
+source("~/.vim/after/ftplugin/javascript.vim")
 
 local lsp = require("alphakeks.lsp")
 

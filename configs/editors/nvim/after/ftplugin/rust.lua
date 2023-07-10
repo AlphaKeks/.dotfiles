@@ -1,6 +1,6 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
-vim.cmd.source("~/.vim/after/ftplugin/rust.vim")
+source("~/.vim/after/ftplugin/rust.vim")
 
 local lsp = require("alphakeks.lsp")
 local capabilities = lsp.capabilities
@@ -14,7 +14,7 @@ local rustfmt_file = vim.fs.find({ "rustfmt.toml", ".rustfmt.toml" }, { upward =
 local rustfmt = {}
 
 if rustfmt_file then
-	local contents = vim.fn.readfile(rustfmt_file)
+	local contents = readfile(rustfmt_file)
 
 	for _, line in ipairs(contents) do
 		if line == "unstable_features = true" then
@@ -72,14 +72,11 @@ vim.lsp.start({
 		usercmd("CargoReload", function()
 			vim.lsp.buf_request(bufnr, "rust-analyzer/reloadWorkspace", nil, function(err)
 				if err then
-					vim.notify("error reloading workspace: " .. vim.inspect(err), vim.log.levels.ERROR)
-					return
+					vim.error("Error reloading workspace: " .. vim.inspect(err))
+				else
+					vim.info("Cargo workspace reloaded.")
 				end
-
-				vim.notify("Cargo workspace reloaded.", vim.log.levels.INFO)
 			end)
 		end)
 	end,
-
-	trace = "verbose",
 })

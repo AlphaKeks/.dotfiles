@@ -1,5 +1,6 @@
 return {
 	"numToStr/Comment.nvim",
+
 	config = function()
 		local comment = require("Comment")
 

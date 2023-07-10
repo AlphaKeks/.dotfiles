@@ -12,7 +12,7 @@ local M = {
 
 	keymaps = function(bufnr)
 		local function bmap(modes, lhs, rhs)
-			vim.keymap.set(modes, lhs, rhs, { buffer = bufnr, silent = true })
+			keymap(modes, lhs, rhs, { buffer = bufnr, silent = true })
 		end
 
 		bmap("n", "gd", vim.lsp.buf.definition)
@@ -33,7 +33,7 @@ M.format_on_save = function(bufnr)
 		buffer = bufnr,
 		callback = function()
 			if not pcall(vim.lsp.buf.format) then
-				vim.notify("Failed to format buffer.", vim.log.levels.ERROR)
+				vim.error("Failed to format buffer.")
 			end
 		end,
 	})
@@ -41,7 +41,7 @@ end
 
 M.inlay_hints = function(bufnr)
 	if not pcall(vim.lsp.inlay_hint, bufnr, true) then
-		vim.notify("Failed to activate inlay hints.", vim.log.levels.ERROR)
+		vim.error("Failed to activate inlay hints.")
 	end
 
 	-- Toggle inlay hints when entering / leaving insert mode
@@ -50,7 +50,7 @@ M.inlay_hints = function(bufnr)
 	-- 	buffer = bufnr,
 	-- 	callback = function()
 	-- 		if not pcall(vim.lsp.inlay_hint, bufnr) then
-	-- 			vim.notify("Failed to toggle inlay hints.", vim.log.levels.ERROR)
+	-- 			vim.error("Failed to toggle inlay hints.")
 	-- 		end
 	-- 	end,
 	-- })
@@ -106,7 +106,7 @@ M.configs = {
 			cmd = { "typescript-language-server", "--stdio" },
 			capabilities = M.capabilities,
 			root_dir = vim.fs.dirname(
-				vim.fs.find({ ".git", "package.json" }, { upward = true })[1]
+				vim.fs.find({ "package.json" }, { upward = true })[1]
 			),
 
 			init_options = {
@@ -136,7 +136,7 @@ autocmd("LspAttach", {
 
 		usercmd("Format", function()
 			if not pcall(vim.lsp.buf.format) then
-				vim.notify("Failed to format buffer.", vim.log.levels.ERROR)
+				vim.error("Failed to format buffer.")
 			end
 		end)
 
@@ -144,14 +144,14 @@ autocmd("LspAttach", {
 			local args = args.args
 			local log_path = os.getenv("HOME") .. "/.local/state/nvim/lsp.log"
 
-			if args:len() == 0 then
-				vim.cmd.edit(log_path)
+			if #args == 0 then
+				edit(log_path)
 			elseif args == "edit" then
-				vim.cmd.edit(log_path)
+				edit(log_path)
 			elseif args == "clean" then
-				vim.fn.system({ "echo", "''", ">", log_path })
+				vim.system({ "echo", "''", ">", log_path })
 			else
-				vim.notify("`" .. args .. "` is not a valid argument.", vim.log.levels.ERROR)
+				vim.error("`" .. args .. "` is not a valid argument.")
 			end
 		end, {
 			nargs = "?",
@@ -174,7 +174,9 @@ autocmd("LspAttach", {
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
 		-- print("LSP capabilities: " .. vim.inspect(client.server_capabilities))
 
-		if client.server_capabilities.documentFormattingProvider then
+		if client.server_capabilities.documentFormattingProvider
+				and client.name ~= "tsserver"
+		then
 			M.format_on_save(args.buf)
 		end
 
@@ -191,7 +193,7 @@ autocmd("LspAttach", {
 autocmd("LspProgress", {
 	group = M.augroups.progress,
 	callback = function()
-		vim.cmd.redrawstatus()
+		redrawstatus()
 	end,
 })
 

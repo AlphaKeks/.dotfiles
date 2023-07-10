@@ -3,20 +3,38 @@
 -- Load global variables
 require("alphakeks.globals")
 
+keymap("n", "<C-s>", write)
+
 autocmd("TextYankPost", {
 	callback = function()
 		vim.highlight.on_yank({ timeout = 69 })
 	end,
 })
 
-autocmd("TermOpen", {
-	command = "setl nonu rnu so=0",
-})
+autocmd("TermOpen", { command = "setl nonu rnu so=0" })
 
--- require("alphakeks.completion")
+usercmd("Messages", function(opts)
+	vim.cmd("redir => g:messages | silent! messages | redir END")
+	Print(vim.g.messages, opts.args == "qf")
+	vim.g.messages = nil
+end, { nargs = "?" })
+
+usercmd("SourceOnSave", function()
+	local bufnr = get_current_buf()
+	local filename = expand("%:t")
+
+	autocmd("BufWritePost", {
+		buffer = bufnr,
+		group = augroup(filename .. "-reload-on-save"),
+		callback = function()
+			source("%")
+			print("Reloaded.")
+		end,
+	})
+end)
 
 -- Plugins
-local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazy_path = stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.loop.fs_stat(lazy_path) then
 	vim.system({
@@ -25,7 +43,7 @@ if not vim.loop.fs_stat(lazy_path) then
 		lazy_path,
 	}):wait()
 
-	vim.notify("Installed lazy.nvim", vim.log.levels.INFO)
+	vim.info("Installed lazy.nvim")
 end
 
 vim.opt.rtp:prepend(lazy_path)
@@ -33,8 +51,8 @@ vim.opt.rtp:prepend(lazy_path)
 local lazy_installed, lazy = pcall(require, "lazy")
 
 if not lazy_installed then
-	vim.notify("lazy.nvim is not installed.", vim.log.levels.WARN)
-	vim.notify("Plugins will be disabled.", vim.log.levels.WARN)
+	vim.warn("lazy.nvim is not installed.")
+	vim.warn("Plugins will be disabled.")
 	return
 end
 

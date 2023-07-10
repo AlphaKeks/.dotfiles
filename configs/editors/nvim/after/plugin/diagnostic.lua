@@ -19,5 +19,5 @@ vim.diagnostic.config({
 	},
 })
 
-vim.keymap.set("n", "gl", vim.diagnostic.open_float)
-vim.keymap.set("n", "gL", vim.diagnostic.goto_next)
+keymap("n", "gl", vim.diagnostic.open_float)
+keymap("n", "gL", vim.diagnostic.goto_next)

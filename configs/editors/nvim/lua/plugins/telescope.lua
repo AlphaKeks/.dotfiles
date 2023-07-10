@@ -49,11 +49,11 @@ return {
 			return ret
 		end
 
-		vim.keymap.set("n", "<C-f>", function()
+		keymap("n", "<C-f>", function()
 			pickers.current_buffer_fuzzy_find(ivy())
 		end)
 
-		vim.keymap.set("n", "<Leader>ff", function()
+		keymap("n", "<Leader>ff", function()
 			local opts = ivy({
 				hidden = true,
 				follow = true,
@@ -78,53 +78,53 @@ return {
 			end
 		end)
 
-		vim.keymap.set("n", "<Leader>fb", function()
+		keymap("n", "<Leader>fb", function()
 			pcall(pickers.buffers, ivy({
 				initial_mode = "normal",
 			}))
 		end)
 
-		vim.keymap.set("n", "<Leader>fh", function()
+		keymap("n", "<Leader>fh", function()
 			pickers.help_tags(ivy())
 		end)
 
-		vim.keymap.set("n", "<Leader>fl", function()
+		keymap("n", "<Leader>fl", function()
 			pickers.live_grep(ivy())
 		end)
 
-		vim.keymap.set("n", "<Leader>fd", function()
+		keymap("n", "<Leader>fd", function()
 			pickers.diagnostics(ivy())
 		end)
 
-		vim.keymap.set("n", "<Leader>fk", function()
+		keymap("n", "<Leader>fk", function()
 			pickers.keymaps(ivy())
 		end)
 
-		vim.keymap.set("n", "<Leader>fa", function()
+		keymap("n", "<Leader>fa", function()
 			pickers.autocommands(ivy())
 		end)
 
-		vim.keymap.set("n", "<Leader>ft", function()
+		keymap("n", "<Leader>ft", function()
 			pickers.filetypes(ivy())
 		end)
 
-		vim.keymap.set("n", "<Leader>fr", function()
+		keymap("n", "<Leader>fr", function()
 			pickers.lsp_references(ivy())
 		end)
 
-		vim.keymap.set("n", "<Leader>gd", function()
+		keymap("n", "<Leader>gd", function()
 			pickers.lsp_definitions(ivy())
 		end)
 
-		vim.keymap.set("n", "<Leader>fs", function()
+		keymap("n", "<Leader>fs", function()
 			pickers.lsp_workspace_symbols(ivy())
 		end)
 
-		vim.keymap.set("n", "<Leader>fi", function()
+		keymap("n", "<Leader>fi", function()
 			pickers.lsp_implementations(ivy())
 		end)
 
-		vim.keymap.set("n", "<Leader>fg", function()
+		keymap("n", "<Leader>fg", function()
 			pcall(pickers.git_commits, {
 				initial_mode = "normal",
 				layout_config = {
@@ -134,7 +134,7 @@ return {
 			})
 		end)
 
-		vim.keymap.set("n", "<Leader>gs", function()
+		keymap("n", "<Leader>gs", function()
 			pcall(pickers.git_status, {
 				initial_mode = "normal",
 				layout_config = {

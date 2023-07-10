@@ -1,12 +1,68 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
+keymap = vim.keymap.set
+
+source = vim.cmd.source
+stopinsert = vim.cmd.stopinsert
+startinsert = vim.cmd.startinsert
+write = vim.cmd.write
+edit = vim.cmd.edit
+redrawstatus = vim.cmd.redrawstatus
+copen = vim.cmd.copen
+new = vim.cmd.new
+resize = vim.cmd.resize
+norm = vim.cmd.norm
+
+expand = vim.fn.expand
+readfile = vim.fn.readfile
+mode = vim.fn.mode
+pum_getpos = vim.fn.pum_getpos
+pumvisible = vim.fn.pumvisible
+stdpath = vim.fn.stdpath
+setqflist = vim.fn.setqflist
+luaeval = vim.fn.luaeval
+line = vim.fn.line
+append = vim.fn.append
+prompt_setcallback = vim.fn.prompt_setcallback
+
+create_namespace = vim.api.nvim_create_namespace
+set_hl = vim.api.nvim_set_hl
+win_get_cursor = vim.api.nvim_win_get_cursor
+get_current_line = vim.api.nvim_get_current_line
+feedkeys = vim.api.nvim_feedkeys
+replace_termcodes = vim.api.nvim_replace_termcodes
+buf_delete = vim.api.nvim_buf_delete
+buf_get_lines = vim.api.nvim_buf_get_lines
+buf_set_lines = vim.api.nvim_buf_set_lines
+get_current_buf = vim.api.nvim_get_current_buf
 autocmd = vim.api.nvim_create_autocmd
-augroup = function(name, opts)
+
+function augroup(name, opts)
 	return vim.api.nvim_create_augroup(name, opts or { clear = true })
 end
 
 function usercmd(name, callback, opts)
-	vim.api.nvim_create_user_command(name, callback, opts or {})
+	return vim.api.nvim_create_user_command(name, callback, opts or {})
+end
+
+vim.trace = function(msg)
+	vim.notify(msg, vim.log.levels.TRACE)
+end
+
+vim.debug = function(msg)
+	vim.notify(msg, vim.log.levels.DEBUG)
+end
+
+vim.info = function(msg)
+	vim.notify(msg, vim.log.levels.INFO)
+end
+
+vim.warn = function(msg)
+	vim.notify(msg, vim.log.levels.WARN)
+end
+
+vim.error = function(msg)
+	vim.notify(msg, vim.log.levels.ERROR)
 end
 
 function Reload(...)
@@ -34,18 +90,18 @@ function Print(input, use_qf_list)
 	local src = ""
 	if type(input) == "table" and not vim.tbl_isempty(input) then
 		src = vim.inspect(input)
-	elseif type(input) == "string" and input:len() > 0 then
+	elseif type(input) == "string" and #input > 0 then
 		src = input
 	end
 
-	if src:len() == 0 then
+	if #src == 0 then
 		return
 	end
 
 	local lines = {}
 
 	for line in vim.gsplit(src, "\n") do
-		if line:len() > 0 then
+		if #line > 0 then
 			if use_qf_list then
 				line = { text = line:gsub("\t", "  ") }
 			end
@@ -55,39 +111,33 @@ function Print(input, use_qf_list)
 	end
 
 	if use_qf_list then
-		vim.fn.setqflist({}, "r", { items = lines, title = "Messages" })
-		vim.cmd.copen()
+		setqflist({}, "r", { items = lines, title = "Messages" })
+		copen()
 	else
-		vim.cmd.new()
-		vim.cmd.resize(-10)
+		new()
+		resize(-10)
 		vim.bo.buftype = "nofile"
 		vim.bo.bufhidden = "hide"
 		vim.bo.buflisted = false
-		vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
+		buf_set_lines(0, 0, -1, false, lines)
 	end
 
-	vim.cmd.norm("G")
+	norm("G")
 
 	return input
 end
 
-usercmd("Messages", function(opts)
-	vim.cmd("redir => g:messages | silent! messages | redir END")
-	Print(vim.g.messages, opts.args == "qf")
-	vim.g.messages = nil
-end, { nargs = "?" })
-
 ---THIS DOES NOT WORK
 function Repl()
 	local function callback(text)
-		local result = vim.fn.luaeval(text)
-		local line = vim.fn.line("$")
-		vim.fn.append(line - 1, result or "")
+		local result = luaeval(text)
+		local line = line("$")
+		append(line - 1, result or "")
 	end
 
-	vim.cmd.new()
+	new()
 	vim.bo.buftype = "prompt"
-	vim.fn.prompt_setcallback(vim.fn.bufnr(), callback)
-	vim.keymap.set("n", "<ESC>", "<CMD>bw!<CR>", { buffer = true, silent = true })
-	vim.cmd.startinsert()
+	prompt_setcallback(get_current_buf(), callback)
+	keymap("n", "<ESC>", "<CMD>bw!<CR>", { buffer = true, silent = true })
+	startinsert()
 end

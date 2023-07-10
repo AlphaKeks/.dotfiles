@@ -52,6 +52,6 @@ return {
 			},
 		})
 
-		vim.keymap.set("n", "<Leader>e", oil.open)
+		keymap("n", "<Leader>e", oil.open)
 	end,
 }

@@ -1,6 +1,6 @@
 -- https://GitHub.com/AlphaKeks/.dotfiles
 
-vim.cmd.source("~/.vim/after/ftplugin/lua.vim")
+source("~/.vim/after/ftplugin/lua.vim")
 
 local lsp = require("alphakeks.lsp")
 

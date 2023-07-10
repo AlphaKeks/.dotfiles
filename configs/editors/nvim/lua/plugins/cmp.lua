@@ -1,5 +1,6 @@
 return {
 	"hrsh7th/nvim-cmp",
+
 	dependencies = {
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-nvim-lsp",
@@ -68,9 +69,9 @@ return {
 
 		-- Fix luasnip sometimes hijacking <Tab> for longer than it's supposed to
 		autocmd("InsertLeave", {
+			group = augroup("luasnip-clean-snippet-nodes"),
 			callback = function()
-				local current_buf = vim.api.nvim_get_current_buf()
-				luasnip.session.current_nodes[current_buf] = nil
+				luasnip.session.current_nodes[get_current_buf()] = nil
 			end,
 		})
 	end,

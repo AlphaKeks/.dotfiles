@@ -54,11 +54,11 @@ Balls = {
 }
 
 local function get_cursor_col()
-	return vim.api.nvim_win_get_cursor(0)[2]
+	return win_get_cursor(0)[2]
 end
 
 local function get_chars_under_cursor()
-	local line = vim.api.nvim_get_current_line()
+	local line = get_current_line()
 	local cursor_col = get_cursor_col()
 	local char = line:sub(cursor_col, cursor_col)
 	local chars = line:sub(cursor_col - 1, cursor_col)
@@ -66,11 +66,11 @@ local function get_chars_under_cursor()
 end
 
 local function is_variable(str)
-	return str:match("[%a_]")
+	return str:match "[%a_]"
 end
 
 local function is_whitespace(str)
-	return str:match("%s")
+	return str:match "%s"
 end
 
 local function should_trigger_lsp_completion(str)
@@ -97,7 +97,7 @@ local function draw_docs_window(word, docs, doc_kind)
 		table.insert(doc_lines, line)
 	end
 
-	local pum = vim.fn.pum_getpos()
+	local pum = pum_getpos()
 	local max_width = vim.o.columns - ((pum.col or 0) + (pum.width or 0))
 	local max_height = vim.o.lines - (pum.row or 0)
 	local offset_x = (pum.width or 0) - word:len() + 1
@@ -118,8 +118,8 @@ local function draw_docs_window(word, docs, doc_kind)
 end
 
 local function press(key)
-	vim.api.nvim_feedkeys(
-		vim.api.nvim_replace_termcodes(key, true, false, true),
+	feedkeys(
+		replace_termcodes(key, true, false, true),
 		"n",
 		false
 	)
@@ -161,7 +161,7 @@ function BallsCompletion(findstart, _)
 			vim.inspect(err)
 		)
 
-		vim.notify(vim.g.latest_error, vim.log.levels.ERROR)
+		vim.error(vim.g.latest_error)
 		return
 	end
 
@@ -171,7 +171,7 @@ function BallsCompletion(findstart, _)
 			vim.inspect(result)
 		)
 
-		vim.notify(vim.g.latest_error, vim.log.levels.ERROR)
+		vim.error(vim.g.latest_error)
 		return
 	end
 
@@ -220,7 +220,7 @@ autocmd({ "VimEnter", "BufNew" }, {
 					return
 				end
 
-				if vim.fn.pumvisible() ~= 0 then
+				if pumvisible() ~= 0 then
 					return
 				end
 
@@ -270,13 +270,13 @@ autocmd({ "VimEnter", "BufNew" }, {
 		})
 
 		vim.keymap.set("i", "<CR>", function()
-			if vim.fn.pumvisible() ~= 0 then
+			if pumvisible() ~= 0 then
 				if Balls.latest_doc_buf then
-					vim.api.nvim_buf_delete(Balls.latest_doc_buf, {})
+					buf_delete(Balls.latest_doc_buf, {})
 				end
 
 				if Balls.import_path then
-					local lines = vim.api.nvim_buf_get_lines(args.buf, 0, -1, false)
+					local lines = buf_get_lines(args.buf, 0, -1, false)
 					local above_last_import = 0
 					local import_keywords = {
 						rust = "use",
@@ -291,7 +291,7 @@ autocmd({ "VimEnter", "BufNew" }, {
 					local import_statement = vim.print(string.format("use %s;", Balls.import_path))
 
 					vim.schedule(function()
-						vim.api.nvim_buf_set_lines(
+						buf_set_lines(
 							args.buf,
 							above_last_import,
 							above_last_import,
@@ -304,7 +304,7 @@ autocmd({ "VimEnter", "BufNew" }, {
 						press("a")
 					end)
 
-					vim.cmd.stopinsert()
+					stopinsert()
 				end
 
 				return "<C-y>"
