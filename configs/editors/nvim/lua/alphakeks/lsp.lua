@@ -100,30 +100,134 @@ else
 end
 
 M.configs = {
-	typescript = function()
-		return {
-			name = "tsserver",
-			cmd = { "typescript-language-server", "--stdio" },
-			capabilities = M.capabilities,
-			root_dir = vim.fs.dirname(
-				vim.fs.find({ "package.json" }, { upward = true })[1]
-			),
+	typescript = {
+		tsserver = function()
+			return {
+				name = "tsserver",
+				cmd = { "typescript-language-server", "--stdio" },
+				capabilities = M.capabilities,
+				root_dir = vim.fs.dirname(
+					vim.fs.find({ "package.json" }, { upward = true })[1]
+				),
 
-			init_options = {
-				hostInfo = "neovim",
-				preferences = {
-					includeInlayParameterNameHints = "all",
-					includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-					includeInlayFunctionParameterTypeHints = true,
-					includeInlayVariableTypeHints = true,
-					includeInlayPropertyDeclarationTypeHints = true,
-					includeInlayFunctionLikeReturnTypeHints = true,
-					includeInlayEnumMemberValueHints = true,
-					importModuleSpecifierPreference = "non-relative",
+				init_options = {
+					hostInfo = "neovim",
+					preferences = {
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+						importModuleSpecifierPreference = "non-relative",
+					},
 				},
-			},
-		}
-	end,
+			}
+		end,
+
+		prettier = function()
+			autocmd("BufWritePre", {
+				group = augroup("prettier-format-on-save"),
+				callback = function()
+					local prettier = { "npx", "prettier", "--write" }
+					local prettier_files = {
+						".prettierrc",
+						".prettierrc.json",
+						".prettierrc.yml",
+						".prettierrc.yaml",
+						".prettierrc.json5",
+						".prettierrc.js",
+						".prettierrc.cjs",
+						".prettierrc.toml",
+						"prettier.config.js",
+						"prettier.config.cjs",
+					}
+
+					if not vim.fs.find(prettier_files, { upward = true })[1] then
+						table.insert(prettier, "--config")
+						table.insert(
+							prettier,
+							os.getenv "HOME" .. "/.dotfiles/configs/tools/prettier/prettier.config.js"
+						)
+					end
+
+					table.insert(prettier, expand("%"))
+
+					vim.system(prettier, {}, function(result)
+						if result.code ~= 0 then
+							vim.error(result.stderr)
+						end
+
+						vim.schedule(function()
+							vim.cmd("e!")
+						end)
+					end)
+				end,
+			})
+		end,
+
+		eslint = function()
+			local group = augroup("typescript-jazz", { clear = false })
+			local namespace = create_namespace("typescript-jazz")
+
+			local function process_eslint(message)
+				return {
+					bufnr = 0,
+					lnum = (message.line or 1) - 1,
+					end_lnum = (message.endLine or 1) - 1,
+					col = (message.column or 1) - 1,
+					end_col = (message.endColumn or 1) - 1,
+					severity = message.severity,
+					message = message.message,
+					source = "eslint",
+				}
+			end
+
+			local function set_diagnostics(result, process_message, qflist_title)
+				local errors = vim.json.decode(result.stdout)
+				local messages = errors and errors[1] and errors[1].messages or {}
+				local diagnostics = {}
+
+				for _, message in ipairs(messages) do
+					table.insert(diagnostics, process_message(message))
+				end
+
+				vim.schedule(function()
+					vim.diagnostic.set(namespace, 0, diagnostics)
+					vim.diagnostic.setqflist({
+						namespace = namespace,
+						open = false,
+						title = qflist_title or "",
+					})
+				end)
+			end
+
+			autocmd("BufWritePost", {
+				group = group,
+				callback = function()
+					local opts = { text = true }
+					local eslint_files = {
+						".eslintrc",
+						".eslintrc.js",
+						".eslintrc.cjs",
+						".eslintrc.yaml",
+						".eslintrc.yml",
+						".eslintrc.json",
+						"eslint.config.js",
+					}
+
+					if vim.fs.find(eslint_files, { upward = true })[1] then
+						local eslint = { "npx", "eslint", "--format", "json", expand("%") }
+
+						vim.system(eslint, opts, function(result)
+							set_diagnostics(result, process_eslint, "ESLint")
+						end)
+					end
+				end,
+			})
+		end,
+	},
 }
 
 autocmd("LspAttach", {

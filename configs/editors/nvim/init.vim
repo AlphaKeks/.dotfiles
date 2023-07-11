@@ -5,7 +5,6 @@ source ~/.vim/vimrc
 set guicursor+=i:ver20
 set inccommand=split
 set laststatus=3
-" set noshowmatch
 set undodir=~/.config/nvim/undo
 set pumblend=10
 set winblend=10
