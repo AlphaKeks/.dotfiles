@@ -2,9 +2,9 @@
 
 source("~/.vim/after/ftplugin/typescript.vim")
 
-local lsp = require("alphakeks.lsp").configs.typescript
+local config = require("alphakeks.lsp").configs.typescript
 
-vim.lsp.start(lsp.tsserver())
+vim.lsp.start(config.tsserver())
 
-lsp.prettier()
-lsp.eslint()
+config.prettier()
+config.eslint()

@@ -42,11 +42,7 @@ return {
 				},
 			})
 
-			for key, value in pairs(opts or {}) do
-				ret[key] = value
-			end
-
-			return ret
+			return vim.tbl_deep_extend("force", ret, opts or {})
 		end
 
 		keymap("n", "<C-f>", function()

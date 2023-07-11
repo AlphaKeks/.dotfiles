@@ -1,6 +1,7 @@
 return {
 	"folke/neodev.nvim",
 
+	ft = "lua",
 	config = function()
 		local neodev = require("neodev")
 
