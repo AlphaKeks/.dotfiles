@@ -95,7 +95,7 @@ else
 	M.capabilities = vim.tbl_deep_extend(
 		"force",
 		M.capabilities,
-		require("alphakeks.completion").capabilities
+		require("scratch.completion").capabilities
 	)
 end
 
@@ -130,7 +130,7 @@ M.configs = {
 			autocmd("BufWritePre", {
 				group = augroup("prettier-format-on-save"),
 				callback = function()
-					local prettier = { "npx", "prettier", "--write" }
+					local prettier = { "prettier", "--write" }
 					local prettier_files = {
 						".prettierrc",
 						".prettierrc.json",
@@ -218,7 +218,7 @@ M.configs = {
 					}
 
 					if vim.fs.find(eslint_files, { upward = true })[1] then
-						local eslint = { "npx", "eslint", "--format", "json", expand("%") }
+						local eslint = { "eslint", "--format", "json", expand("%") }
 
 						vim.system(eslint, opts, function(result)
 							set_diagnostics(result, process_eslint, "ESLint")
@@ -291,6 +291,18 @@ autocmd("LspAttach", {
 		if client.server_capabilities.documentHighlightProvider then
 			M.highlight_word(args.buf)
 		end
+
+		-- if client.server_capabilities.signatureHelpProvider then
+		-- 	autocmd({ "TextChangedI", "TextChangedP" }, {
+		-- 		group = M.augroups.global,
+		-- 		buffer = args.buf,
+		-- 		callback = function()
+		-- 			vim.schedule(function()
+		-- 				pcall(vim.lsp.buf.signature_help)
+		-- 			end)
+		-- 		end,
+		-- 	})
+		-- end
 	end,
 })
 

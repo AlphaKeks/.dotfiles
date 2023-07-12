@@ -590,7 +590,6 @@ hi "@constant.builtin" {
 hi "@constructor.lua" {
 	fg = Dawn.sky,
 	bold = true,
-	-- link = "@punctuation.bracket.lua",
 }
 
 hi "@field" {
@@ -687,6 +686,10 @@ hi "@lsp.mod.crateRoot.rust" {
 
 hi "@lsp.mod.defaultLibrary" {
 	link = "@variable.builtin",
+}
+
+hi "@lsp.mod.global" {
+	fg = Dawn.sky,
 }
 
 hi "@lsp.mod.library" {

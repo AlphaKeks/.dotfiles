@@ -78,5 +78,25 @@ vim.lsp.start({
 				end
 			end)
 		end)
+
+		usercmd("CargoFmt", function()
+			local command = { "cargo" }
+
+			if rustfmt.overrideCommand then
+				table.insert(command, "+nightly")
+			end
+
+			command = vim.tbl_extend("keep", command, { "fmt", "--all" })
+
+			vim.system(command, {}, function(result)
+				vim.schedule(function()
+					if result.code ~= 0 then
+						vim.error("Failed to format. " .. vim.inspect(result))
+					else
+						vim.cmd("e!")
+					end
+				end)
+			end)
+		end)
 	end,
 })

@@ -33,6 +33,10 @@ usercmd("SourceOnSave", function()
 	})
 end)
 
+if os.getenv("CMP") then
+	require("scratch.completion"):setup()
+end
+
 -- Plugins
 local lazy_path = stdpath("data") .. "/lazy/lazy.nvim"
 

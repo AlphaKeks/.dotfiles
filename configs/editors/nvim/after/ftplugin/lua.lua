@@ -17,8 +17,15 @@ vim.lsp.start({
 			telemetry = {
 				enable = false,
 			},
+			diagnostics = {
+				globals = { "vim" },
+			},
+			workspace = {
+				library = {
+					[expand("$VIMRUNTIME/lua")] = true,
+					[expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+				},
+			}
 		},
 	},
-
-	before_init = require("neodev.lsp").before_init,
 })
