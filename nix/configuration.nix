@@ -393,7 +393,8 @@
 				direnv nix-direnv
 				gh
 				lazygit rustup just jq fzf
-				nodePackages_latest.typescript-language-server taplo nil lua-language-server
+				nodePackages_latest.typescript-language-server nodePackages.prettier nodePackages.eslint
+				taplo nil lua-language-server
 				docker-compose podman-compose
 				postgresql delta
 				inkdrop obsidian
