@@ -15,7 +15,7 @@ vim.diagnostic.config({
 		focusable = true,
 		source = "always",
 		prefix = "",
-		border = "solid",
+		border = "single",
 	},
 })
 

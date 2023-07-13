@@ -3,22 +3,48 @@
 -- Maintainer:    AlphaKeks <alphakeks@dawn.sh>
 -- Repository:    https://github.com/AlphaKeks/.dotfiles
 -- License:       MIT
+--
 -- Color palette: https://github.com/catppuccin/nvim
+--   rosewater -> "#F5E0DC"
+--   flamingo  -> "#F2CDCD"
+--   pink      -> "#F5C2E7"
+--   mauve     -> "#CBA6F7"
+--   red       -> "#F38BA8"
+--   maroon    -> "#EBA0AC"
+--   peach     -> "#FAB387"
+--   yellow    -> "#F9E2AF"
+--   green     -> "#A6E3A1"
+--   teal      -> "#94E2D5"
+--   sky       -> "#89DCEB"
+--   sapphire  -> "#74C7EC"
+--   blue      -> "#89B4FA"
+--   lavender  -> "#B4BEFE"
+--   text      -> "#CDD6F4"
+--   subtext1  -> "#BAC2DE"
+--   subtext0  -> "#A6ADC8"
+--   overlay2  -> "#9399B2"
+--   overlay1  -> "#7F849C"
+--   overlay0  -> "#6C7086"
+--   surface2  -> "#585B70"
+--   surface1  -> "#45475A"
+--   surface0  -> "#313244"
+--   base      -> "#1E1E2E"
+--   mantle    -> "#181825"
+--   crust     -> "#11111B"
+--   none      -> "NONE"
+--
+-- These are my own (͡ ͡° ͜ つ ͡͡°)
+--   slate     -> "#3C5E7F"
+--   poggers   -> "#7480C2"
 
-vim.cmd [[
-	set background=dark
-	let g:colors_name="dawn"
-]]
+source("~/.vim/colors/dawn.vim")
+vim.g.colors_name = "dawn"
 
-local function hi(group)
-	return function(opts)
-		if opts then
-			vim.api.nvim_set_hl(0, group, opts)
-		end
-	end
+function hi(group, opts)
+	set_hl(0, group, opts or {})
 end
 
--- {{{ Color palette
+-- {{{ Colors
 
 Dawn = {
 	rosewater = "#F5E0DC",
@@ -59,817 +85,232 @@ Dawn = {
 
 -- {{{ Editor
 
-hi "Conceal" {
-	fg = Dawn.sapphire,
-	bg = Dawn.none,
-	bold = true,
-}
+hi("DiagnosticOk", {
+	fg = Dawn.green,
+})
 
-hi "ColorColumn" {
-	bg = Dawn.base,
-}
-
-hi "CursorColumn" {
-	link = "ColorColumn",
-}
-
-hi "CursorLine" {
-	link = "CursorColumn",
-}
-
-hi "Search" {
-	fg = Dawn.crust,
-	bg = Dawn.yellow,
-}
-
-hi "CurSearch" {
-	fg = Dawn.crust,
-	bg = Dawn.red,
-}
-
-hi "IncSearch" {
-	fg = Dawn.crust,
-	bg = Dawn.poggers,
-}
-
-hi "Substitute" {
-	fg = Dawn.crust,
-	bg = Dawn.poggers,
-}
-
-hi "Cursor" {
-	fg = Dawn.crust,
-	bg = Dawn.text,
-}
-
-hi "lCursor" {
-	link = "Cursor",
-}
-
-hi "CursorIM" {
-	link = "Cursor",
-}
-
-hi "TermCursor" {
-	link = "Cursor",
-}
-
-hi "TermCursorNC" {
-	link = "TermCursor",
-}
-
-hi "DiagnosticOk"
-
-hi "DiagnosticInfo" {
+hi("DiagnosticHint", {
 	fg = Dawn.teal,
-}
+})
 
-hi "DiagnosticHint" {
+hi("DiagnosticInfo", {
 	fg = Dawn.green,
-}
+})
 
-hi "DiagnosticWarn" {
+hi("DiagnosticWarn", {
 	fg = Dawn.yellow,
-}
+})
 
-hi "DiagnosticError" {
+hi("DiagnosticError", {
 	fg = Dawn.red,
-}
+})
 
-hi "DiagnosticUnderlineOk" {
-	fg = Dawn.none,
-	underline = false,
-}
-
-hi "DiagnosticUnderlineInfo" {
-	fg = Dawn.none,
-	underline = false,
-}
-
-hi "DiagnosticUnderlineHint" {
-	fg = Dawn.none,
-	underline = false,
-}
-
-hi "DiagnosticUnderlineWarn" {
-	fg = Dawn.none,
-	underline = false,
-}
-
-hi "DiagnosticUnderlineError" {
-	fg = Dawn.none,
-	underline = false,
-}
-
-hi "DiagnosticDeprecated" {
-	fg = Dawn.surface0,
-	italic = true,
-}
-
-hi "Directory" {
-	fg = Dawn.blue,
-	bold = true,
-}
-
-hi "DiffAdd" {
-	fg = Dawn.green,
-	bg = Dawn.none,
-}
-
-hi "DiffChange" {
-	fg = Dawn.yellow,
-	bg = Dawn.none,
-}
-
-hi "DiffDelete" {
-	fg = Dawn.red,
-	bg = Dawn.none,
-}
-
-hi "DiffText" {
-	fg = Dawn.blue,
-	bg = Dawn.none,
-}
-
-hi "EndOfBuffer" {
-	fg = Dawn.slate,
-	bg = Dawn.none,
-}
-
-hi "ErrorMsg" {
-	fg = Dawn.red,
-	bold = true,
-}
-
-hi "WinSeparator" {
-	fg = Dawn.text,
-	bg = Dawn.none,
-}
-
-hi "Folded" {
+hi("DiagnosticDeprecated", {
 	fg = Dawn.slate,
 	italic = true,
-}
+})
 
-hi "FoldColumn"
+hi("DiagnosticUnderlineOk")
+hi("DiagnosticUnderlineHint")
+hi("DiagnosticUnderlineInfo")
+hi("DiagnosticUnderlineWarn")
+hi("DiagnosticUnderlineError")
+hi("DiagnosticUnderlineDeprecated")
 
-hi "CursorLineFold" {
-	link = "FoldColumn",
-}
-
-hi "SignColumn" {
-	bg = Dawn.mantle,
-}
-
-hi "CursorLineSign" {
-	link = "SignColumn",
-}
-
-hi "LineNr" {
-	fg = Dawn.overlay0,
-	bg = Dawn.none,
-}
-
-hi "LineNrAbove" {
-	link = "LineNr",
-}
-
-hi "LineNrBelow" {
-	link = "LineNr",
-}
-
-hi "CursorLineNr" {
-	fg = Dawn.yellow,
-	bg = Dawn.none,
-	bold = true,
-}
-
-hi "MatchParen" {
-	fg = Dawn.peach,
-	bg = Dawn.none,
-}
-
-hi "ModeMsg" {
-	fg = Dawn.mauve,
-	bg = Dawn.none,
-	italic = true,
-}
-
-hi "MsgArea" {
-	link = "Normal",
-}
-
-hi "MsgSeparator"
-
-hi "MoreMsg" {
-	fg = Dawn.subtext1,
-	bold = true,
-}
-
-hi "NonText" {
-	fg = Dawn.surface2,
-}
-
-hi "Normal" {
+hi("NormalFloat", {
 	fg = Dawn.text,
-	bg = Dawn.mantle,
-}
+	bg = Dawn.none,
+	blend = 30,
+})
 
-hi "NormalNC" {
-	link = "Normal",
-}
-
-hi "NormalFloat" {
-	fg = Dawn.text,
-	bg = Dawn.crust,
-	blend = 10,
-}
-
-hi "FloatBorder" {
+hi("FloatBorder", {
 	fg = Dawn.lavender,
-	bg = Dawn.crust,
-	blend = 10,
-}
+	bg = Dawn.none,
+	blend = 30,
+})
 
-hi "FloatShadow"
-hi "FloatShadowThrough"
-
-hi "FloatTitle" {
+hi("FloatTitle", {
 	fg = Dawn.blue,
-	bg = Dawn.crust,
-	bold = true,
-	blend = 10,
-}
+	bg = Dawn.none,
+	blend = 30,
+})
 
-hi "LspInlayHint" {
-	link = "Comment",
-}
-
-hi "LspReferenceText" {
-	fg = Dawn.yellow,
-	bg = Dawn.surface0,
-	italic = true,
-}
-
-hi "LspReferenceRead" {
-	link = "LspReferenceText",
-}
-
-hi "LspReferenceWrite" {
-	link = "LspReferenceRead",
-}
-
-hi "Pmenu" {
-	fg = Dawn.surface2,
-	bg = Dawn.base,
-}
-
-hi "PmenuSel" {
-	fg = Dawn.text,
-	bg = Dawn.surface0,
-	bold = true,
-}
-
-hi "PmenuKind"
-hi "PmenuKindSel"
-hi "PmenuExtra"
-hi "PmenuExtraSel"
-
-hi "PmenuSbar" {
-	bg = Dawn.crust,
-}
-
-hi "PmenuThumb" {
-	bg = Dawn.surface0,
-}
-
-hi "Question" {
-	fg = Dawn.green,
-}
-
-hi "QuickFixLine"
-
-hi "SpecialKey" {
-	fg = Dawn.mauve,
-	italic = true,
-}
-
-hi "SpellBad" {
-	fg = Dawn.red,
-	bold = true,
-}
-
-hi "SpellCap"
-hi "SpellLocal"
-hi "SpellRare"
-
-hi "StatusLine" {
-	fg = Dawn.lavender,
-	bg = Dawn.crust,
-}
-
-hi "StatusLineNC" {
-	fg = Dawn.none,
-	bg = Dawn.crust,
-}
-
-hi "TabLine" {
-	fg = Dawn.surface0,
-	bg = Dawn.crust,
-}
-
-hi "TabLineFill" {
-	fg = Dawn.surface0,
-	bg = Dawn.crust,
-}
-
-hi "TabLineSel" {
-	fg = Dawn.lavender,
-	bg = Dawn.mantle,
-}
-
-hi "Title" {
-	fg = Dawn.green,
-	bold = true,
-}
-
-hi "Visual" {
-	bg = Dawn.surface1,
-}
-
-hi "VisualNOS" {
-	link = "Visual",
-}
-
-hi "WarningMsg" {
-	fg = Dawn.yellow,
-	bold = true,
-}
-
-hi "Whitespace" {
-	fg = Dawn.surface0,
-}
-
-hi "WildMenu"
-
-hi "WinBar" {
+hi("WinBar", {
 	fg = Dawn.sapphire,
 	italic = true,
-}
+})
 
-hi "WinBarNC" {
+hi("WinBarNC", {
 	link = "WinBar",
-}
+})
 
--- }}}
+hi("WinSeparator", {
+	fg = Dawn.text,
+	bg = Dawn.none,
+})
 
--- {{{ Syntax
-
-hi "Boolean" {
-	fg = Dawn.red,
-}
-
-hi "Character" {
-	fg = Dawn.teal,
-}
-
-hi "SpecialChar" {
-	fg = Dawn.teal,
-	italic = true,
-}
-
-hi "Comment" {
+hi("LspInlayHint", {
 	fg = Dawn.slate,
 	italic = true,
-}
+	blend = 50,
+})
 
-hi "SpecialComment" {
-	link = "Comment",
-}
-
-hi "Conditional" {
-	fg = Dawn.mauve,
-}
-
-hi "Constant" {
-	fg = Dawn.peach,
-	bold = true,
-}
-
-hi "Debug"
-
-hi "Define" {
-	fg = Dawn.pink,
-}
-
-hi "Delimiter" {
-	fg = Dawn.subtext0,
-}
-
-hi "Error" {
-	fg = Dawn.red,
-	bold = true,
-}
-
-hi "Exception" {
-	fg = Dawn.red,
-	bold = true,
-}
-
-hi "Float" {
-	link = "Number",
-}
-
-hi "Function" {
-	fg = Dawn.blue,
-}
-
-hi "Identifier" {
-	fg = Dawn.text,
-}
-
-hi "Ignore"
-
-hi "Include" {
-	fg = Dawn.mauve,
-}
-
-hi "Keyword" {
-	fg = Dawn.mauve,
-}
-
-hi "Label" {
-	fg = Dawn.sapphire,
-}
-
-hi "Macro" {
-	fg = Dawn.mauve,
-	italic = true,
-}
-
-hi "Number" {
-	fg = Dawn.red,
-}
-
-hi "Operator" {
+hi("LspReferenceText", {
 	fg = Dawn.yellow,
-}
-
-hi "PreCondit" {
-	fg = Dawn.pink,
-	bold = true,
-}
-
-hi "PreProc" {
-	fg = Dawn.pink,
-	bold = true,
-}
-
-hi "Repeat" {
-	fg = Dawn.mauve,
-}
-
-hi "StorageClass" {
-	fg = Dawn.sapphire,
-}
-
-hi "Structure" {
-	link = "Type",
-}
-
-hi "Special" {
-	fg = Dawn.mauve,
-	bold = true,
-}
-
-hi "Statement"
-
-hi "String" {
-	fg = Dawn.green,
-}
-
-hi "Tag" {
-	fg = Dawn.maroon,
-}
-
-hi "Todo" {
-	fg = Dawn.yellow,
-	bold = true,
-}
-
-hi "Type" {
-	fg = Dawn.poggers,
-	bold = true,
+	bg = Dawn.surface0,
 	italic = true,
-}
+})
 
-hi "Typedef" {
-	link = "Type",
-}
+hi("LspReferenceRead", {
+	link = "LspReferenceText",
+})
 
-hi "Underlined" {
-	underline = true,
-}
+hi("LspReferenceWrite", {
+	link = "LspReferenceText",
+})
 
-hi "Variable" {
-	fg = Dawn.text,
-}
-
--- }}}
+--- }}}
 
 -- {{{ Treesitter
 
-hi "@attribute" {
-	fg = Dawn.maroon,
-}
+hi("@constructor", {
+	link = "Delimiter",
+})
 
-hi "@constant.builtin" {
+-- For enums
+hi("@constant.builtin.rust", {
 	link = "@constant",
-}
+})
 
-hi "@constructor.lua" {
-	fg = Dawn.sky,
-	bold = true,
-}
-
-hi "@field" {
+hi("@field", {
 	fg = Dawn.lavender,
-}
+})
 
-hi "@function.builtin" {
+hi("@function.builtin", {
 	fg = Dawn.peach,
-	italic = true,
-}
+})
 
-hi "@identifier" {
-	link = "Identifier",
-}
-
-hi "@namespace" {
+hi("@namespace", {
 	fg = Dawn.blue,
-}
+})
 
-hi "@number.comment" {
-	fg = Dawn.text,
-	italic = true,
-}
-
-hi "@tag.delimiter" {
-	link = "Delimiter",
-}
-
-hi "@text.reference" {
-	fg = Dawn.sky,
-	italic = true,
-}
-
-hi "@text.todo.comment" {
-	link = "Todo",
-}
-
-hi "@text.note.comment" {
-	fg = Dawn.blue,
-}
-
-hi "@text.warning.comment" {
-	fg = Dawn.peach,
-}
-
-hi "@text.danger.comment" {
-	fg = Dawn.red,
-}
-
-hi "@type.qualifier" {
-	link = "@operator",
-}
-
-hi "@parameter" {
+hi("@parameter", {
 	fg = Dawn.maroon,
-}
+})
 
-hi "@property" {
-	link = "@attribute",
-}
-
-hi "@punctiation" {
-	link = "Delimiter",
-}
-
-hi "@variable" {
-	link = "Variable",
-}
-
-hi "@variable.builtin" {
-	fg = Dawn.rosewater,
-}
+hi("@variable.builtin", {
+	fg = Dawn.peach,
+})
 
 -- }}}
 
--- {{{ Semantic Highlights
+-- {{{ LSP Semantic Highlights
 
-hi "@lsp.mod.attribute" {
-	link = "@identifier",
-}
+hi("@lsp.mod.attribute", {
+	link = "Delimiter",
+})
 
-hi "@lsp.mod.constant" {
-	link = "@constant",
-}
-
-hi "@lsp.mod.controlFlow" {
-	fg = Dawn.sapphire,
-}
-
-hi "@lsp.mod.crateRoot.rust" {
-	fg = Dawn.pink,
-	bold = true,
-}
-
-hi "@lsp.mod.defaultLibrary" {
-	link = "@variable.builtin",
-}
-
-hi "@lsp.mod.global" {
-	fg = Dawn.sky,
-}
-
-hi "@lsp.mod.library" {
-	link = "@namespace",
-}
-
-hi "@lsp.type.boolean" {
-	link = "@boolean",
-}
-
-hi "@lsp.type.builtinType" {
-	link = "@type.builtin",
-}
-
-hi "@lsp.type.formatSpecifier" {
-	link = "@punctiation",
-}
-
-hi "@lsp.type.generic" {
-	link = "@type",
-}
-
-hi "@lsp.type.keyword" {
-	link = "@keyword",
-}
-
-hi "@lsp.type.namespace" {
-	link = "@namespace",
-}
-
-hi "@lsp.type.number" {
-	link = "@number",
-}
-
-hi "@lsp.type.operator" {
-	link = "@operator",
-}
-
-hi "@lsp.type.parameter" {
-	link = "@parameter",
-}
-
-hi "@lsp.type.property" {
-	link = "@attribute",
-}
-
-hi "@lsp.type.punctuation" {
-	link = "@punctuation",
-}
-
-hi "@lsp.type.selfKeyword" {
+hi("@lsp.mod.crateRoot", {
 	fg = Dawn.red,
 	bold = true,
-}
+})
 
-hi "@lsp.type.selfTypeKeyword" {
-	link = "@type",
-}
+hi("@lsp.mod.controlFlow", {
+	link = "Conditional",
+})
 
-hi "@lsp.type.string" {
-	link = "@string",
-}
+hi("@lsp.mod.constant", {
+	link = "Constant",
+})
 
-hi "@lsp.type.typeAlias" {
-	link = "@type",
-}
+hi("@lsp.mod.defaultLibrary", {
+	fg = Dawn.peach,
+})
 
-hi "@lsp.type.variable" {
-	link = "@variable",
-}
+hi("@lsp.mod.definition", {
+	fg = Dawn.red,
+})
 
-hi "@lsp.typemod.property" {
-	link = "@attribute",
-}
+hi("@lsp.mod.library", {
+	fg = Dawn.blue,
+})
 
-hi "@lsp.typemod.attributeBracket" {
-	link = "@punctuation",
-}
+hi("@lsp.type.enumMember", {
+	fg = Dawn.peach,
+})
 
-hi "@lsp.typemod.decorator" {
-	fg = Dawn.flamingo,
-}
+hi("@lsp.type.formatSpecifier", {
+	link = "Delimiter",
+})
 
-hi "@lsp.typemod.derive" {
-	fg = Dawn.rosewater,
-	italic = true,
-}
+hi("@lsp.type.operator", {
+	link = "Operator",
+})
 
-hi "@lsp.typemod.enum" {
-	link = "@type",
-}
+hi("@lsp.type.parameter", {
+	fg = Dawn.maroon,
+})
 
-hi "@lsp.typemod.enumMember" {
+hi("@lsp.type.property", {
+	fg = Dawn.lavender,
+})
+
+hi("@lsp.typemod.decorator.attribute", {
+	link = "Function",
+})
+
+hi("@lsp.typemod.enum", {
+	link = "Type",
+})
+
+hi("@lsp.typemod.enumMember", {
 	link = "@lsp.type.enumMember",
-}
+})
 
-hi "@lsp.typemod.function.defaultLibrary" {
-	link = "@function.builtin",
-}
-
-hi "@lsp.typemod.generic.attribute" {
-	link = "@attribute",
-}
-
-hi "@lsp.typemod.interface" {
+hi("@lsp.typemod.interface", {
 	fg = Dawn.flamingo,
 	bold = true,
 	italic = true,
-}
+})
 
-hi "@lsp.typemod.keyword.async" {
-	link = "Keyword",
-}
+hi("@lsp.typemod.macro", {
+	link = "Macro",
+})
 
-hi "@lsp.typemod.selfKeyword" {
-	link = "@lsp.type.selfKeyword",
-}
+hi("@lsp.typemod.method", {
+	link = "Function",
+})
 
-hi "@lsp.typemod.macro" {
-	link = "@macro",
-}
+hi("@lsp.typemod.namespace.crateRoot", {
+	link = "@lsp.mod.crateRoot",
+})
 
-hi "@lsp.typemod.method" {
-	link = "@function",
-}
+hi("@lsp.typemod.namespace.defaultLibrary")
 
-hi "@lsp.typemod.keyword.controlFlow" {
-	link = "@conditional",
-}
-
-hi "@lsp.typemod.namespace" {
+hi("@lsp.typemod.namespace.library", {
 	link = "@namespace",
-}
+})
 
-hi "@lsp.typemod.operator.attribute" {
-	link = "@punctuation",
-}
+hi("@lsp.typemod.struct", {
+	link = "Type",
+})
 
-hi "@lsp.typemod.struct" {
-	link = "@type",
-}
-
-hi "@lsp.typemod.typeAlias" {
-	link = "@type",
-}
-
-hi "@lsp.typemod.variable.constant" {
-	link = "@constant",
-}
+hi("@lsp.typemod.variable.global", {
+	fg = Dawn.red,
+})
 
 -- }}}
 
 -- {{{ Telescope
 
-hi "TelescopeBorder" {
-	fg = Dawn.poggers,
-	bg = Dawn.none,
-}
+hi("TelescopePromptCounter", {
+	link = "Text",
+})
 
-hi "TelescopeNormal" {
-	fg = Dawn.lavender,
-	bg = Dawn.none,
-}
-
-hi "TelescopeSelection" {
-	fg = Dawn.red,
-	bg = Dawn.none,
-}
-
-hi "TelescopeSelectionCaret" {
-	fg = Dawn.poggers,
-	bg = Dawn.none,
-}
+hi("TelescopeSelection", {
+	link = "CursorLine",
+})
 
 -- }}}
 
--- {{{ lir.nvim
-
-hi "LirFloatBorder" {
-	bg = Dawn.none,
-}
-
--- }}}
+-- vim: foldmethod=marker foldlevel=0

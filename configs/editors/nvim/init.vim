@@ -1,15 +1,15 @@
-" https://GitHub.com/AlphaKeks/.dotfiles
+lua require("globals")
 
-source ~/.vim/vimrc
+source ~/.vim/vimrc.d/options.vim
+source ~/.vim/vimrc.d/keymaps.vim
 
-set guicursor+=i:ver20
 set inccommand=split
 set laststatus=3
-set undodir=~/.config/nvim/undo
+set mouse=
 set pumblend=10
+set undodir=~/.config/nvim/undo
 set winblend=10
 
 colorscheme dawn
 
 lua require("alphakeks")
-

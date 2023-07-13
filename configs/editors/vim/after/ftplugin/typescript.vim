@@ -1,4 +1,3 @@
-" https://GitHub.com/AlphaKeks/.dotfiles
-
-set makeprg=npx
-
+compiler tsc
+setl makeprg=npx\ tsc
+setl formatprg=prettier\ --stdin-filepath\ %

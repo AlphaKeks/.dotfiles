@@ -1,15 +1,20 @@
 # https://GitHub.com/AlphaKeks/.dotfiles
 # Documentation: `nixos-help` or `man 5 configuration.nix`
 
-{ inputs, lib, config, pkgs, ... }: let user = "alphakeks"; in {
-	imports = [
-		./hardware-configuration.nix
-		inputs.home-manager.nixosModules.home-manager
-	];
+{ inputs, lib, pkgs, config, ... }:
+let
+	user = "alphakeks";
+	stateVersion = "22.11";
+	configs = ../configs;
+	packages = ./pkgs;
+	# neovim = pkgs.neovim;
+	neovim = inputs.neovim-nightly.defaultPackage.x86_64-linux;
+in
+{
+	# {{{ Nix
 
 	system = {
-		# https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-		stateVersion = "22.11";
+		stateVersion = "${stateVersion}";
 	};
 
 	nix = {
@@ -33,45 +38,14 @@
 		nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 	};
 
-	nixpkgs = {
-		config = {
-			allowUnfree = true;
-		};
+	# }}}
 
-		overlays = [
-			(final: prev: {
-				awesome-git = (prev.awesome.overrideAttrs (old:
-				let
-					extraGIPackages = with prev; [ networkmanager upower playerctl ];
-				in
-				{
-					version = "git-20230518-485661b";
-					src = prev.fetchFromGitHub {
-						owner = "awesomeWM";
-						repo = "awesome";
-						rev = "485661b706752212dac35e91bb24a0e16a677b70";
-						sha256 = "O0JqK0X8c9uj+c72ocN9i9sWiz1tvGHzN7t4WBQH504=";
-					};
-					patches = [];
-					postPatch = ''
-					patchShebangs tests/examples/_postprocess.lua
-					patchShebangs tests/examples/_postprocess_cleanup.lua
-					'';
+	# {{{ Hardware
 
-					GI_TYPELIB_PATH =
-					let
-						mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
-						extraGITypeLibPaths = prev.lib.forEach extraGIPackages mkTypeLibPath;
-					in
-					prev.lib.concatStringsSep ":" (extraGITypeLibPaths ++ [ (mkTypeLibPath prev.pango.out) ]);
-				}))
-				.override {
-					gtk3Support = true;
-					lua = prev.luajit;
-				};
-			})
-		];
-	};
+	imports = [
+		./hardware-configuration.nix
+		inputs.home-manager.nixosModules.home-manager
+	];
 
 	fileSystems = {
 		"/mnt/dev" = {
@@ -125,31 +99,9 @@
 		};
 	};
 
-	virtualisation = {
-		libvirtd = {
-			enable = true;
-		};
+	# }}}
 
-		docker = {
-			enable = true;
-
-			daemon = {
-				settings = {
-					data-root = "/mnt/docker";
-				};
-			};
-
-			rootless = {
-				enable = true;
-				setSocketVariable = true;
-				daemon = {
-					settings = {
-						data-root = "/mnt/dev/docker-rootless";
-					};
-				};
-			};
-		};
-	};
+	# {{{ ResidentSleeper
 
 	networking = {
 		hostName = "btw";
@@ -191,14 +143,32 @@
 		};
 	};
 
-	environment = {
-		systemPackages = with pkgs; [
-			gcc gnumake cmake
-			git curl wget killall bc zip unzip
-			vim-full
-			xclip mate.mate-polkit xorg.libX11
-			gnupg pinentry pinentry-gnome xdg-desktop-portal xdg-desktop-portal-gtk gtk3
-		];
+	# }}}
+
+	# {{{ System
+
+	users = {
+		users = {
+			"${user}" = {
+				isNormalUser = true;
+				initialPassword = "bensmom";
+				extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
+				shell = pkgs.zsh;
+				packages = with pkgs; [
+					htop
+					tmux
+					qemu
+					qemu_kvm
+					libvirt
+					dnsmasq
+					vde2
+					netcat-openbsd
+					bridge-utils
+					dconf
+					pciutils
+				];
+			};
+		};
 	};
 
 	programs = {
@@ -217,6 +187,42 @@
 				enableSSHSupport = true;
 			};
 		};
+	};
+
+	systemd = {
+		user = {
+			services = {
+				mate-polkit = {
+					description = "polkit-mate-authentication-agent-1";
+					wantedBy = [ "graphical-session.target" ];
+					wants = [ "graphical-session.target" ];
+					after = [ "graphical-session.target" ];
+					serviceConfig = {
+						Type = "simple";
+						ExecStart = "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1";
+						Restart = "on-failure";
+						RestartSec = 1;
+						TimeoutStopSec = 10;
+					};
+				};
+			};
+		};
+	};
+
+	environment = {
+		systemPackages = with pkgs; [
+			zsh
+			vim-full
+			curl
+			wget
+			git
+			coreutils
+			bc
+			zip unzip gzip
+			killall
+			gnupg
+			pinentry pinentry-gnome
+		];
 	};
 
 	services = {
@@ -252,13 +258,13 @@
 
 			deviceSection = ''
 				Option "TearFree" "true"
-				'';
+			'';
 
 			layout = "alpha";
 			extraLayouts.alpha = {
 				description = "The best keyboard layout ever to be created";
 				languages = [ "eng" ];
-				symbolsFile = ../configs/X11/xkb/symbols/alpha;
+				symbolsFile = "${configs}/X11/xkb/symbols/alpha";
 			};
 
 			libinput = {
@@ -288,226 +294,360 @@
 		};
 	};
 
-	systemd = {
-		user = {
-			services = {
-				mate-polkit = {
-					description = "polkit-mate-authentication-agent-1";
-					wantedBy = [ "graphical-session.target" ];
-					wants = [ "graphical-session.target" ];
-					after = [ "graphical-session.target" ];
-					serviceConfig = {
-						Type = "simple";
-						ExecStart = "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1";
-						Restart = "on-failure";
-						RestartSec = 1;
-						TimeoutStopSec = 10;
+	# }}}
+
+	# {{{ nixpkgs
+
+	nixpkgs = {
+		config = {
+			allowUnfree = true;
+		};
+
+		overlays = [
+			(final: prev: {
+				awesome-git = (prev.awesome.overrideAttrs (old:
+				let
+					extraGIPackages = with prev; [ networkmanager upower playerctl ];
+				in
+				{
+					version = "git-20230518-485661b";
+					src = prev.fetchFromGitHub {
+						owner = "awesomeWM";
+						repo = "awesome";
+						rev = "485661b706752212dac35e91bb24a0e16a677b70";
+						sha256 = "O0JqK0X8c9uj+c72ocN9i9sWiz1tvGHzN7t4WBQH504=";
+					};
+					patches = [];
+					postPatch = ''
+						patchShebangs tests/examples/_postprocess.lua
+						patchShebangs tests/examples/_postprocess_cleanup.lua
+					'';
+
+					GI_TYPELIB_PATH =
+					let
+						mkTypeLibPath = pkg: "${pkg}/lib/girepository-1.0";
+						extraGITypeLibPaths = prev.lib.forEach extraGIPackages mkTypeLibPath;
+					in
+					prev.lib.concatStringsSep ":" (extraGITypeLibPaths ++ [ (mkTypeLibPath prev.pango.out) ]);
+				}))
+				.override {
+					gtk3Support = true;
+					lua = prev.luajit;
+				};
+			})
+		];
+
+	};
+
+	# }}}
+
+	# {{{ Virtualization
+
+	virtualisation = {
+		libvirtd = {
+			enable = true;
+		};
+
+		docker = {
+			enable = true;
+
+			daemon = {
+				settings = {
+					data-root = "/mnt/docker";
+				};
+			};
+
+			rootless = {
+				enable = true;
+				setSocketVariable = true;
+				daemon = {
+					settings = {
+						data-root = "/mnt/dev/docker-rootless";
 					};
 				};
 			};
 		};
 	};
 
-	users.users.${user} = {
-		isNormalUser = true;
-		initialPassword = "bensmom";
-		extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
-		shell = pkgs.zsh;
-		packages = [];
+	# }}}
+
+	# {{{ home-manager
+
+	home-manager = {
+		users = {
+			"${user}" = { stdenv, lib, pkgs, ... }: {
+
+				# {{{ nixpkgs
+
+				nixpkgs = {
+					config = {
+						allowUnfree = true;
+					};
+
+					overlays = [
+						(final: prev: {
+							osu-git = prev.callPackage "${packages}/osu-lazer-bin.nix" {
+								src = inputs.osu;
+								inherit (final) lib stdenv fetchurl fetchzip appimageTools;
+							};
+						})
+
+						(final: prev: {
+							inkdrop = prev.callPackage "${packages}/inkdrop.nix" {
+								inherit (final)
+									stdenv
+									lib
+									libxkbcommon
+									libdrm
+									alsaLib
+									atk
+									at-spi2-atk
+									cairo
+									cups
+									dbus
+									dpkg
+									expat
+									fontconfig
+									freetype
+									fetchurl
+									gdk-pixbuf
+									glib
+									gtk2
+									gtk3
+									libpulseaudio
+									makeWrapper
+									nspr
+									nss
+									pango
+									udev
+									xorg
+									libuuid
+									at-spi2-core
+									libsecret
+									coreutils
+									mesa
+									gnome;
+							};
+						})
+					];
+				};
+
+				# }}}
+
+				# {{{ Home
+
+				home = {
+					stateVersion = "${stateVersion}";
+					username = "${user}";
+					homeDirectory = "/home/${user}";
+					packages = with pkgs; [
+						zsh
+						"${neovim}"
+						wezterm
+						jetbrains-mono
+						firefox
+
+						# CLI tools
+						jq
+						fzf
+						bat
+						exa
+						delta
+						ripgrep-all
+						btop
+						neofetch
+						tokei
+						hyperfine
+						starship
+						lazygit
+						websocat
+						gh
+						direnv nix-direnv
+						just
+						yt-dlp
+						pass
+						gdb
+						perf-tools
+						cargo-flamegraph
+						cargo-expand
+						cargo-watch
+						rustup
+
+						# Dev
+						postgresql
+						docker-compose
+						podman-compose
+						lua-language-server
+						taplo
+						nodePackages_latest.typescript-language-server
+						nodePackages_latest.prettier
+						nodePackages_latest.eslint
+
+						# Desktop
+						gparted
+						pavucontrol
+						flameshot
+						xfce.thunar
+						obs-studio
+						showmethekey
+						peek
+						gimp
+						easyeffects
+						discord
+						signal-desktop
+						picom
+						rofi
+						inkdrop
+						obsidian
+						luajitPackages.lgi # for awesome
+					];
+
+					file = {
+						".bashrc" = {
+							source = "${configs}/shells/bash/bashrc";
+						};
+						".zlogin" = {
+							source = "${configs}/shells/zsh/zlogin";
+						};
+						".zshenv" = {
+							source = "${configs}/shells/zsh/zshenv";
+						};
+						".zshrc" = {
+							source = "${configs}/shells/zsh/zshrc";
+						};
+						".zhist" = {
+							source = "${configs}/shells/zsh/zhist";
+						};
+						".zsh/plugins" = {
+							source = "${configs}/shells/zsh/plugins";
+							recursive = true;
+						};
+						".Xresources" = {
+							source = "${configs}/desktop/.Xresources";
+						};
+						".xprofile" = {
+							source = "${configs}/desktop/.xprofile";
+						};
+						"gtkrc" = {
+							source = "${configs}/desktop/gtkrc";
+						};
+						"gtkrc-2.0" = {
+							source = "${configs}/desktop/gtkrc-2.0";
+						};
+						".icons" = {
+							source = "${configs}/desktop/.icons";
+							recursive = true;
+						};
+						".themes" = {
+							source = "${configs}/desktop/.themes";
+							recursive = true;
+						};
+						".config/bat" = {
+							source = "${configs}/cli/bat";
+							recursive = true;
+						};
+						".config/btop" = {
+							source = "${configs}/cli/btop";
+							recursive = true;
+						};
+						".config/neofetch" = {
+							source = "${configs}/cli/neofetch";
+							recursive = true;
+						};
+						".config/tmux" = {
+							source = "${configs}/cli/tmux";
+							recursive = true;
+						};
+						".config/dunst" = {
+							source = "${configs}/desktop/dunst";
+							recursive = true;
+						};
+						".config/gtkrc" = {
+							source = "${configs}/desktop/gtkrc";
+						};
+						".config/gtkrc-2.0" = {
+							source = "${configs}/desktop/gtkrc-2.0";
+						};
+						".config/gtk-3.0" = {
+							source = "${configs}/desktop/gtk-3.0";
+							recursive = true;
+						};
+						".config/gtk-4.0" = {
+							source = "${configs}/desktop/gtk-4.0";
+							recursive = true;
+						};
+						".config/picom" = {
+							source = "${configs}/desktop/picom";
+							recursive = true;
+						};
+						".config/rofi" = {
+							source = "${configs}/desktop/rofi";
+							recursive = true;
+						};
+						".config/waybar" = {
+							source = "${configs}/desktop/waybar";
+							recursive = true;
+						};
+						".config/alacritty" = {
+							source = "${configs}/terminals/alacritty";
+							recursive = true;
+						};
+						".config/kitty" = {
+							source = "${configs}/terminals/kitty";
+							recursive = true;
+						};
+						".config/wezterm" = {
+							source = "${configs}/terminals/wezterm";
+							recursive = true;
+						};
+						".config/lazygit" = {
+							source = "${configs}/tools/lazygit";
+							recursive = true;
+						};
+						".config/rustfmt" = {
+							source = "${configs}/tools/rustfmt";
+							recursive = true;
+						};
+						".config/prettier" = {
+							source = "${configs}/tools/prettier";
+							recursive = true;
+						};
+						".config/starship.toml" = {
+							source = "${configs}/shells/prompts/starship.toml";
+						};
+					};
+				};
+
+				programs = {
+					home-manager = {
+						enable = true;
+					};
+
+					zsh = {
+						enable = true;
+					};
+
+					direnv = {
+						enable = true;
+						nix-direnv = {
+							enable = true;
+						};
+					};
+				};
+
+				systemd = {
+					user = {
+						startServices = "sd-switch";
+					};
+				};
+
+				# }}}
+
+			};
+		};
 	};
 
-	home-manager.users.${user} = { config, lib, stdenv, pkgs, ... }: {
-		nixpkgs = {
-			config = {
-				allowUnfree = true;
-			};
-
-			overlays = [
-				(final: prev: {
-					osu-git = prev.callPackage ./pkgs/osu-lazer-bin.nix {
-						src = inputs.osu;
-						inherit (final) lib stdenv fetchurl fetchzip appimageTools;
-					};
-				})
-
-				(final: prev: {
-					inkdrop = prev.callPackage ./pkgs/inkdrop.nix {
-						inherit (final)
-							stdenv
-							lib
-							libxkbcommon
-							libdrm
-							alsaLib
-							atk
-							at-spi2-atk
-							cairo
-							cups
-							dbus
-							dpkg
-							expat
-							fontconfig
-							freetype
-							fetchurl
-							gdk-pixbuf
-							glib
-							gtk2
-							gtk3
-							libpulseaudio
-							makeWrapper
-							nspr
-							nss
-							pango
-							udev
-							xorg
-							libuuid
-							at-spi2-core
-							libsecret
-							coreutils
-							mesa
-							gnome;
-					};
-				})
-			];
-		};
-
-		home = {
-			stateVersion = "22.11";
-			username = "${user}";
-			homeDirectory = "/home/${user}";
-
-			packages = with pkgs; [
-				# Basic shit
-				zsh wezterm tmux firefox
-				btop neofetch pavucontrol tokei gparted
-				luajitPackages.lgi picom rofi flameshot
-				discord signal-desktop xfce.thunar easyeffects gimp yt-dlp
-				pass
-				peek
-
-				# Games
-				osu-git steam minecraft
-
-				# Dev
-				inputs.neovim-nightly.defaultPackage.x86_64-linux # neovim nightly
-				# neovim # neovim stable
-				direnv nix-direnv
-				gh
-				lazygit rustup just jq fzf
-				nodePackages_latest.typescript-language-server nodePackages.prettier nodePackages.eslint
-				taplo nil lua-language-server
-				docker-compose podman-compose
-				postgresql delta
-				inkdrop obsidian
-
-				# Virtualisation
-				qemu qemu_kvm libvirt dnsmasq vde2 netcat-openbsd
-				bridge-utils dconf pciutils virt-manager looking-glass-client
-
-				# Twitch
-				obs-studio showmethekey
-			];
-
-			file = {
-				".zlogin".source = ../configs/shells/zsh/zlogin;
-				".zshenv".source = ../configs/shells/zsh/zshenv;
-				".zshrc".source = ../configs/shells/zsh/zshrc;
-				".bashrc".source = ../configs/shells/bash/bashrc;
-				".config/btop" = {
-					source = ../configs/cli/btop;
-					recursive = true;
-				};
-				".config/neofetch" = {
-					source = ../configs/cli/neofetch;
-					recursive = true;
-				};
-				".config/tmux" = {
-					source = ../configs/cli/tmux;
-					recursive = true;
-				};
-				".config/wezterm" = {
-					source = ../configs/terminals/wezterm;
-					recursive = true;
-				};
-				".config/alacritty" = {
-					source = ../configs/terminals/alacritty;
-					recursive = true;
-				};
-				".config/kitty" = {
-					source = ../configs/terminals/kitty;
-					recursive = true;
-				};
-				".xprofile".source = ../configs/desktop/.xprofile;
-				".Xresources".source = ../configs/desktop/.Xresources;
-				".icons".source = ../configs/desktop/icons;
-				".themes".source = ../configs/desktop/themes;
-				".config/gtkrc".source = ../configs/desktop/gtkrc;
-				".config/gtkrc-2.0".source = ../configs/desktop/gtkrc-2.0;
-				".config/gtk-3.0" = {
-					source = ../configs/desktop/gtk-3.0;
-					recursive = true;
-				};
-				".config/gtk-4.0" = {
-					source = ../configs/desktop/gtk-4.0;
-					recursive = true;
-				};
-				".config/awesome" = {
-					source = ../configs/desktop/awesome;
-					recursive = true;
-				};
-				".config/picom" = {
-					source = ../configs/desktop/picom;
-					recursive = true;
-				};
-				".config/rofi" = {
-					source = ../configs/desktop/rofi;
-					recursive = true;
-				};
-				".config/clippy" = {
-					source = ../configs/tools/clippy;
-					recursive = true;
-				};
-				".config/rustfmt" = {
-					source = ../configs/tools/rustfmt;
-					recursive = true;
-				};
-				".config/lazygit" = {
-					source = ../configs/tools/lazygit;
-					recursive = true;
-				};
-				".config/bat" = {
-					source = ../configs/cli/bat;
-					recursive = true;
-				};
-				".config/starship.toml".source = ../configs/shells/prompts/starship.toml;
-				".local/share/fonts" = {
-					source = ../configs/desktop/fonts;
-					recursive = true;
-				};
-			};
-		};
-
-		programs = {
-			home-manager = {
-				enable = true;
-			};
-
-			zsh = {
-				enable = true;
-			};
-
-			direnv = {
-				enable = true;
-				nix-direnv = {
-					enable = true;
-				};
-			};
-		};
-
-		systemd = {
-			user = {
-				startServices = "sd-switch";
-			};
-		};
-	};
+	# }}}
 }
 
+# vim: foldmethod=marker foldlevel=0 indentexpr=c

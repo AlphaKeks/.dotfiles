@@ -1,7 +1,4 @@
-" https://GitHub.com/AlphaKeks/.dotfiles
-
-setlocal expandtab
-setlocal shiftwidth=2
-setlocal tabstop=2
-setlocal softtabstop=2
-
+setl noexpandtab
+setl tabstop=2
+setl softtabstop=2
+setl shiftwidth=2

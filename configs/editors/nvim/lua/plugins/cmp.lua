@@ -2,9 +2,11 @@ return {
 	"hrsh7th/nvim-cmp",
 
 	event = "InsertEnter",
-	enabled = not os.getenv("CMP"),
 	dependencies = {
+		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-nvim-lsp-signature-help",
+		"saadparwaiz1/cmp_luasnip",
 		"L3MON4D3/LuaSnip",
 	},
 
@@ -41,7 +43,10 @@ return {
 			}),
 
 			sources = {
+				{ name = "luasnip" },
 				{ name = "nvim_lsp" },
+				{ name = "nvim_lsp_signature_help" },
+				{ name = "path" },
 			},
 
 			formatting = {
@@ -53,7 +58,7 @@ return {
 			},
 
 			experimental = {
-				ghost_text = { hl_group = "Comment" },
+				ghost_text = "Comment",
 			},
 
 			views = {
@@ -71,7 +76,7 @@ return {
 		autocmd("InsertLeave", {
 			group = augroup("luasnip-clean-snippet-nodes"),
 			callback = function()
-				luasnip.session.current_nodes[get_current_buf()] = nil
+				luasnip.session.current_nodes[bufnr()] = nil
 			end,
 		})
 	end,

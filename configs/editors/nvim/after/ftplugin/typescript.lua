@@ -1,10 +1,8 @@
--- https://GitHub.com/AlphaKeks/.dotfiles
-
 source("~/.vim/after/ftplugin/typescript.vim")
 
-local config = require("alphakeks.lsp").configs.typescript
+local lsp = require("alphakeks.lsp.typescript")
 
-vim.lsp.start(config.tsserver())
+vim.lsp.start(lsp.tsserver())
 
-config.prettier()
-config.eslint()
+lsp.prettier()
+lsp.eslint()
