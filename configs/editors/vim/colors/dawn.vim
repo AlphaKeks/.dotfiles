@@ -83,10 +83,10 @@ hi! link lCursor Cursor
 hi! link CursorColumn ColorColumn
 hi! link CursorLine CursorColumn
 hi! Directory guifg=#89B4FA
-hi! DiffAdd guifg=#11111B guibg=#A6E3A1
-hi! DiffChange guifg=#11111B guibg=#89B4FA
-hi! DiffDelete guifg=#11111B guibg=#F38BA8
-hi! DiffText guifg=#11111B guibg=#89B4FA
+hi! DiffAdd guifg=#A6E3A1 guibg=NONE
+hi! DiffChange guifg=#89B4FA guibg=NONE
+hi! DiffDelete guifg=#F38BA8 guibg=NONE
+hi! DiffText guifg=#89B4FA guibg=NONE
 hi! EndOfBuffer guifg=#CBA6F7
 hi! ErrorMsg guifg=#F38BA8 guibg=NONE
 hi! VertSplit guifg=NONE guibg=#B4BEFE

@@ -313,4 +313,69 @@ hi("TelescopeSelection", {
 
 -- }}}
 
+-- {{{ Neogit
+
+hi("NeogitBranch", {
+	fg = Dawn.pink,
+})
+
+hi("NeogitRemote", {
+	fg = Dawn.pink,
+})
+
+hi("NeogitHunkHeader", {
+	fg = Dawn.blue,
+	bg = Dawn.base,
+})
+
+hi("NeogitHunkHeaderHighlight", {
+	link = "NeogitHunkHeader",
+})
+
+hi("NeogitDiffContext", {
+	fg = Dawn.text,
+	bg = Dawn.base,
+})
+
+hi("NeogitDiffContextHighlight", {
+	link = "NeogitDiffContext",
+})
+
+hi("NeogitDiffAdd", {
+	fg = Dawn.green,
+	bg = Dawn.base,
+})
+
+hi("NeogitDiffDelete", {
+	fg = Dawn.red,
+	bg = Dawn.base,
+})
+
+hi("NeogitDiffAddHighlight", {
+	link = "NeogitDiffAdd",
+})
+
+hi("NeogitDiffDeleteHighlight", {
+	link = "NeogitDiffDelete",
+})
+
+hi("NeogitCommitViewHeader", {
+	fg = Dawn.blue,
+	bg = Dawn.base,
+})
+
+hi("NeogitNotificationInfo", {
+	fg = Dawn.blue,
+})
+
+hi("NeogitNotificationWarn", {
+	fg = Dawn.yellow,
+})
+
+hi("NeogitNotificationError", {
+	fg = Dawn.red,
+})
+
+-- }}}
+
 -- vim: foldmethod=marker foldlevel=0
