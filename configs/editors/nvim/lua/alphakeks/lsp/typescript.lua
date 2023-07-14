@@ -85,7 +85,7 @@ local function eslint()
 				return
 			end
 
-			local command = { "eslint", "--format", "json", expand("%") }
+			local command = { "eslint_d", "--format", "json", expand("%") }
 
 			vim.system(command, {}, vim.schedule_wrap(function(result)
 				local output = vim.json.decode(result.stdout)
@@ -111,6 +111,18 @@ local function eslint()
 					open = false,
 					title = "ESLint",
 				})
+			end))
+		end,
+	})
+
+	autocmd("VimLeave", {
+		desc = "Stop eslint_d before quitting",
+		group = augroup("kill-eslint-daemon"),
+		callback = function()
+			vim.system({ "eslint_d", "stop" }, { text = true }, vim.schedule_wrap(function(result)
+				if result.code ~= 0 then
+					vim.error("Failed to kill eslint_d: %s", vim.inspect(result))
+				end
 			end))
 		end,
 	})
