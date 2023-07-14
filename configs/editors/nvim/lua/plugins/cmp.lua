@@ -3,10 +3,7 @@ return {
 
 	event = "InsertEnter",
 	dependencies = {
-		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-nvim-lsp-signature-help",
-		"saadparwaiz1/cmp_luasnip",
 		"L3MON4D3/LuaSnip",
 	},
 
@@ -43,10 +40,7 @@ return {
 			}),
 
 			sources = {
-				{ name = "luasnip" },
 				{ name = "nvim_lsp" },
-				{ name = "nvim_lsp_signature_help" },
-				{ name = "path" },
 			},
 
 			formatting = {

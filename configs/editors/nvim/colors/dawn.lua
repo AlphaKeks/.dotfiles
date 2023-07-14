@@ -243,6 +243,10 @@ hi("@lsp.type.formatSpecifier", {
 	link = "Delimiter",
 })
 
+hi("@lsp.type.namespace", {
+	link = "@namespace",
+})
+
 hi("@lsp.type.operator", {
 	link = "Operator",
 })
@@ -253,6 +257,14 @@ hi("@lsp.type.parameter", {
 
 hi("@lsp.type.property", {
 	fg = Dawn.lavender,
+})
+
+hi("@lsp.type.selfKeyword", {
+	fg = Dawn.red,
+})
+
+hi("@lsp.type.typeAlias", {
+	link = "Type",
 })
 
 hi("@lsp.typemod.decorator.attribute", {
@@ -292,6 +304,10 @@ hi("@lsp.typemod.namespace.library", {
 })
 
 hi("@lsp.typemod.struct", {
+	link = "Type",
+})
+
+hi("@lsp.typemod.typeAlias", {
 	link = "Type",
 })
 

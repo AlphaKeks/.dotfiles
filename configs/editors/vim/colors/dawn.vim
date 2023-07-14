@@ -87,7 +87,7 @@ hi! DiffAdd guifg=#A6E3A1 guibg=NONE
 hi! DiffChange guifg=#89B4FA guibg=NONE
 hi! DiffDelete guifg=#F38BA8 guibg=NONE
 hi! DiffText guifg=#89B4FA guibg=NONE
-hi! EndOfBuffer guifg=#CBA6F7
+hi! EndOfBuffer guifg=#3C5E7F
 hi! ErrorMsg guifg=#F38BA8 guibg=NONE
 hi! VertSplit guifg=NONE guibg=#B4BEFE
 hi! Folded guifg=#3C5E7F guibg=#181825 gui=italic

@@ -1,5 +1,3 @@
-local Iterator = require("scratch.iterator")
-
 local M = {}
 
 M.find_root = function(pattern)
@@ -120,7 +118,9 @@ autocmd("LspAttach", {
 			M.format_on_save(opts.buf)
 		end
 
-		if client.server_capabilities.inlayHintProvider then
+		if client.server_capabilities.inlayHintProvider
+				and client.name ~= "rust-analyzer"
+		then
 			M.inlay_hints(opts.buf)
 		end
 
@@ -162,9 +162,11 @@ autocmd("LspAttach", {
 
 		usercmd("LspInfo", function()
 			local servers = vim.lsp.get_active_clients()
-			local list = Iterator:new(servers):fold("Attached LSP Servers:", function(list, server)
-				return format("%s\n • %s (%s)", list, server.name, server.id)
-			end)
+			local list = "Attached LSP Servers:"
+
+			for _, server in ipairs(servers) do
+				list = format("%s\n • %s (%s)", list, server.name, server.id)
+			end
 
 			vim.info(list)
 		end)
