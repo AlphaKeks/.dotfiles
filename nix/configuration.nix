@@ -463,6 +463,9 @@ in
 						websocat
 						gh
 						direnv nix-direnv
+						gnumake
+						cmake
+						meson
 						just
 						yt-dlp
 						pass
@@ -474,6 +477,7 @@ in
 						rustup
 
 						# Dev
+						gcc
 						postgresql
 						docker-compose
 						podman-compose
@@ -482,8 +486,10 @@ in
 						nodePackages_latest.typescript-language-server
 						nodePackages_latest.prettier
 						nodePackages_latest.eslint
+						nodePackages_latest.eslint_d
 
 						# Desktop
+						xclip
 						gparted
 						pavucontrol
 						flameshot
@@ -500,6 +506,7 @@ in
 						inkdrop
 						obsidian
 						luajitPackages.lgi # for awesome
+						osu-git
 					];
 
 					file = {
