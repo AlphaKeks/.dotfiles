@@ -487,6 +487,7 @@ in
 						nodePackages_latest.prettier
 						nodePackages_latest.eslint
 						nodePackages_latest.eslint_d
+						pgformatter
 
 						# Desktop
 						xclip
