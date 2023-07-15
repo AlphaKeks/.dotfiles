@@ -542,11 +542,11 @@ in
 							source = "${configs}/desktop/gtkrc-2.0";
 						};
 						".icons" = {
-							source = "${configs}/desktop/.icons";
+							source = "${configs}/desktop/icons";
 							recursive = true;
 						};
 						".themes" = {
-							source = "${configs}/desktop/.themes";
+							source = "${configs}/desktop/themes";
 							recursive = true;
 						};
 						".config/bat" = {
