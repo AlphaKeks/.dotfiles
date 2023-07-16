@@ -3,9 +3,9 @@
 # https://GitHub.com/AlphaKeks/.dotfiles
 
 # QoL
-alias ls="ls -hl --color=auto"
-alias l="exa -gl --icons"
-alias la="exa -agl --icons"
+alias ls="ls -Fhl --color=auto"
+alias l="exa -Fgl --icons"
+alias la="exa -aFgl --icons"
 alias cat="bat"
 alias mkdir="mkdir -p"
 alias grep="grep --color=auto"
