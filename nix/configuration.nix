@@ -453,6 +453,7 @@ in
 						bat
 						exa
 						delta
+						ripgrep
 						ripgrep-all
 						btop
 						neofetch
@@ -499,6 +500,7 @@ in
 						showmethekey
 						peek
 						gimp
+						gthumb
 						easyeffects
 						discord
 						signal-desktop
@@ -508,6 +510,7 @@ in
 						obsidian
 						luajitPackages.lgi # for awesome
 						osu-git
+						evince
 					];
 
 					file = {
@@ -535,12 +538,6 @@ in
 						};
 						".xprofile" = {
 							source = "${configs}/desktop/.xprofile";
-						};
-						"gtkrc" = {
-							source = "${configs}/desktop/gtkrc";
-						};
-						"gtkrc-2.0" = {
-							source = "${configs}/desktop/gtkrc-2.0";
 						};
 						".icons" = {
 							source = "${configs}/desktop/icons";
@@ -658,4 +655,4 @@ in
 	# }}}
 }
 
-# vim: foldmethod=marker foldlevel=0 indentexpr=c
+# vim: foldmethod=marker foldlevel=0
