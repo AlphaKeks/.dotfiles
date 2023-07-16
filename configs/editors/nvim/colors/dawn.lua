@@ -198,6 +198,10 @@ hi("@parameter", {
 	fg = Dawn.maroon,
 })
 
+hi("@property", {
+	fg = Dawn.red,
+})
+
 hi("@variable.builtin", {
 	fg = Dawn.peach,
 })
@@ -271,6 +275,10 @@ hi("@lsp.typemod.decorator.attribute", {
 	link = "Function",
 })
 
+hi("@lsp.typemod.derive", {
+	link = "@lsp.typemod.interface",
+})
+
 hi("@lsp.typemod.enum", {
 	link = "Type",
 })
@@ -301,6 +309,10 @@ hi("@lsp.typemod.namespace.defaultLibrary")
 
 hi("@lsp.typemod.namespace.library", {
 	link = "@namespace",
+})
+
+hi("@lsp.typemod.property", {
+	link = "@lsp.type.property",
 })
 
 hi("@lsp.typemod.struct", {

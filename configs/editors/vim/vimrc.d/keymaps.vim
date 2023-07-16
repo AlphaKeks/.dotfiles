@@ -1,4 +1,5 @@
 let g:mapleader = " "
+map <Space> <Nop>
 
 nnoremap <Leader>e :Explore<CR>
 nnoremap <C-s> :write<CR>

@@ -39,6 +39,7 @@ local function prettier()
 	autocmd("BufWritePost", {
 		desc = "Run prettier after saving",
 		group = augroup("prettier-format-on-save"),
+		buffer = bufnr(),
 		callback = function()
 			local command = { "prettier", "--write" }
 
@@ -80,6 +81,7 @@ local function eslint()
 	autocmd("BufWritePost", {
 		desc = "Run eslint after saving",
 		group = augroup("eslint-on-save"),
+		buffer = bufnr(),
 		callback = function()
 			if not vim.fs.find(files, { upward = true })[1] then
 				return
