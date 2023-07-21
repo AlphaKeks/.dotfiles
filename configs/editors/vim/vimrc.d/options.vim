@@ -18,7 +18,7 @@ set backspace=indent,eol,start
 set belloff=all
 
 " Funny gray line
-set colorcolumn=100
+set colorcolumn=101
 
 " Completion
 set complete=.,w
