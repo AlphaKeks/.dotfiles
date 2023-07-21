@@ -71,8 +71,8 @@ function SendToQf(item)
 
 	setqflist({}, "r", { items = lines, title = "Messages" })
 	copen()
+	vim.keymap.set("n", "<CR>", "<CR>0w\"+y$", { buffer = true })
 	norm("G")
-	nvim_input("<CR>")
 
 	return item
 end

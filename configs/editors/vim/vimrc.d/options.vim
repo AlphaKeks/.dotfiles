@@ -71,7 +71,7 @@ set formatoptions=crqn2lj
 set guicursor=a:block,v-r-cr-o:hor20,i:ver20
 set guifont=JetBrains\ Mono
 set history=999
-set iskeyword=a-z,A-Z,45,48-57,_,-,;
+set iskeyword=a-z,A-Z,45,48-57,_,-
 set laststatus=2
 set list
 set listchars=tab:│\ ,trail:-

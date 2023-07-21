@@ -120,19 +120,19 @@ hi("DiagnosticUnderlineDeprecated")
 hi("NormalFloat", {
 	fg = Dawn.text,
 	bg = Dawn.none,
-	blend = 30,
+	blend = 20,
 })
 
 hi("FloatBorder", {
 	fg = Dawn.lavender,
 	bg = Dawn.none,
-	blend = 30,
+	blend = 20,
 })
 
 hi("FloatTitle", {
 	fg = Dawn.blue,
 	bg = Dawn.none,
-	blend = 30,
+	blend = 20,
 })
 
 hi("WinBar", {
@@ -152,7 +152,6 @@ hi("WinSeparator", {
 hi("LspInlayHint", {
 	fg = Dawn.slate,
 	italic = true,
-	blend = 50,
 })
 
 hi("LspReferenceText", {

@@ -225,6 +225,12 @@ in
 		];
 	};
 
+	xdg = {
+		portal = {
+			enable = true;
+		};
+	};
+
 	services = {
 		openssh = {
 			enable = true;
@@ -291,6 +297,10 @@ in
 			gnome-keyring = {
 				enable = true;
 			};
+		};
+
+		flatpak = {
+			enable = true;
 		};
 	};
 

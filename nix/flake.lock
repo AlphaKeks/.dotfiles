@@ -40,11 +40,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1689495092,
-        "narHash": "sha256-yZu2j5FpLZEPhJQQutMCPTxa1VMigLPabLYvLTq6ASM=",
+        "lastModified": 1689791618,
+        "narHash": "sha256-+GbknQxvqytQDecu8vyAAUipP7DZexdckBbByykVJW0=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "2f84579a70b8c74e5ebb37299a0c3ba279f09382",
+        "rev": "44ba0184376c1bf017b8f2646a6040fb66d9c3e8",
         "type": "github"
       },
       "original": {
@@ -60,11 +60,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1689511810,
-        "narHash": "sha256-HfyoAybF5c+AZB4RofCXnMcJdjgcvU23g1f/PBu2i2Y=",
+        "lastModified": 1689785735,
+        "narHash": "sha256-QdjWbe4oNjIazmOrbJ9u5GadaqTV44RiYbiZoLgNKC8=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "f660b794808ac809ee8cafe82ddd824840bc8e2c",
+        "rev": "86ce3878d662c1dbfec61a5ad8e7c16c4283ed5c",
         "type": "github"
       },
       "original": {
@@ -101,15 +101,15 @@
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "rev": "645ff62e09d294a30de823cb568e9c6d68e92606",
         "type": "github"
       }
     },
     "osu": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-TYMsLRgQheNEBzqkxife4T1GrhBFR0ixPq+zPNxfn88=",
+        "narHash": "sha256-f1FgYODn61CjStXiFqZRozaT2EKJAlOZNGs91J/J8nM=",
         "type": "file",
         "url": "https://github.com/ppy/osu/releases/latest/download/osu.AppImage"
       },
