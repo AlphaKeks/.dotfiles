@@ -26,9 +26,6 @@ set completeopt=menu,menuone,preview,noinsert,noselect
 " TODO: set completepopup
 set pumheight=10
 
-" Display some error messages that would otherwise not be displayed
-set debug=msg
-
 " Delete multibyte characters one byte at a time
 set delcombine
 
