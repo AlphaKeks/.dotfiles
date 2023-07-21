@@ -24,6 +24,7 @@ stdpath = vim.fn.stdpath
 readfile = vim.fn.readfile
 expand = vim.fn.expand
 mode = vim.fn.mode
+feedkeys = vim.fn.feedkeys
 
 -- vim.api
 set_hl = vim.api.nvim_set_hl

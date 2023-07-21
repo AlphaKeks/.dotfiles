@@ -60,7 +60,7 @@ return {
 	},
 
 	on_attach = function(client, bufnr)
-		SendToQf(client)
+		-- SendToQf(client)
 
 		usercmd("CargoReload", function()
 			vim.lsp.buf_request(bufnr, "rust-analyzer/reloadWorkspace", nil, function(err)
