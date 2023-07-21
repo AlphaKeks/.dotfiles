@@ -603,16 +603,16 @@ in
 							source = "${configs}/desktop/waybar";
 							recursive = true;
 						};
+						".config/bspwm" = {
+							source = "${configs}/desktop/bspwm";
+							recursive = true;
+						};
 						".config/alacritty" = {
 							source = "${configs}/terminals/alacritty";
 							recursive = true;
 						};
 						".config/kitty" = {
 							source = "${configs}/terminals/kitty";
-							recursive = true;
-						};
-						".config/wezterm" = {
-							source = "${configs}/terminals/wezterm";
 							recursive = true;
 						};
 						".config/lazygit" = {
