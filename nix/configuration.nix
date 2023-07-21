@@ -439,6 +439,12 @@ in
 									gnome;
 							};
 						})
+
+						(final: prev: {
+							mission-center = prev.callPackage "${packages}/mission-center/default.nix" {
+								inherit (final) pkgs;
+							};
+						})
 					];
 				};
 
@@ -521,6 +527,7 @@ in
 						luajitPackages.lgi # for awesome
 						osu-git
 						evince
+						mission-center
 					];
 
 					file = {
