@@ -72,7 +72,7 @@ function SendToQf(item)
 	setqflist({}, "r", { items = lines, title = "Messages" })
 	copen()
 	norm("G")
-	vim.keymap.set("n", "<CR>", "<CR>0w\"+y$", { buffer = true })
+	vim.keymap.set("n", "<CR>", "<CR>my0w\"+y$`y", { buffer = true })
 
 	return item
 end
@@ -84,8 +84,8 @@ end)
 
 function LuaRepl()
 	local function callback(text)
-		local result = eval(text or "nil")
-		append(line("$") - 1, result or "")
+		local result = eval(text)
+		append(line("$") - 1, result)
 	end
 
 	new()
