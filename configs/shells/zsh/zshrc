@@ -15,7 +15,7 @@ bindkey -v
 
 # How is this not default?
 bindkey "^H" backward-kill-word
-bindkey "^r" history-incremental-search-backward
+# bindkey "^r" history-incremental-search-backward
 KEYTIMEOUT=1
 
 # Load plugins

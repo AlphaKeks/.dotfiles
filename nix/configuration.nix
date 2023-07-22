@@ -180,6 +180,10 @@ in
 			enable = true;
 		};
 
+		fzf = {
+			keybindings = true;
+		};
+
 		gnupg = {
 			agent = {
 				enable = true;
