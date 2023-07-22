@@ -28,12 +28,13 @@ return {
 		["rust-analyzer"] = {
 			cargo = {
 				features = "all",
+			},
 
-				check = {
-					command = "clippy",
-					extraArgs = { "--tests" },
-					features = "all",
-				},
+			checkOnSave = true,
+			check = {
+				command = "clippy",
+				extraArgs = { "--tests" },
+				features = "all",
 			},
 
 			imports = {
