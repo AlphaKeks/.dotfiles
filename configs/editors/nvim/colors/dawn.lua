@@ -201,6 +201,11 @@ hi("@property", {
 	fg = Dawn.red,
 })
 
+hi("@text.reference", {
+	fg = Dawn.mauve,
+	italic = true,
+})
+
 hi("@variable.builtin", {
 	fg = Dawn.peach,
 })

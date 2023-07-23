@@ -25,6 +25,18 @@ end)
 
 keymap("n", "<Leader>gs", ":LG<CR>")
 
+usercmd("Git", function(cmd)
+	local command = vim.tbl_append({ "git" }, cmd.fargs)
+
+	vim.system(command, { text = true }, vim.schedule_wrap(function(result)
+		if result.code ~= 0 then
+			vim.error("Failed to run git command: %s", vim.inspect(result))
+		end
+
+		SendToQf(result.stdout, "Git output")
+	end))
+end, { nargs = "+" })
+
 function Reload(...)
 	local plenary_installed, plenary = pcall(require, "plenary.reload")
 
@@ -35,7 +47,7 @@ function Reload(...)
 	return require(...)
 end
 
-function SendToQf(item)
+function SendToQf(item, custom_title)
 	if not item then
 		return item
 	end
@@ -72,7 +84,7 @@ function SendToQf(item)
 		end
 	end
 
-	setqflist({}, "r", { items = lines, title = "Messages" })
+	setqflist({}, "r", { items = lines, title = custom_title or "Messages" })
 	copen()
 	norm("G")
 	vim.keymap.set("n", "<CR>", "<CR>my0w\"+y$`y", { buffer = true })
