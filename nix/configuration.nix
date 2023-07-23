@@ -4,6 +4,7 @@
 { inputs, lib, pkgs, config, ... }:
 let
 	user = "alphakeks";
+	home = "/home/${user}";
 	stateVersion = "22.11";
 	configs = ../configs;
 	packages = ./pkgs;
@@ -532,6 +533,7 @@ in
 						osu-git
 						evince
 						mission-center
+						catppuccin-gtk
 					];
 
 					file = {
@@ -640,6 +642,19 @@ in
 						};
 						".config/starship.toml" = {
 							source = "${configs}/shells/prompts/starship.toml";
+						};
+					};
+				};
+
+				gtk = {
+					enable = true;
+					theme = {
+						name = "Catppuccin-Macchiato-Compact-Lavender-dark";
+						package = pkgs.catppuccin-gtk.override {
+							accents = [ "lavender" ];
+							size = "compact";
+							tweaks = [ "normal" ];
+							variant = "mocha";
 						};
 					};
 				};
