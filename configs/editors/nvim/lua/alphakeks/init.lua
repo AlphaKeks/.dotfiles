@@ -20,7 +20,10 @@ end)
 usercmd("LG", function()
 	vim.cmd.Term()
 	nvim_input("lg<CR>")
+	keymap("t", "q", "<CMD>wincmd q<CR>", { buffer = true })
 end)
+
+keymap("n", "<Leader>gs", ":LG<CR>")
 
 function Reload(...)
 	local plenary_installed, plenary = pcall(require, "plenary.reload")

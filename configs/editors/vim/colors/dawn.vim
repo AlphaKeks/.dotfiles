@@ -145,7 +145,7 @@ hi! Boolean guifg=#F38BA8
 hi! Character guifg=#94E2D5
 hi! Comment guifg=#3C5E7F gui=italic
 hi! Conditional guifg=#CBA6F7
-hi! Constant guifg=#F38BA8 gui=bold
+hi! Constant guifg=#FAB387 gui=bold
 hi! Define guifg=#F5C2E7
 hi! Delimiter guifg=#A6ADC8
 hi! Error guifg=#F38BA8 guibg=NONE gui=bold
@@ -164,7 +164,7 @@ hi! PreCondit guifg=#F5C2E7 gui=bold
 hi! PreProc guifg=#F5C2E7 gui=bold
 hi! Repeat guifg=#CBA6F7
 hi! Special guifg=#CBA6F7 gui=bold
-hi! SpecialChar guifg=#94E2D5 gui=italic
+hi! SpecialChar guifg=#94E2D5
 hi! SpecialComment guifg=#A6E3A1 gui=italic
 hi! StorageClass guifg=#74C7EC
 hi! String guifg=#A6E3A1

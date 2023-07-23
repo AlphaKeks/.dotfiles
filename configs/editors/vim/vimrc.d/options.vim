@@ -87,6 +87,7 @@ set noswapfile
 set tabline=%!alphakeks#tabline()
 set termencoding=utf-8
 set termguicolors
+set textwidth=100
 set tildeop
 set undodir=~/.vim/undo
 set undofile

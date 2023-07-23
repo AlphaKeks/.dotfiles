@@ -46,30 +46,62 @@ return {
 			return vim.tbl_deep_extend("force", ret, opts or {})
 		end
 
+		local stupid_files = {
+			"zsh/plugins/*",
+			"%.png",
+			"%.svg",
+			"%.ttf",
+			"%.otf",
+			"%.lock",
+			"%-lock.json",
+			"%.wasm",
+			".direnv/*",
+			"node_modules/*",
+			"dist/*",
+			".git/*",
+			"desktop/icons/*",
+		}
+
 		keymap("n", "<C-f>", function()
 			pickers.current_buffer_fuzzy_find(ivy())
 		end)
 
+		local function search_dotfiles(subdir)
+			subdir = subdir or ""
+			pickers.find_files(ivy({
+				prompt_title = ".dotfiles" .. subdir,
+				hidden = true,
+				follow = true,
+				cwd = DOTFILES .. subdir,
+				file_ignore_patterns = vim.tbl_append(stupid_files, {
+					"%.xml",
+					"%.css",
+					"%.tmTheme",
+				}),
+			}))
+		end
+
+		keymap("n", "<Leader>df", search_dotfiles)
+
+		keymap("n", "<Leader>nf", function()
+			search_dotfiles("/configs/editors")
+		end)
+
 		keymap("n", "<Leader>ff", function()
+			-- Make `<Leader>ff` equivalent to `<Leader>df` when I'm in my dotfiles directory.
+			if vim.startswith(expand("%:p:h"), DOTFILES) then
+				return search_dotfiles()
+			end
+
 			local opts = ivy({
 				hidden = true,
 				follow = true,
 				show_untracked = true,
-				file_ignore_patterns = {
-					"zsh/plugins/*",
-					"%.png",
-					"%.svg",
-					"%.ttf",
-					"%.otf",
-					"%.lock",
-					"%-lock.json",
-					"%.wasm",
-					".direnv/*",
-					"node_modules/*",
-					"dist/*",
-				},
+				file_ignore_patterns = stupid_files,
 			})
 
+			-- Try to search git files first.
+			-- If we're not in a git directory, fall back to normal `find_files`.
 			if not pcall(pickers.git_files, opts) then
 				pickers.find_files(opts)
 			end
@@ -87,6 +119,10 @@ return {
 
 		keymap("n", "<Leader>fl", function()
 			pickers.live_grep(ivy())
+		end)
+
+		keymap("n", "<C-/>", function()
+			pickers.grep_string(ivy())
 		end)
 
 		keymap("n", "<Leader>fd", function()
@@ -123,16 +159,6 @@ return {
 
 		keymap("n", "<Leader>fg", function()
 			pcall(pickers.git_commits, {
-				initial_mode = "normal",
-				layout_config = {
-					height = 0.9,
-					width = 0.9,
-				},
-			})
-		end)
-
-		keymap("n", "<Leader>gs", function()
-			pcall(pickers.git_status, {
 				initial_mode = "normal",
 				layout_config = {
 					height = 0.9,

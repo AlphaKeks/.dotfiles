@@ -25,6 +25,8 @@ readfile = vim.fn.readfile
 expand = vim.fn.expand
 mode = vim.fn.mode
 feedkeys = vim.fn.feedkeys
+getline = vim.fn.getline
+getcursorcharpos = vim.fn.getcursorcharpos
 
 -- vim.api
 set_hl = vim.api.nvim_set_hl
@@ -59,5 +61,22 @@ vim.error = function(msg, ...)
 	return vim.notify(msg:format(...), vim.log.levels.ERROR)
 end
 
+-- Tables
+
+---Appends an array-like table to another
+---@param tbl table Array-like table
+---@param other table Array-like table
+---@return table
+vim.tbl_append = function(tbl, other)
+	for _, v in ipairs(other) do
+		table.insert(tbl, v)
+	end
+
+	return tbl
+end
+
 -- Lua builtins
 format = string.format
+
+-- Other stuff
+DOTFILES = os.getenv("HOME") .. "/.dotfiles"
