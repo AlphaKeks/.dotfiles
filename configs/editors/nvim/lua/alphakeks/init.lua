@@ -124,6 +124,9 @@ local lazy_setup = function()
 		performance = {
 			rtp = {
 				reset = false,
+				disabled_plugins = {
+					"netrwPlugin",
+				},
 			},
 		},
 	})

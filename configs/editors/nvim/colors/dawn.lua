@@ -322,6 +322,10 @@ hi("@lsp.typemod.typeAlias", {
 	link = "Type",
 })
 
+hi("@lsp.typemod.variable.constant", {
+	link = "@lsp.mod.constant",
+})
+
 hi("@lsp.typemod.variable.global", {
 	fg = Dawn.red,
 })
