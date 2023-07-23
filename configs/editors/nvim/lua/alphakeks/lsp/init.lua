@@ -109,6 +109,14 @@ autocmd("LspAttach", {
 		M.setup_keymaps(opts.buf)
 		vim.bo[opts.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
+		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+			border = "single",
+		})
+
+		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+			border = "single",
+		})
+
 		local client = vim.lsp.get_client_by_id(opts.data.client_id)
 		-- SendToQf(client)
 
