@@ -53,14 +53,9 @@ local function prettier()
 
 			table.insert(command, expand("%"))
 
-			vim.system(command, {}, vim.schedule_wrap(function(result)
-				if result.code ~= 0 then
-					vim.error("Failed to run prettier: %s", vim.inspect(result))
-					return
-				end
-
+			run_shell(command, function()
 				vim.cmd("e!")
-			end))
+			end)
 		end,
 	})
 end
@@ -87,9 +82,7 @@ local function eslint()
 				return
 			end
 
-			local command = { "eslint_d", "--format", "json", expand("%") }
-
-			vim.system(command, {}, vim.schedule_wrap(function(result)
+			run_shell({ "eslint_d", "--format", "json", expand("%") }, function(result)
 				local output = vim.json.decode(result.stdout)
 				local messages = output and output[1] and output[1].messages or {}
 				local diagnostics = {}
@@ -113,7 +106,7 @@ local function eslint()
 					open = false,
 					title = "ESLint",
 				})
-			end))
+			end)
 		end,
 	})
 
@@ -121,11 +114,7 @@ local function eslint()
 		desc = "Stop eslint_d before quitting",
 		group = augroup("kill-eslint-daemon"),
 		callback = function()
-			vim.system({ "eslint_d", "stop" }, { text = true }, vim.schedule_wrap(function(result)
-				if result.code ~= 0 then
-					vim.error("Failed to kill eslint_d: %s", vim.inspect(result))
-				end
-			end))
+			run_shell({ "eslint_d", "stop" })
 		end,
 	})
 end

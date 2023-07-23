@@ -28,13 +28,9 @@ keymap("n", "<Leader>gs", ":LG<CR>")
 usercmd("Git", function(cmd)
 	local command = vim.tbl_append({ "git" }, cmd.fargs)
 
-	vim.system(command, { text = true }, vim.schedule_wrap(function(result)
-		if result.code ~= 0 then
-			vim.error("Failed to run git command: %s", vim.inspect(result))
-		end
-
+	run_shell(command, function(result)
 		SendToQf(result.stdout, "Git output")
-	end))
+	end)
 end, { nargs = "+" })
 
 function Reload(...)
@@ -156,13 +152,8 @@ else
 		lazy_path,
 	}
 
-	vim.system(command, { text = true }, vim.schedule_wrap(function(result)
-		if result.code ~= 0 then
-			vim.error("Failed to install lazy.nvim: %s", vim.inspect(result))
-			return
-		end
-
+	run_shell(command, function()
 		vim.info("Successfully installed lazy.nvim")
 		lazy_setup()
-	end))
+	end)
 end

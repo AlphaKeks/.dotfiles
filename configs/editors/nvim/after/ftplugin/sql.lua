@@ -17,15 +17,8 @@ autocmd("BufWritePost", {
 			expand("%")
 		}
 
-		local opts = { text = true }
-
-		vim.system(command, opts, vim.schedule_wrap(function(result)
-			if result.code ~= 0 then
-				vim.error("Failed to format SQL: %s", vim.inspect(result))
-				return
-			end
-
+		run_shell(command, function()
 			vim.cmd("e!")
-		end))
+		end)
 	end,
 })

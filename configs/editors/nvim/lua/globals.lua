@@ -75,8 +75,34 @@ vim.tbl_append = function(tbl, other)
 	return tbl
 end
 
--- Lua builtins
-format = string.format
-
 -- Other stuff
 DOTFILES = os.getenv("HOME") .. "/.dotfiles"
+
+---Run a shell command
+---@param command string[] List of command arguments
+---@param callback fun(result: table)? Callback to run once the command finishes
+---@param opts { error_msg: string?, sync: boolean? }?
+---@return SystemCompleted? result Will only be returned if `sync` was `true`
+run_shell = function(command, callback, opts)
+	opts = opts or {}
+
+	if type(command) == "string" then
+		command = { command }
+	end
+
+	local result = vim.system(command, { text = true }, vim.schedule_wrap(function(result)
+		if result.code ~= 0 then
+			local message = opts.error_msg or "Failed to run shell command"
+			vim.error(message .. ": %s", vim.inspect(result))
+			return
+		end
+
+		if callback then
+			callback(result)
+		end
+	end))
+
+	if opts.sync then
+		return result:wait()
+	end
+end

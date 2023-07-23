@@ -138,8 +138,8 @@ autocmd("LspAttach", {
 
 		usercmd("LspFormat", lsp_format, { desc = "Format the current buffer via LSP" })
 
-		usercmd("LspLog", function(opts)
-			local arg = opts.args
+		usercmd("LspLog", function(cmd)
+			local arg = cmd.args
 			local log_path = stdpath("state") .. "/lsp.log"
 
 			if #arg == 0 or arg == "edit" then
@@ -148,15 +148,10 @@ autocmd("LspAttach", {
 				local lines = readfile(log_path)
 				SendToQf(lines)
 			elseif arg == "clean" then
-				local command = { "echo", "''", ">", log_path }
-				vim.system(command, { text = true }, vim.schedule_wrap(function(result)
-					if result.code ~= 0 then
-						vim.error("Failed to delete LSP log: %s", vim.inspect(result))
-						return
-					end
-
+				run_shell({ "rm", log_path }, function()
+					run_shell({ "touch", log_path })
 					vim.info("Successfully cleaned LSP log.")
-				end))
+				end)
 			else
 				vim.error("`%s` is not a valid argument.", arg)
 			end
@@ -173,7 +168,7 @@ autocmd("LspAttach", {
 			local list = "Attached LSP Servers:"
 
 			for _, server in ipairs(servers) do
-				list = format("%s\n • %s (%s)", list, server.name, server.id)
+				list = string.format("%s\n • %s (%s)", list, server.name, server.id)
 			end
 
 			vim.info(list)

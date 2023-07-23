@@ -59,7 +59,7 @@ local modules = {
 		for _, opts in ipairs(diagnostic_opts) do
 			local count = #vim.diagnostic.get(0, { severity = opts.severity })
 			if count > 0 then
-				str = format("%s%%#StatusDiagnosticSign%s#%s%s ", str, opts.name, count, opts.icon)
+				str = string.format("%s%%#StatusDiagnosticSign%s#%s%s ", str, opts.name, count, opts.icon)
 			end
 		end
 
