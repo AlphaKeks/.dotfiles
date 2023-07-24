@@ -19,7 +19,7 @@ end, { desc = "Opens a terminal in a new tab" })
 
 usercmd("LG", function()
 	vim.cmd.Term()
-	nvim_input("lg<CR>")
+	input("lg<CR>")
 	keymap("t", "q", "<CMD>wincmd q<CR>", { buffer = true })
 end, { desc = "Opens a terminal with lazygit in a new tab" })
 
@@ -29,7 +29,25 @@ usercmd("Git", function(cmd)
 	local command = vim.tbl_append({ "git" }, cmd.fargs)
 
 	run_shell(command, function(result)
-		SendToQf(result.stdout, "Git output")
+		local stdout = result.stdout
+		local stderr = result.stderr
+		local stdout_exists = stdout and #stdout > 0
+		local stderr_exists = stderr and #stderr > 0
+		local messages = ""
+
+		if not (stdout_exists or stderr_exists) then
+			return
+		end
+
+		if stdout_exists and stderr_exists then
+			messages = string.format("STDOUT:\n%s\nSTDERR:\n%s", stdout, stderr)
+		elseif stdout_exists then
+			messages = stdout
+		elseif stderr_exists then
+			messages = stderr
+		end
+
+		SendToQf(messages, "Git output")
 	end)
 end, {
 	nargs = "+",
@@ -86,7 +104,6 @@ function SendToQf(item, custom_title)
 	setqflist({}, "r", { items = lines, title = custom_title or "Messages" })
 	copen()
 	norm("G")
-	vim.keymap.set("n", "<CR>", "<CR>my0w\"+y$`y", { buffer = true })
 
 	return item
 end
