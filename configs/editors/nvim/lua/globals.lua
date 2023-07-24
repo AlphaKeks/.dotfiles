@@ -28,17 +28,26 @@ feedkeys = vim.fn.feedkeys
 getline = vim.fn.getline
 getcursorcharpos = vim.fn.getcursorcharpos
 
+-- vim.F
+if_nil = vim.F.if_nil
+
 -- vim.api
 set_hl = vim.api.nvim_set_hl
 create_namespace = vim.api.nvim_create_namespace
 autocmd = vim.api.nvim_create_autocmd
+input = vim.api.nvim_input
+
 augroup = function(name, opts)
 	return vim.api.nvim_create_augroup(name, opts or { clear = true })
 end
+
 usercmd = function(name, cb, opts)
 	return vim.api.nvim_create_user_command(name, cb, opts or {})
 end
-nvim_input = vim.api.nvim_input
+
+get_runtime_file = function(pattern, all)
+	return vim.api.nvim_get_runtime_file(pattern, if_nil(all, true))
+end
 
 -- logging
 vim.trace = function(msg, ...)

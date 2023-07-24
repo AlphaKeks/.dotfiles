@@ -4,6 +4,10 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-telescope/telescope-ui-select.nvim",
+		{
+			"nvim-telescope/telescope-fzf-native.nvim",
+			build = "make",
+		}
 	},
 
 	config = function()
@@ -23,6 +27,8 @@ return {
 						["<ESC>"] = actions.close,
 						["<C-j>"] = actions.move_selection_next,
 						["<C-k>"] = actions.move_selection_previous,
+						["<C-s>"] = actions.file_split,
+						["<C-Space>"] = actions.to_fuzzy_refine,
 					},
 				},
 			},
@@ -31,10 +37,18 @@ return {
 				["ui-select"] = {
 					themes.get_cursor(),
 				},
+
+				["fzf"] = {
+					fuzzy = true,
+					override_generic_sorter = true,
+					override_file_sorter = true,
+					case_mode = "smart_case",
+				},
 			},
 		})
 
 		telescope.load_extension("ui-select")
+		telescope.load_extension("fzf")
 
 		local function ivy(opts)
 			local ret = themes.get_ivy({
@@ -83,7 +97,7 @@ return {
 
 		keymap("n", "<Leader>df", search_dotfiles)
 
-		keymap("n", "<Leader>nf", function()
+		keymap("n", "<Leader>fn", function()
 			search_dotfiles("/configs/editors")
 		end)
 
@@ -117,8 +131,20 @@ return {
 			pickers.commands(ivy())
 		end)
 
-		keymap("n", "<Leader>fh", function()
+		local function help_tags()
 			pickers.help_tags(ivy())
+		end
+
+		keymap("n", "<Leader>fh", help_tags)
+		keymap("n", "<Leader>fht", help_tags)
+
+		keymap("n", "<Leader>fhh", function()
+			pickers.grep_string(ivy({
+				prompt_title = "Help",
+				search = "",
+				search_dirs = get_runtime_file("doc/*.txt"),
+				only_sort_text = true,
+			}))
 		end)
 
 		keymap("n", "<Leader>fl", function()
