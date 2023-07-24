@@ -113,6 +113,10 @@ return {
 			}))
 		end)
 
+		keymap("n", "<Leader>fc", function()
+			pickers.commands(ivy())
+		end)
+
 		keymap("n", "<Leader>fh", function()
 			pickers.help_tags(ivy())
 		end)

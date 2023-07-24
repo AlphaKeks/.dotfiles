@@ -136,7 +136,7 @@ autocmd("LspAttach", {
 			M.highlight_word(opts.buf)
 		end
 
-		usercmd("LspFormat", lsp_format, { desc = "Format the current buffer via LSP" })
+		usercmd("LspFormat", lsp_format, { desc = "Formats the current buffer via LSP" })
 
 		usercmd("LspLog", function(cmd)
 			local arg = cmd.args
@@ -172,7 +172,7 @@ autocmd("LspAttach", {
 			end
 
 			vim.info(list)
-		end)
+		end, { desc = "Shows currently active LSP servers" })
 	end,
 })
 

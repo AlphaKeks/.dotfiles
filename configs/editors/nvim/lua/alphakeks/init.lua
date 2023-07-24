@@ -15,13 +15,13 @@ usercmd("Term", function()
 	tabe()
 	term()
 	startinsert()
-end)
+end, { desc = "Opens a terminal in a new tab" })
 
 usercmd("LG", function()
 	vim.cmd.Term()
 	nvim_input("lg<CR>")
 	keymap("t", "q", "<CMD>wincmd q<CR>", { buffer = true })
-end)
+end, { desc = "Opens a terminal with lazygit in a new tab" })
 
 keymap("n", "<Leader>gs", ":LG<CR>")
 
@@ -31,7 +31,10 @@ usercmd("Git", function(cmd)
 	run_shell(command, function(result)
 		SendToQf(result.stdout, "Git output")
 	end)
-end, { nargs = "+" })
+end, {
+	nargs = "+",
+	desc = "Run any git command",
+})
 
 function Reload(...)
 	local plenary_installed, plenary = pcall(require, "plenary.reload")
@@ -91,7 +94,7 @@ end
 usercmd("Messages", function()
 	vim.cmd("redir => g:messages | silent messages | redir END")
 	SendToQf(vim.g.messages)
-end)
+end, { desc = "Inserts all :messages into the quickfix list and opens it" })
 
 function LuaRepl()
 	local function callback(text)
@@ -106,7 +109,7 @@ function LuaRepl()
 	startinsert()
 end
 
-usercmd("Repl", LuaRepl)
+usercmd("Repl", LuaRepl, { desc = "Opens a Lua REPL" })
 
 -- Plugins
 local lazy_path = stdpath("data") .. "/lazy/lazy.nvim"

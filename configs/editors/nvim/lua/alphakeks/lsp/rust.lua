@@ -71,6 +71,6 @@ return {
 					vim.info("Cargo workspace reloaded.")
 				end
 			end)
-		end)
+		end, { desc = "Reloads rust-analyzer with updated Cargo.toml information" })
 	end,
 }
