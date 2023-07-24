@@ -104,6 +104,7 @@ function SendToQf(item, custom_title)
 	setqflist({}, "r", { items = lines, title = custom_title or "Messages" })
 	copen()
 	norm("G")
+	wincmd("k")
 
 	return item
 end

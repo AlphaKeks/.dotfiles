@@ -12,6 +12,7 @@ edit = vim.cmd.edit
 redrawstatus = vim.cmd.redrawstatus
 tabe = vim.cmd.tabe
 term = vim.cmd.term
+wincmd = vim.cmd.wincmd
 
 -- vim.fn
 setqflist = vim.fn.setqflist
