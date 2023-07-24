@@ -77,14 +77,5 @@ return {
 				},
 			},
 		})
-
-		local ts_repeat = require("nvim-treesitter.textobjects.repeatable_move")
-
-		keymap({ "n", "x", "o" }, ";", ts_repeat.repeat_last_move)
-		keymap({ "n", "x", "o" }, ",", ts_repeat.repeat_last_move_opposite)
-		keymap({ "n", "x", "o" }, "f", ts_repeat.builtin_f)
-		keymap({ "n", "x", "o" }, "F", ts_repeat.builtin_F)
-		keymap({ "n", "x", "o" }, "t", ts_repeat.builtin_t)
-		keymap({ "n", "x", "o" }, "T", ts_repeat.builtin_T)
 	end,
 }
