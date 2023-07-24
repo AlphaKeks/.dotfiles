@@ -71,22 +71,22 @@ vim.error = function(msg, ...)
 	return vim.notify(msg:format(...), vim.log.levels.ERROR)
 end
 
--- Tables
+-- Other stuff
 
----Appends an array-like table to another
----@param tbl table Array-like table
----@param other table Array-like table
+DOTFILES = os.getenv("HOME") .. "/.dotfiles"
+
+---Merges two array-like tables
+---@param tbl any[]
+---@param other any[]
 ---@return table
 vim.tbl_append = function(tbl, other)
+	tbl = vim.deepcopy(tbl)
 	for _, v in ipairs(other) do
 		table.insert(tbl, v)
 	end
 
 	return tbl
 end
-
--- Other stuff
-DOTFILES = os.getenv("HOME") .. "/.dotfiles"
 
 ---Run a shell command
 ---@param command string[] List of command arguments
