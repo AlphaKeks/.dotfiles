@@ -20,7 +20,7 @@ end, { desc = "Opens a terminal in a new tab" })
 usercmd("LG", function()
 	vim.cmd.Term()
 	input("lg<CR>")
-	keymap("t", "q", "<CMD>wincmd q<CR>", { buffer = true })
+	keymap("n", "q", "<CMD>wincmd q<CR>", { buffer = true })
 end, { desc = "Opens a terminal with lazygit in a new tab" })
 
 keymap("n", "<Leader>gs", ":LG<CR>")
