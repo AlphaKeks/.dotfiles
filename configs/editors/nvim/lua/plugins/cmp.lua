@@ -14,21 +14,21 @@ return {
 		cmp.setup({
 			preselect = cmp.PreselectMode.None,
 			mapping = cmp.mapping.preset.insert({
-				["<cr>"] = cmp.mapping.confirm({ select = true }),
-				["<Right>"] = cmp.mapping.confirm({ select = true }),
+				["<cr>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }),
+				["<Right>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }),
 				["<C-Space>"] = cmp.mapping.complete(),
 				["<C-j>"] = cmp.mapping.scroll_docs(4),
 				["<C-k>"] = cmp.mapping.scroll_docs(-4),
 				["<C-n>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
-						cmp.select_next_item()
+						cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
 					else
 						fallback()
 					end
 				end),
 				["<C-p>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
-						cmp.select_prev_item()
+						cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
 					else
 						fallback()
 					end
@@ -39,14 +39,14 @@ return {
 					else
 						fallback()
 					end
-				end),
+				end, { "i", "s" }),
 				["<S-Tab>"] = cmp.mapping(function(fallback)
 					if luasnip.jumpable(-1) then
 						luasnip.jump(-1)
 					else
 						fallback()
 					end
-				end),
+				end, { "i", "s" }),
 			}),
 
 			sources = {
@@ -77,11 +77,11 @@ return {
 		})
 
 		-- Fix luasnip sometimes hijacking <Tab> for longer than it's supposed to
-		autocmd("InsertLeave", {
-			group = augroup("luasnip-clean-snippet-nodes"),
-			callback = function()
-				luasnip.session.current_nodes[bufnr()] = nil
-			end,
-		})
+		-- autocmd("InsertLeave", {
+		-- 	group = augroup("luasnip-clean-snippet-nodes"),
+		-- 	callback = function()
+		-- 		luasnip.session.current_nodes[bufnr()] = nil
+		-- 	end,
+		-- })
 	end,
 }
