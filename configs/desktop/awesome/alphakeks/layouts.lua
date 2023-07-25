@@ -3,8 +3,7 @@
 local layout = require("awful").layout
 
 layout.layouts = {
-	layout.suit.tile.left,
+	layout.suit.tile.right,
 	layout.suit.fair,
 	layout.suit.floating,
 }
-
