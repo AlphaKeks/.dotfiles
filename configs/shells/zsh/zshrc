@@ -34,3 +34,6 @@ eval "$(starship init zsh)"
 # Nix
 eval "$(direnv hook zsh)"
 
+# Zoxide
+eval "$(zoxide init zsh)"
+

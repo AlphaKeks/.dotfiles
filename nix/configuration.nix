@@ -497,6 +497,7 @@ in
 						cargo-expand
 						cargo-watch
 						rustup
+						zoxide
 
 						# Dev
 						gcc

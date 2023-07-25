@@ -155,7 +155,7 @@ hi("LspInlayHint", {
 })
 
 hi("LspReferenceText", {
-	fg = Dawn.sky,
+	fg = Dawn.pink,
 	bold = true,
 	italic = true,
 })

@@ -71,7 +71,6 @@ return {
 						border = "single",
 					},
 					peek_definition_code = {
-						["<Leader>df"] = "@function.outer",
 						["<Leader>dc"] = "@class.outer",
 					},
 				},
