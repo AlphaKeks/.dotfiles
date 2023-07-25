@@ -3,7 +3,14 @@ return {
 
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"sindrets/diffview.nvim",
+		{
+			"sindrets/diffview.nvim",
+			lazy = true,
+		}
+	},
+
+	keys = {
+		{ "<Leader>gs", "<CMD>Neogit<CR>" },
 	},
 
 	config = function()
@@ -12,6 +19,9 @@ return {
 		neogit.setup({
 			disable_context_highlighting = true,
 			disable_commit_confirmation = true,
+			popup = {
+				kind = "vsplit",
+			},
 			commit_popup = {
 				kind = "vsplit",
 			},
@@ -24,7 +34,5 @@ return {
 				diffview = true,
 			},
 		})
-
-		keymap("n", "<Leader>gs", neogit.open)
 	end,
 }
