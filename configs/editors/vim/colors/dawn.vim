@@ -103,7 +103,7 @@ hi! CursorLineSign guifg=#74C7EC guibg=#181825
 hi! MatchParen guifg=#FAB387 guibg=NONE
 hi! ModeMsg guifg=#CBA6F7 guibg=NONE gui=italic
 hi! link MoreMsg ModeMsg
-hi! NonText guifg=#CDD6F4 guibg=#F38BA8
+hi! NonText guifg=#CDD6F4 guibg=NONE
 hi! Normal guifg=#CDD6F4 guibg=#181825
 hi! Pmenu guifg=#585B70 guibg=#1E1E2E
 hi! PmenuSel guifg=#CDD6F4 guibg=#313244 gui=bold

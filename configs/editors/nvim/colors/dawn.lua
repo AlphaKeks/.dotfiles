@@ -352,64 +352,36 @@ hi("TelescopeSelection", {
 -- {{{ Neogit
 
 hi("NeogitBranch", {
-	fg = Dawn.pink,
+	fg = Dawn.sapphire,
 })
 
 hi("NeogitRemote", {
-	fg = Dawn.pink,
+	fg = Dawn.mauve,
 })
 
-hi("NeogitHunkHeader", {
-	fg = Dawn.blue,
-	bg = Dawn.base,
+hi("NeogitUntrackedFiles", {
+	fg = Dawn.green,
 })
 
-hi("NeogitHunkHeaderHighlight", {
-	link = "NeogitHunkHeader",
+hi("NeogitUnstagedChanges", {
+	fg = Dawn.red,
 })
 
-hi("NeogitDiffContext", {
-	fg = Dawn.text,
-	bg = Dawn.base,
-})
-
-hi("NeogitDiffContextHighlight", {
-	link = "NeogitDiffContext",
+hi("NeogitRecentcommits", {
+	fg = Dawn.yellow,
 })
 
 hi("NeogitDiffAdd", {
 	fg = Dawn.green,
-	bg = Dawn.base,
 })
 
 hi("NeogitDiffDelete", {
 	fg = Dawn.red,
-	bg = Dawn.base,
 })
 
-hi("NeogitDiffAddHighlight", {
-	link = "NeogitDiffAdd",
-})
-
-hi("NeogitDiffDeleteHighlight", {
-	link = "NeogitDiffDelete",
-})
-
-hi("NeogitCommitViewHeader", {
+hi("NeogitHunkHeader", {
 	fg = Dawn.blue,
-	bg = Dawn.base,
-})
-
-hi("NeogitNotificationInfo", {
-	fg = Dawn.blue,
-})
-
-hi("NeogitNotificationWarn", {
-	fg = Dawn.yellow,
-})
-
-hi("NeogitNotificationError", {
-	fg = Dawn.red,
+	bold = true,
 })
 
 -- }}}
