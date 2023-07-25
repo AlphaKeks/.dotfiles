@@ -7,6 +7,7 @@ let
 	home = "/home/${user}";
 	stateVersion = "22.11";
 	configs = ../configs;
+	scripts = ../scripts;
 	packages = ./pkgs;
 	# neovim = pkgs.neovim;
 	neovim = inputs.neovim-nightly.defaultPackage.x86_64-linux;
@@ -570,6 +571,9 @@ in
 						".themes" = {
 							source = "${configs}/desktop/themes";
 							recursive = true;
+						};
+						".local/bin/scripts/cd.sh" = {
+							source = "${scripts}/cd.sh";
 						};
 						".config/bat" = {
 							source = "${configs}/cli/bat";
