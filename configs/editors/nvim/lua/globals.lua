@@ -92,18 +92,20 @@ end
 
 ---Run a shell command
 ---@param command string[] List of command arguments
----@param callback fun(result: table)? Callback to run once the command finishes
----@param opts { error_msg: string?, sync: boolean? }?
+---@param callback? fun(result: table) Callback to run once the command finishes
+---@param opts? { error_msg: string?, sync: boolean?, ignore_errors: boolean? }
 ---@return SystemCompleted? result Will only be returned if `sync` was `true`
 run_shell = function(command, callback, opts)
 	opts = opts or {}
+	opts.sync = if_nil(opts.sync, false)
+	opts.ignore_errors = if_nil(opts.ignore_errors, false)
 
 	if type(command) == "string" then
 		command = { command }
 	end
 
 	local result = vim.system(command, { text = true }, vim.schedule_wrap(function(result)
-		if result.code ~= 0 then
+		if (not opts.ignore_errors) and result.code ~= 0 then
 			local message = opts.error_msg or "Failed to run shell command"
 			vim.error(message .. ": %s", vim.inspect(result))
 			return

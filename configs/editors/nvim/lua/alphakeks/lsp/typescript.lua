@@ -71,6 +71,12 @@ local function eslint()
 		"eslint.config.js",
 	}
 
+	local severities = {
+		[0] = vim.diagnostic.severity.OFF,
+		[1] = vim.diagnostic.severity.WARN,
+		[2] = vim.diagnostic.severity.ERROR,
+	}
+
 	local namespace = create_namespace("eslint-stuff")
 
 	autocmd("BufWritePost", {
@@ -94,7 +100,7 @@ local function eslint()
 						end_lnum = (message.endLine or 1) - 1,
 						col = (message.column or 1) - 1,
 						end_col = (message.endColumn or 1) - 1,
-						severity = message.severity,
+						severity = severities[message.severity],
 						message = message.message,
 						source = "ESLint",
 					})
@@ -106,7 +112,7 @@ local function eslint()
 					open = false,
 					title = "ESLint",
 				})
-			end)
+			end, { ignore_errors = true })
 		end,
 	})
 
