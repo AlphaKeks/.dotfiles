@@ -1,5 +1,3 @@
--- https://GitHub.com/AlphaKeks/.dotfiles
-
 vim.diagnostic.config({
 	underline = true,
 

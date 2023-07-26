@@ -1,68 +1,59 @@
-autocmd("TextYankPost", {
-	desc = "Highlight text after yanking it",
-	callback = function()
-		vim.highlight.on_yank({
-			timeout = 69,
-		})
-	end,
-})
+-- {{{ Lazy
 
-autocmd("TermOpen", {
-	command = "setlocal nonumber relativenumber scrolloff=0",
-})
+local lazy_path = stdpath("data") .. "/lazy/lazy.nvim"
+local lazy_setup = function()
+	vim.opt.runtimepath:prepend(lazy_path)
 
-usercmd("Term", function()
-	tabe()
-	term()
-	startinsert()
-end, { desc = "Opens a terminal in a new tab" })
+	require("lazy").setup("plugins", {
+		defaults = {
+			lazy = false,
+		},
 
-usercmd("LG", function()
-	vim.cmd.Term()
-	input("lg<CR>")
-	keymap("n", "q", "<CMD>wincmd q<CR>", { buffer = true })
-end, { desc = "Opens a terminal with lazygit in a new tab" })
+		install = {
+			missing = true,
+			colorscheme = { "dawn", "habamax" },
+		},
 
-keymap("n", "<Leader>gs", ":LG<CR>")
+		ui = {
+			wrap = true,
+			border = "solid",
+		},
 
-usercmd("Git", function(cmd)
-	local command = vim.tbl_append({ "git" }, cmd.fargs)
+		change_detection = {
+			notify = false,
+		},
 
-	run_shell(command, function(result)
-		local stdout = result.stdout
-		local stderr = result.stderr
-		local stdout_exists = stdout and #stdout > 0
-		local stderr_exists = stderr and #stderr > 0
-		local messages = ""
-
-		if not (stdout_exists or stderr_exists) then
-			return
-		end
-
-		if stdout_exists and stderr_exists then
-			messages = string.format("STDOUT:\n%s\nSTDERR:\n%s", stdout, stderr)
-		elseif stdout_exists then
-			messages = stdout
-		elseif stderr_exists then
-			messages = stderr
-		end
-
-		SendToQf(messages, "Git output")
-	end)
-end, {
-	nargs = "+",
-	desc = "Run any git command",
-})
-
-function Reload(...)
-	local plenary_installed, plenary = pcall(require, "plenary.reload")
-
-	if plenary_installed then
-		plenary.reload_module(...)
-	end
-
-	return require(...)
+		performance = {
+			rtp = {
+				reset = false,
+				disabled_plugins = {
+					"netrwPlugin", -- thank you for native gx, neovim gods
+				},
+			},
+		},
+	})
 end
+
+local lazy_installed = vim.uv.fs_stat(lazy_path)
+
+if lazy_installed then
+	lazy_setup()
+else
+	local command = {
+		"git", "clone", "--branch=stable",
+		"https://github.com/folke/lazy.nvim",
+		lazy_path,
+	}
+
+	run_shell(command, function()
+		vim.info("Successfully installed lazy.nvim")
+		lazy_setup()
+	end)
+end
+
+-- }}}
+
+-- {{{ Quickfix List
 
 function SendToQf(item, custom_title)
 	if not item then
@@ -112,72 +103,55 @@ function SendToQf(item, custom_title)
 	return item
 end
 
-usercmd("Messages", function()
-	vim.cmd("redir => g:messages | silent messages | redir END")
-	SendToQf(vim.g.messages, "Messages")
-end, { desc = "Inserts all :messages into the quickfix list and opens it" })
+-- }}}
 
-function LuaRepl()
-	local function callback(text)
-		local result = eval(text)
-		append(line("$") - 1, result)
+-- {{{ Git
+
+function Git(args)
+	if #args == 0 then
+		args = { "status" }
 	end
 
-	new()
-	vim.bo.buftype = "prompt"
-	prompt_setcallback(bufnr(), callback)
-	keymap("n", "<ESC>", "<CMD>bw!<CR>", { buffer = true, silent = true })
-	startinsert()
-end
+	local command = vim.tbl_append({ "git" }, args)
 
-usercmd("Repl", LuaRepl, { desc = "Opens a Lua REPL" })
+	run_shell(command, function(result)
+		local stdout = result.stdout
+		local stderr = result.stderr
+		local stdout_exists = stdout and #stdout > 0
+		local stderr_exists = stderr and #stderr > 0
+		local messages = ""
 
--- Plugins
-local lazy_path = stdpath("data") .. "/lazy/lazy.nvim"
-local lazy_setup = function()
-	vim.opt.runtimepath:prepend(lazy_path)
+		if not (stdout_exists or stderr_exists) then
+			return
+		end
 
-	require("lazy").setup("plugins", {
-		defaults = {
-			lazy = false,
-		},
+		if stdout_exists and stderr_exists then
+			messages = string.format("STDOUT:\n%s\nSTDERR:\n%s", stdout, stderr)
+		elseif stdout_exists then
+			messages = stdout
+		elseif stderr_exists then
+			messages = stderr
+		end
 
-		install = {
-			missing = true,
-			colorscheme = { "dawn", "catppuccin", "habamax" },
-		},
-
-		ui = {
-			wrap = true,
-			border = "solid",
-		},
-
-		change_detection = {
-			notify = false,
-		},
-
-		performance = {
-			rtp = {
-				reset = false,
-				disabled_plugins = {
-					"netrwPlugin",
-				},
-			},
-		},
-	})
-end
-
-if vim.uv.fs_stat(lazy_path) then
-	lazy_setup()
-else
-	local command = {
-		"git", "clone", "--branch=stable",
-		"https://github.com/folke/lazy.nvim",
-		lazy_path,
-	}
-
-	run_shell(command, function()
-		vim.info("Successfully installed lazy.nvim")
-		lazy_setup()
+		SendToQf(messages, "Git output")
 	end)
 end
+
+-- }}}
+
+-- {{{ Reload
+
+function ReloadPlugin(plugin)
+	local ok, spec = pcall(require, "plugins." .. plugin)
+
+	if ok then
+		spec.config()
+		vim.info("Reloaded `%s`.", plugin)
+	else
+		vim.error("`%s` is not a valid plugin.", plugin)
+	end
+end
+
+-- }}}
+
+-- vim: foldmethod=marker foldlevel=0

@@ -16,6 +16,7 @@ bindkey -v
 # How is this not default?
 bindkey "^H" backward-kill-word
 # bindkey "^r" history-incremental-search-backward
+bindkey -s "^f" "source ~/.local/bin/scripts/cd.sh\n"
 KEYTIMEOUT=1
 
 # Load plugins

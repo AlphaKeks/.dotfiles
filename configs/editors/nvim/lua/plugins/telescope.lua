@@ -72,7 +72,7 @@ return {
 			".direnv/*",
 			"node_modules/*",
 			"dist/*",
-			".git/*",
+			-- ".git/*",
 			"desktop/icons/*",
 		}
 
@@ -145,6 +145,10 @@ return {
 				search_dirs = get_runtime_file("doc/*.txt"),
 				only_sort_text = true,
 			}))
+		end)
+
+		keymap("n", "<Leader>fhi", function()
+			pickers.highlights(ivy())
 		end)
 
 		keymap("n", "<Leader>fl", function()

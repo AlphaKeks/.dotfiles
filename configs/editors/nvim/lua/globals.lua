@@ -23,11 +23,13 @@ prompt_setcallback = vim.fn.prompt_setcallback
 bufnr = vim.fn.bufnr
 stdpath = vim.fn.stdpath
 readfile = vim.fn.readfile
+readdir = vim.fn.readdir
 expand = vim.fn.expand
 mode = vim.fn.mode
 feedkeys = vim.fn.feedkeys
 getline = vim.fn.getline
 getcursorcharpos = vim.fn.getcursorcharpos
+map = vim.fn.map
 
 -- vim.F
 if_nil = vim.F.if_nil
@@ -115,4 +117,15 @@ run_shell = function(command, callback, opts)
 	if opts.sync then
 		return result:wait()
 	end
+end
+
+---Fully reload a module (replacement for `require`)
+function Reload(...)
+	local plenary_installed, plenary = pcall(require, "plenary.reload")
+
+	if plenary_installed then
+		plenary.reload_module(...)
+	end
+
+	return require(...)
 end
