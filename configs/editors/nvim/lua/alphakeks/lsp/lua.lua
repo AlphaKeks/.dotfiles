@@ -19,7 +19,7 @@ return {
 			},
 
 			diagnostics = {
-				globals = { "vim" },
+				globals = { "vim", "awesome" },
 			},
 
 			telemetry = {

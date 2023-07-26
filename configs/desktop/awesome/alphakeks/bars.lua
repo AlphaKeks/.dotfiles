@@ -36,7 +36,7 @@ widgets.launcher = awful.widget.launcher({
 
 widgets.clock = wibox.widget({
 	widget = wibox.widget.textclock,
-	format = "	%H:%M %a %d/%m/%Y	",
+	format = "  %H:%M %a %d/%m/%Y  ",
 	refresh = 1,
 })
 
@@ -46,19 +46,19 @@ widgets.systray = wibox.widget.systray()
 widgets.systray:set_base_size(16)
 
 awful.screen.connect_for_each_screen(function(screen)
-	local tags = create_tags(screen)
+	create_tags(screen)
 
 	screen.taglist = awful.widget.taglist({
 		screen = screen,
 		filter = awful.widget.taglist.filter.all,
-		buttons = gears.table.join(awful.button({ }, 1, function(tag)
+		buttons = gears.table.join(awful.button({}, 1, function(tag)
 			tag:view_only()
 		end)),
 	})
 
 	screen.wibar = awful.wibar({
 		screen = screen,
-		position = "top",
+		position = "bottom",
 	})
 
 	screen.wibar:setup({
@@ -78,4 +78,3 @@ awful.screen.connect_for_each_screen(function(screen)
 		},
 	})
 end)
-

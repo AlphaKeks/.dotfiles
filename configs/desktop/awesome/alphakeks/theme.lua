@@ -13,7 +13,7 @@ beautiful.init({
 	-- The default background color
 	bg_normal = Colors.base,
 	-- The systray background color
-	bg_systray = Colors.base,
+	bg_systray = Colors.mantle,
 	-- The default urgent element background color
 	bg_urgent = Colors.red,
 	-- The border color when the client is active

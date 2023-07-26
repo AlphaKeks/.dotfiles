@@ -1,5 +1,3 @@
--- https://GitHub.com/AlphaKeks/.dotfiles
-
 local term = require("wezterm")
 
 return {
@@ -7,7 +5,7 @@ return {
 	color_scheme = "Catppuccin Mocha",
 	colors = { background = "#181825" },
 	font = term.font({ family = "JetBrains Mono" }),
-	font_size = 16,
+	font_size = 12,
 	line_height = 1,
 	use_fancy_tab_bar = false,
 	hide_tab_bar_if_only_one_tab = true,
@@ -26,11 +24,6 @@ return {
 		bottom = 0
 	},
 	keys = {
-		{
-			key = "f",
-			mods = "CTRL|SHIFT",
-			action = term.action.SendString("source ~/.local/bin/scripts/gtp.sh\r"),
-		},
 		{
 			key = "^",
 			mods = "CTRL",
