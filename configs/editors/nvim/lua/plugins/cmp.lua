@@ -77,11 +77,11 @@ return {
 		})
 
 		-- Fix luasnip sometimes hijacking <Tab> for longer than it's supposed to
-		-- autocmd("InsertLeave", {
-		-- 	group = augroup("luasnip-clean-snippet-nodes"),
-		-- 	callback = function()
-		-- 		luasnip.session.current_nodes[bufnr()] = nil
-		-- 	end,
-		-- })
+		autocmd("InsertLeave", {
+			group = augroup("luasnip-clean-snippet-nodes"),
+			callback = function()
+				luasnip.session.current_nodes[bufnr()] = nil
+			end,
+		})
 	end,
 }

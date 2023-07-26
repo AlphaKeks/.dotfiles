@@ -37,8 +37,17 @@ if_nil = vim.F.if_nil
 -- vim.api
 set_hl = vim.api.nvim_set_hl
 create_namespace = vim.api.nvim_create_namespace
-autocmd = vim.api.nvim_create_autocmd
 input = vim.api.nvim_input
+autocmd = vim.api.nvim_create_autocmd
+
+---@param opts string | table augroup name or `vim.api.nvim_clear_autocmds` options
+clear_autocmds = function(opts)
+	if type(opts) == "string" then
+		opts = { group = opts }
+	end
+
+	vim.api.nvim_clear_autocmds(opts)
+end
 
 augroup = function(name, opts)
 	return vim.api.nvim_create_augroup(name, opts or { clear = true })
@@ -91,9 +100,9 @@ vim.tbl_append = function(tbl, other)
 end
 
 ---Run a shell command
----@param command string[] List of command arguments
+---@param command string | string[] List of command arguments
 ---@param callback? fun(result: table) Callback to run once the command finishes
----@param opts? { error_msg: string?, sync: boolean?, ignore_errors: boolean? }
+---@param opts? { sync: boolean?, ignore_errors: boolean?, error_msg: string? }
 ---@return SystemCompleted? result Will only be returned if `sync` was `true`
 run_shell = function(command, callback, opts)
 	opts = opts or {}

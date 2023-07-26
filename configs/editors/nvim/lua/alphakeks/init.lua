@@ -69,7 +69,11 @@ function SendToQf(item, custom_title)
 		return item
 	end
 
-	if #item == 0 then
+	if is_table and vim.tbl_count(item) == 0 then
+		return item
+	end
+
+	if is_string and #item == 0 then
 		return item
 	end
 

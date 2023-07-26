@@ -38,7 +38,7 @@ local function prettier()
 
 	autocmd("BufWritePost", {
 		desc = "Run prettier after saving",
-		group = augroup("prettier-format-on-save"),
+		group = augroup("prettier-on-save"),
 		buffer = bufnr(),
 		callback = function()
 			local command = { "prettier", "--write" }
@@ -72,7 +72,6 @@ local function eslint()
 	}
 
 	local severities = {
-		[0] = vim.diagnostic.severity.OFF,
 		[1] = vim.diagnostic.severity.WARN,
 		[2] = vim.diagnostic.severity.ERROR,
 	}
