@@ -301,7 +301,7 @@ beautiful.init({
 	-- The urgent titlebar foreground (text) color
 	titlebar_fg_urgent = Colors.red,
 	-- The default gap
-	useless_gap = dpi(8),
+	useless_gap = dpi(0), -- 8
 	-- The default wallpaper background color
 	wallpaper_bg = Colors.base,
 	-- The default wallpaper foreground color
@@ -319,4 +319,3 @@ beautiful.init({
 	-- If the wibar is to be on top of other windows
 	wibar_ontop = false,
 })
-

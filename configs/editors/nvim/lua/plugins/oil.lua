@@ -23,6 +23,7 @@ return {
 				wrap = true,
 				cursorcolumn = false,
 				cursorline = true,
+				number = false,
 			},
 
 			default_file_explorer = true,

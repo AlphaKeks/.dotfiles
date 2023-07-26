@@ -11,6 +11,6 @@ set undodir=~/.config/nvim/undo
 set winblend=10
 
 colorscheme dawn
-au TextYankPost * lua vim.highlight.on_yank({ timeout = 250 })
+au TextYankPost * lua vim.highlight.on_yank({ timeout = 150 })
 
 lua require("alphakeks")

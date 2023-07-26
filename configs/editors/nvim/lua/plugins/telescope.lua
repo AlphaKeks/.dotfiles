@@ -72,7 +72,7 @@ return {
 			".direnv/*",
 			"node_modules/*",
 			"dist/*",
-			-- ".git/*",
+			".git/*",
 			"desktop/icons/*",
 		}
 

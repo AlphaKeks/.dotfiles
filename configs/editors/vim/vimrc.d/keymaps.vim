@@ -37,6 +37,9 @@ vnoremap <silent> K :m '<-2<CR>gv=gv
 vnoremap < <gv
 vnoremap > >gv
 
+" Keep cursor at current position when yanking in visual mode
+vnoremap y myy`y
+
 " Window management
 nnoremap <C-h> <CMD>wincmd h<CR>
 nnoremap <C-j> <CMD>wincmd j<CR>
