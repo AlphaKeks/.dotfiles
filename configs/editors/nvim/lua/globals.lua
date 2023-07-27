@@ -30,6 +30,7 @@ feedkeys = vim.fn.feedkeys
 getline = vim.fn.getline
 getcursorcharpos = vim.fn.getcursorcharpos
 map = vim.fn.map
+keytrans = vim.fn.keytrans
 
 -- vim.F
 if_nil = vim.F.if_nil
@@ -39,6 +40,13 @@ set_hl = vim.api.nvim_set_hl
 create_namespace = vim.api.nvim_create_namespace
 input = vim.api.nvim_input
 autocmd = vim.api.nvim_create_autocmd
+open_win = vim.api.nvim_open_win
+create_buf = vim.api.nvim_create_buf
+buf_set_lines = vim.api.nvim_buf_set_lines
+win_get_buf = vim.api.nvim_win_get_buf
+win_close = vim.api.nvim_win_close
+buf_set_extmark = vim.api.nvim_buf_set_extmark
+buf_del_extmark = vim.api.nvim_buf_del_extmark
 
 ---@param opts string | table augroup name or `vim.api.nvim_clear_autocmds` options
 clear_autocmds = function(opts)
@@ -59,6 +67,10 @@ end
 
 get_runtime_file = function(pattern, all)
 	return vim.api.nvim_get_runtime_file(pattern, if_nil(all, true))
+end
+
+buf_delete = function(bufnr, opts)
+	vim.api.nvim_buf_delete(bufnr, opts or {})
 end
 
 -- logging
@@ -101,8 +113,8 @@ end
 
 ---Run a shell command
 ---@param command string | string[] List of command arguments
----@param callback? fun(result: table) Callback to run once the command finishes
----@param opts? { sync: boolean?, ignore_errors: boolean?, error_msg: string? }
+---@param callback fun(result: table)? Callback to run once the command finishes
+---@param opts { sync: boolean?, ignore_errors: boolean?, error_msg: string? }?
 ---@return SystemCompleted? result Will only be returned if `sync` was `true`
 run_shell = function(command, callback, opts)
 	opts = opts or {}

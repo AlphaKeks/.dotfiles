@@ -62,7 +62,6 @@ function SendToQf(item, custom_title)
 
 	local is_string = type(item) == "string"
 	local is_table = type(item) == "table"
-	local is_array = is_table and vim.tbl_isarray(item)
 
 	if not (is_string or is_table) then
 		vim.error("`%s` is not a valid argument type.", type(item))
@@ -81,8 +80,6 @@ function SendToQf(item, custom_title)
 
 	if is_string then
 		src = item
-	elseif is_array then
-		src = table.concat(item, "\n")
 	elseif is_table then
 		src = vim.inspect(item)
 	else

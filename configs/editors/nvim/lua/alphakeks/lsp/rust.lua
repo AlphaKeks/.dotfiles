@@ -17,6 +17,8 @@ if rustfmt_file then
 			rustfmt.overrideCommand = { "rustfmt", "+nightly", "--emit", "stdout" }
 		end
 	end
+else
+	rustfmt.overrideCommand = { "rustfmt", "+nightly", "--emit", "stdout" }
 end
 
 return {
