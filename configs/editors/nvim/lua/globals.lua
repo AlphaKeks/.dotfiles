@@ -47,6 +47,7 @@ win_get_buf = vim.api.nvim_win_get_buf
 win_close = vim.api.nvim_win_close
 buf_set_extmark = vim.api.nvim_buf_set_extmark
 buf_del_extmark = vim.api.nvim_buf_del_extmark
+get_current_buf = vim.api.nvim_get_current_buf
 
 ---@param opts string | table augroup name or `vim.api.nvim_clear_autocmds` options
 clear_autocmds = function(opts)

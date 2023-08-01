@@ -13,8 +13,8 @@ return {
 
 			workspace = {
 				library = {
-					[expand("$VIMRUNTIME/lua")] = true,
-					[expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+					expand("$VIMRUNTIME/lua"),
+					stdpath("config") .. "/lua",
 				},
 			},
 

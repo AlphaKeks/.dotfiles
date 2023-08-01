@@ -10,13 +10,13 @@ export TERM="xterm-256color"
 # Useful globals
 export KEYBOARD="alpha"
 export TERMINAL="wezterm"
-export BROWSER="firefox"
+export BROWSER="librewolf"
 export DOTFILES="$HOME/.dotfiles"
 export CONFIGS="$HOME/.config"
 
 # Rust
 export CARGO_TARGET_DIR="/mnt/dev/cargo-global-target"
-export RUST_BACKTRACE="full"
+export RUST_BACKTRACE=1
 
 # Exa
 export EXA_COLORS="ur=34:uw=34:ux=34:gr=34:gw=34:gx=34:tr=34:tw=34:tx=34:uu=35:gu=35"

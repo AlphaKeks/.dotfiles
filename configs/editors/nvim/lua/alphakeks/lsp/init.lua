@@ -57,6 +57,8 @@ local function toggle_inlay_hints(bufnr)
 end
 
 M.inlay_hints = function(bufnr)
+	bufnr = bufnr or get_current_buf()
+
 	toggle_inlay_hints(bufnr)
 
 	-- autocmd({ "InsertLeave", "InsertEnter" }, {
@@ -121,16 +123,14 @@ autocmd("LspAttach", {
 		-- SendToQf(client)
 
 		if client.server_capabilities.documentFormattingProvider
-				and client.name ~= "tsserver"
+				and client.name ~= "tsserver" -- We like prettier more
 		then
 			M.format_on_save(opts.buf)
 		end
 
-		if client.server_capabilities.inlayHintProvider
-				and client.name ~= "rust-analyzer"
-		then
-			M.inlay_hints(opts.buf)
-		end
+		-- if client.server_capabilities.inlayHintProvider then
+		-- 	M.inlay_hints(opts.buf)
+		-- end
 
 		if client.server_capabilities.documentHighlightProvider then
 			M.highlight_word(opts.buf)

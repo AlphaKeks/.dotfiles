@@ -1,3 +1,9 @@
+-- {{{ Keymaps
+
+require("alphakeks.keymaps")
+
+-- }}}
+
 -- {{{ Lazy
 
 local lazy_path = stdpath("data") .. "/lazy/lazy.nvim"
@@ -151,6 +157,20 @@ function ReloadPlugin(plugin)
 	else
 		vim.error("`%s` is not a valid plugin.", plugin)
 	end
+end
+
+-- }}}
+
+-- {{{ Run on save
+
+function RunOnSave(code)
+	autocmd("BufWritePost", {
+		group = augroup("run-on-save", { clear = false }),
+		buffer = bufnr(),
+		callback = function()
+			eval(code)
+		end,
+	})
 end
 
 -- }}}

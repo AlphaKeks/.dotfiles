@@ -467,7 +467,8 @@ in
 						"${neovim}"
 						wezterm
 						jetbrains-mono
-						firefox
+						# firefox
+						librewolf
 
 						# CLI tools
 						jq
@@ -477,6 +478,7 @@ in
 						delta
 						ripgrep
 						ripgrep-all
+						fd
 						btop
 						neofetch
 						tokei
@@ -512,6 +514,7 @@ in
 						nodePackages_latest.eslint
 						nodePackages_latest.eslint_d
 						pgformatter
+						virt-manager
 
 						# Desktop
 						xclip

@@ -3,7 +3,7 @@
 Programs = {
 	editor = os.getenv("EDITOR") or "vim",
 	terminal = os.getenv("TERMINAL") or "wezterm",
-	browser = os.getenv("BROWSER") or "firefox",
+	browser = os.getenv("BROWSER") or "librewolf",
 	filemanager = "thunar",
 	launcher = "rofi -show drun",
 	screenshots = "flameshot gui",

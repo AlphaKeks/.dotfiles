@@ -203,7 +203,7 @@ hi("@property", {
 
 hi("@text.reference", {
 	fg = Dawn.mauve,
-	italic = true,
+	bold = true,
 })
 
 hi("@variable.builtin", {
@@ -251,8 +251,20 @@ hi("@lsp.type.formatSpecifier", {
 	link = "Delimiter",
 })
 
+hi("@lsp.type.generic", {
+	link = "Type",
+})
+
+hi("@lsp.type.keyword", {
+	link = "Keyword",
+})
+
 hi("@lsp.type.namespace", {
 	link = "@namespace",
+})
+
+hi("@lsp.type.number", {
+	link = "Number",
 })
 
 hi("@lsp.type.operator", {
@@ -267,8 +279,16 @@ hi("@lsp.type.property", {
 	fg = Dawn.lavender,
 })
 
+hi("@lsp.type.punctuation", {
+	link = "Delimiter",
+})
+
 hi("@lsp.type.selfKeyword", {
 	fg = Dawn.red,
+})
+
+hi("@lsp.type.string", {
+	link = "String",
 })
 
 hi("@lsp.type.typeAlias", {
