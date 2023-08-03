@@ -82,3 +82,7 @@ ts-init() {
 	touch src/main.ts
 }
 
+twitch() {
+	nix-shell -p firefox --command "firefox https://twitch.tv/$1/chat & disown"
+}
+

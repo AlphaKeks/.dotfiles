@@ -1,6 +1,6 @@
 -- {{{ Keymaps
 
-require("alphakeks.keymaps")
+require("keymaps")
 
 -- }}}
 
@@ -33,7 +33,7 @@ local lazy_setup = function()
 			rtp = {
 				reset = false,
 				disabled_plugins = {
-					"netrwPlugin", -- thank you for native gx, neovim gods
+					"netrwPlugin",
 				},
 			},
 		},

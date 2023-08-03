@@ -539,6 +539,7 @@ in
 						evince
 						mission-center
 						catppuccin-gtk
+						steam
 					];
 
 					file = {
