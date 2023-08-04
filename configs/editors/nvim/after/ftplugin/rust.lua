@@ -55,7 +55,7 @@ vim.lsp.start({
 				},
 			},
 
-			rustfmt = rustfmt,
+			rustfmt = rustfmt_opts,
 		},
 	},
 
