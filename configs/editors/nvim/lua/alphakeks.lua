@@ -119,7 +119,7 @@ function Git(args)
 		args = { "status" }
 	end
 
-	local command = vim.tbl_append({ "git" }, args)
+	local command = vim.tbl_merge({ "git" }, args)
 
 	run_shell(command, function(result)
 		local stdout = result.stdout

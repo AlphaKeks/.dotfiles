@@ -88,7 +88,7 @@ return {
 				hidden = true,
 				follow = true,
 				cwd = DOTFILES .. subdir,
-				file_ignore_patterns = vim.tbl_append(stupid_files, {
+				file_ignore_patterns = vim.tbl_merge(stupid_files, {
 					"%.xml",
 					"%.css",
 					"%.tmTheme",
@@ -132,12 +132,9 @@ return {
 			pickers.commands(ivy())
 		end)
 
-		local function help_tags()
+		keymap("n", "<Leader>fht", function()
 			pickers.help_tags(ivy())
-		end
-
-		keymap("n", "<Leader>fh", help_tags)
-		keymap("n", "<Leader>fht", help_tags)
+		end)
 
 		keymap("n", "<Leader>fhh", function()
 			pickers.grep_string(ivy({

@@ -496,6 +496,8 @@ in
 						pass
 						gdb
 						perf-tools
+						linuxPackages_latest.perf
+						inferno
 						cargo-flamegraph
 						cargo-expand
 						cargo-watch
@@ -540,6 +542,7 @@ in
 						mission-center
 						catppuccin-gtk
 						steam
+						recursive
 					];
 
 					file = {

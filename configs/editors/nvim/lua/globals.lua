@@ -103,7 +103,7 @@ DOTFILES = os.getenv("HOME") .. "/.dotfiles"
 ---@param tbl any[]
 ---@param other any[]
 ---@return table
-vim.tbl_append = function(tbl, other)
+vim.tbl_merge = function(tbl, other)
 	tbl = vim.deepcopy(tbl)
 	for _, v in ipairs(other) do
 		table.insert(tbl, v)

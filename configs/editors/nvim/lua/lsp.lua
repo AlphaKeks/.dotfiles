@@ -94,7 +94,7 @@ M.highlight_word = function(bufnr)
 				return
 			end
 
-			vim.lsp.buf.clear_references(bufnr)
+			vim.lsp.buf.clear_references()
 			vim.g.current_node = node_text
 
 			local node_type = vim.treesitter.get_node():type()
@@ -145,8 +145,9 @@ autocmd("LspAttach", {
 			if #arg == 0 or arg == "edit" then
 				edit(log_path)
 			elseif arg == "qf" then
-				local lines = readfile(log_path)
-				SendToQf(lines)
+				new()
+				require("fiddle")
+				wincmd("p")
 			elseif arg == "clean" then
 				run_shell({ "rm", log_path }, function()
 					run_shell({ "touch", log_path })
@@ -164,7 +165,7 @@ autocmd("LspAttach", {
 		})
 
 		usercmd("LspInfo", function()
-			local servers = vim.lsp.get_active_clients()
+			local servers = vim.lsp.get_clients()
 			local list = "Attached LSP Servers:"
 
 			for _, server in ipairs(servers) do

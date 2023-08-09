@@ -56,7 +56,7 @@ nnoremap [q :cprev<CR>
 nnoremap ]q :cnext<CR>
 
 " :terminal
-tnoremap <C-Esc> <C-\><C-n>
+tnoremap <C-]> <C-\><C-n>
 
 " FZF
 nnoremap <silent> <Leader>ff :FZF<CR>
