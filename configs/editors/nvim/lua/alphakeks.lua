@@ -1,8 +1,4 @@
--- {{{ Keymaps
-
 require("keymaps")
-
--- }}}
 
 -- {{{ Lazy
 
@@ -51,7 +47,7 @@ else
 		lazy_path,
 	}
 
-	run_shell(command, function()
+	System(command, function()
 		vim.info("Successfully installed lazy.nvim")
 		lazy_setup()
 	end)
@@ -121,7 +117,7 @@ function Git(args)
 
 	local command = vim.tbl_merge({ "git" }, args)
 
-	run_shell(command, function(result)
+	System(command, function(result)
 		local stdout = result.stdout
 		local stderr = result.stderr
 		local stdout_exists = stdout and #stdout > 0
@@ -168,7 +164,7 @@ function RunOnSave(code)
 		group = augroup("run-on-save", { clear = false }),
 		buffer = bufnr(),
 		callback = function()
-			eval(code)
+			luaeval(code)
 		end,
 	})
 end

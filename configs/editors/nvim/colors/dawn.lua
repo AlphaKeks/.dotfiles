@@ -41,7 +41,7 @@ source("~/.vim/colors/dawn.vim")
 vim.g.colors_name = "dawn"
 
 function hi(group, opts)
-	set_hl(0, group, opts or {})
+	nvim_set_hl(0, group, opts or {})
 end
 
 -- {{{ Colors
@@ -352,6 +352,10 @@ hi("@lsp.typemod.variable.constant", {
 })
 
 hi("@lsp.typemod.variable.global", {
+	fg = Dawn.red,
+})
+
+hi("@lsp.typemod.function.global", {
 	fg = Dawn.red,
 })
 

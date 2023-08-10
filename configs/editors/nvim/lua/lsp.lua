@@ -57,7 +57,7 @@ local function toggle_inlay_hints(bufnr)
 end
 
 M.inlay_hints = function(bufnr)
-	bufnr = bufnr or get_current_buf()
+	bufnr = bufnr or nvim_get_current_buf()
 
 	toggle_inlay_hints(bufnr)
 
@@ -80,6 +80,7 @@ M.highlight_word = function(bufnr)
 			local ts_installed, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
 			if not ts_installed then
 				vim.warn("Treesitter is not installed.")
+				nvim_clear_autocmds({ buffer = bufnr, group = M.augroups.on_attach })
 				return
 			end
 
@@ -89,13 +90,12 @@ M.highlight_word = function(bufnr)
 			end
 
 			local node_text = vim.treesitter.get_node_text(current_node, bufnr)
-			if vim.g.current_node == node_text then
-				-- Cursor is still on the same word
+			if CURRENT_NODE == node_text then
 				return
 			end
 
 			vim.lsp.buf.clear_references()
-			vim.g.current_node = node_text
+			CURRENT_NODE = node_text
 
 			local node_type = vim.treesitter.get_node():type()
 			if node_type == "identifier" or node_type == "property_identifier" then
@@ -122,6 +122,10 @@ autocmd("LspAttach", {
 		local client = vim.lsp.get_client_by_id(opts.data.client_id)
 		-- SendToQf(client)
 
+		if not client then
+			return
+		end
+
 		if client.server_capabilities.documentFormattingProvider
 				and client.name ~= "tsserver" -- We like prettier more
 		then
@@ -145,12 +149,18 @@ autocmd("LspAttach", {
 			if #arg == 0 or arg == "edit" then
 				edit(log_path)
 			elseif arg == "qf" then
-				new()
-				require("fiddle")
-				wincmd("p")
+				local lines = ""
+
+				for _, line in ipairs(readfile(log_path)) do
+					for subline in vim.gsplit(line, "\\n") do
+						lines = lines .. "\n\n" .. subline
+					end
+				end
+
+				SendToQf(lines)
 			elseif arg == "clean" then
-				run_shell({ "rm", log_path }, function()
-					run_shell({ "touch", log_path })
+				System({ "rm", log_path }, function()
+					System({ "touch", log_path })
 					vim.info("Successfully cleaned LSP log.")
 				end)
 			else

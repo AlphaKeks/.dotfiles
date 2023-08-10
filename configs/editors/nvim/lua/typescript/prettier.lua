@@ -29,7 +29,7 @@ local function format_on_save()
 
 			table.insert(command, expand("%"))
 
-			run_shell(command, function()
+			System(command, function()
 				vim.cmd("e!")
 			end)
 		end,

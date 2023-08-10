@@ -13,7 +13,7 @@ local severities = {
 	[2] = vim.diagnostic.severity.ERROR,
 }
 
-local namespace = create_namespace("eslint-stuff")
+local namespace = nvim_create_namespace("eslint-stuff")
 
 local function lint_on_save()
 	autocmd("BufWritePost", {
@@ -25,7 +25,7 @@ local function lint_on_save()
 				return
 			end
 
-			run_shell({ "eslint_d", "--format", "json", expand("%") }, function(result)
+			System({ "eslint_d", "--format", "json", expand("%") }, function(result)
 				local output = vim.json.decode(result.stdout)
 				local messages = output and output[1] and output[1].messages or {}
 				local diagnostics = {}
@@ -57,7 +57,7 @@ local function lint_on_save()
 		desc = "Stop eslint_d before quitting",
 		group = augroup("kill-eslint-daemon"),
 		callback = function()
-			run_shell({ "eslint_d", "stop" })
+			System({ "eslint_d", "stop" })
 		end,
 	})
 end

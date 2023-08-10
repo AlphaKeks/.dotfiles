@@ -87,11 +87,11 @@ end
 vim.opt.showmode = false
 vim.opt.statusline = "%{%v:lua.LeftStatusline()%} %= %{%v:lua.RightStatusline()%}"
 
-set_hl(0, "StatusSeparator", { fg = Dawn.lavender, bg = Dawn.crust })
-set_hl(0, "StatusMode", { fg = Dawn.text, bg = Dawn.crust, bold = true })
-set_hl(0, "StatusGitBranch", { fg = Dawn.mauve, bg = Dawn.crust })
-set_hl(0, "StatusWinbar", { link = "WinBar" })
-set_hl(0, "StatusDiagnosticSignHint", { fg = Dawn.teal, bg = Dawn.crust })
-set_hl(0, "StatusDiagnosticSignInfo", { fg = Dawn.green, bg = Dawn.crust })
-set_hl(0, "StatusDiagnosticSignWarn", { fg = Dawn.yellow, bg = Dawn.crust })
-set_hl(0, "StatusDiagnosticSignError", { fg = Dawn.red, bg = Dawn.crust })
+nvim_set_hl(0, "StatusSeparator", { fg = Dawn.lavender, bg = Dawn.crust })
+nvim_set_hl(0, "StatusMode", { fg = Dawn.text, bg = Dawn.crust, bold = true })
+nvim_set_hl(0, "StatusGitBranch", { fg = Dawn.mauve, bg = Dawn.crust })
+nvim_set_hl(0, "StatusWinbar", { link = "WinBar" })
+nvim_set_hl(0, "StatusDiagnosticSignHint", { fg = Dawn.teal, bg = Dawn.crust })
+nvim_set_hl(0, "StatusDiagnosticSignInfo", { fg = Dawn.green, bg = Dawn.crust })
+nvim_set_hl(0, "StatusDiagnosticSignWarn", { fg = Dawn.yellow, bg = Dawn.crust })
+nvim_set_hl(0, "StatusDiagnosticSignError", { fg = Dawn.red, bg = Dawn.crust })
