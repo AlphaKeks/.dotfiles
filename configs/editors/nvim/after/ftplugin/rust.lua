@@ -22,7 +22,6 @@ vim.lsp.start({
 	cmd = { rust_analyzer },
 	capabilities = lsp.capabilities,
 	root_dir = lsp.find_root({ "Cargo.toml", "rust-project.json" }),
-
 	settings = {
 		["rust-analyzer"] = {
 			cargo = {

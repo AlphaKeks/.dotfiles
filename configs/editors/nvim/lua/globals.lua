@@ -111,6 +111,7 @@ readdir = vim.fn.readdir
 readfile = vim.fn.readfile
 setqflist = vim.fn.setqflist
 stdpath = vim.fn.stdpath
+writefile = vim.fn.writefile
 
 -- vim.api
 for name, value in pairs(vim.api) do

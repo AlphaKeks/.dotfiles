@@ -7,7 +7,6 @@ vim.lsp.start({
 	cmd = { "lua-language-server" },
 	capabilities = lsp.capabilities,
 	root_dir = lsp.find_root({ "lua" }),
-
 	settings = {
 		Lua = {
 			runtime = {
@@ -16,7 +15,7 @@ vim.lsp.start({
 
 			workspace = {
 				library = {
-					expand("$VIMRUNTIME/lua"),
+					vim.env.VIMRUNTIME,
 					stdpath("config") .. "/lua",
 				},
 			},

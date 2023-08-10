@@ -17,7 +17,7 @@ autocmd("BufWritePost", {
 			expand("%")
 		}
 
-		run_shell(command, function()
+		System(command, function()
 			vim.cmd("e!")
 		end)
 	end,

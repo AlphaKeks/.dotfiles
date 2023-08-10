@@ -19,22 +19,6 @@ if cmp_installed then
 	M.capabilities = vim.tbl_deep_extend("force", M.capabilities, cmp.default_capabilities())
 end
 
-M.setup_keymaps = function(bufnr)
-	local function bmap(modes, lhs, rhs)
-		return keymap(modes, lhs, rhs, { buffer = bufnr, silent = true })
-	end
-
-	bmap("n", "gd", vim.lsp.buf.definition)
-	bmap("n", "gD", vim.lsp.buf.type_definition)
-	bmap("n", "<Leader><Leader>", vim.lsp.buf.hover)
-	bmap("n", "ga", vim.lsp.buf.code_action)
-	bmap("n", "gr", vim.lsp.buf.rename)
-	bmap("n", "gR", vim.lsp.buf.references)
-	bmap("n", "gi", vim.lsp.buf.implementation)
-	bmap("n", "<Leader>gi", function() vim.lsp.inlay_hint(0) end)
-	bmap("i", "<C-h>", vim.lsp.buf.signature_help)
-end
-
 local function lsp_format()
 	if not pcall(vim.lsp.buf.format) then
 		vim.error("Failed to format buffer.")
@@ -54,6 +38,22 @@ local function toggle_inlay_hints(bufnr)
 	if not pcall(vim.lsp.inlay_hint, bufnr) then
 		vim.error("Failed to toggle inlay hints in buffer %s", bufnr)
 	end
+end
+
+M.setup_keymaps = function(bufnr)
+	local function bmap(modes, lhs, rhs)
+		return keymap(modes, lhs, rhs, { buffer = bufnr, silent = true })
+	end
+
+	bmap("n", "gd", vim.lsp.buf.definition)
+	bmap("n", "gD", vim.lsp.buf.type_definition)
+	bmap("n", "<Leader><Leader>", vim.lsp.buf.hover)
+	bmap("n", "ga", vim.lsp.buf.code_action)
+	bmap("n", "gr", vim.lsp.buf.rename)
+	bmap("n", "gR", vim.lsp.buf.references)
+	bmap("n", "gi", vim.lsp.buf.implementation)
+	bmap("n", "<Leader>gi", function() toggle_inlay_hints(0) end)
+	bmap("i", "<C-h>", vim.lsp.buf.signature_help)
 end
 
 M.inlay_hints = function(bufnr)
