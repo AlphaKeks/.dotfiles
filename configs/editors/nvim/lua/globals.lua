@@ -100,6 +100,7 @@ wincmd = vim.cmd.wincmd
 -- vim.fn
 append = vim.fn.append
 bufnr = vim.fn.bufnr
+col = vim.fn.col
 expand = vim.fn.expand
 getline = vim.fn.getline
 keytrans = vim.fn.keytrans
@@ -107,6 +108,8 @@ line = vim.fn.line
 luaeval = vim.fn.luaeval
 mode = vim.fn.mode
 prompt_setcallback = vim.fn.prompt_setcallback
+pum_getpos = vim.fn.pum_getpos
+pumvisible = vim.fn.pumvisible
 readdir = vim.fn.readdir
 readfile = vim.fn.readfile
 setqflist = vim.fn.setqflist

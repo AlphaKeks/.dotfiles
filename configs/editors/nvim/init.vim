@@ -3,6 +3,7 @@ lua require("globals")
 source ~/.vim/vimrc.d/options.vim
 source ~/.vim/vimrc.d/keymaps.vim
 
+set completeopt-=preview
 set inccommand=split
 set laststatus=3
 set mouse=

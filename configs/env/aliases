@@ -44,7 +44,15 @@ alias gbD="git branch -D"
 # Dev
 alias vim="nvim"
 alias lg="lazygit"
-ns() { nix-shell --command "zsh" $@; }
+
+ns() {
+	nix-shell --command "zsh" $@
+}
+
+upload() {
+	FILE=$(readlink -f "$1")
+	curl -F "file=@$FILE" https://0x0.st 2>/dev/null | xclip -selection clipboard
+}
 
 # Rust
 alias c="cargo"

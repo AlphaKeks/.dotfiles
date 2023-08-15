@@ -140,7 +140,7 @@ return {
 			pickers.grep_string(ivy({
 				prompt_title = "Help",
 				search = "",
-				search_dirs = get_runtime_file("doc/*.txt"),
+				search_dirs = nvim_get_runtime_file("doc/*.txt"),
 				only_sort_text = true,
 			}))
 		end)

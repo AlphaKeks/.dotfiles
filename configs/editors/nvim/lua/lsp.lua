@@ -14,11 +14,6 @@ M.augroups = {
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 
-local cmp_installed, cmp = pcall(require, "cmp_nvim_lsp")
-if cmp_installed then
-	M.capabilities = vim.tbl_deep_extend("force", M.capabilities, cmp.default_capabilities())
-end
-
 local function lsp_format()
 	if not pcall(vim.lsp.buf.format) then
 		vim.error("Failed to format buffer.")

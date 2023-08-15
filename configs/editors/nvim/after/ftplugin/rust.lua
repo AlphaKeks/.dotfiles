@@ -1,7 +1,10 @@
 source("~/.vim/after/ftplugin/rust.vim")
 
+vim.bo.formatprg = nil
+
 local lsp = require("lsp")
-local rust_analyzer = vim.env.HOME .. "/.local/bin/rust-analyzer/release/rust-analyzer"
+-- local rust_analyzer = vim.env.HOME .. "/.local/bin/rust-analyzer"
+local rust_analyzer = "rust-analyzer"
 local rustfmt = vim.fs.find({ "rustfmt.toml", ".rustfmt.toml" }, { upward = true })
 local rustfmt_opts = {}
 

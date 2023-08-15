@@ -86,6 +86,9 @@ in
 	boot = {
 		kernelModules = [ "amdgpu" "kvm-amd" "vfio-pci" ];
 		kernelParams = [ "amd_iommu=on" "vfio-pci.ids=10de:1b81,10de:10f0" ];
+		kernel = {
+			sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
+		};
 
 		loader = {
 			efi = {

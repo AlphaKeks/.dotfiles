@@ -159,7 +159,7 @@ hi! Keyword guifg=#CBA6F7
 hi! Label guifg=#74C7EC
 hi! Macro guifg=#CBA6F7 gui=italic
 hi! Number guifg=#F38BA8
-hi! Operator guifg=#F9E2AF
+hi! Operator guifg=#A6ADC8
 hi! PreCondit guifg=#F5C2E7 gui=bold
 hi! PreProc guifg=#F5C2E7 gui=bold
 hi! Repeat guifg=#CBA6F7

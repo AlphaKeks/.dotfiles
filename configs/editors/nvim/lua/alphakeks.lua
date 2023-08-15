@@ -98,10 +98,12 @@ function SendToQf(item, custom_title)
 		end
 	end
 
-	setqflist({}, "r", { items = lines, title = custom_title or "" })
-	copen()
-	norm("G")
-	wincmd("k")
+	vim.schedule(function()
+		setqflist({}, "r", { items = lines, title = custom_title or "" })
+		copen()
+		norm("G")
+		wincmd("k")
+	end)
 
 	return item
 end

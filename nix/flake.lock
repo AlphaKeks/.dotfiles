@@ -20,11 +20,11 @@
     },
     "hardware": {
       "locked": {
-        "lastModified": 1690957133,
-        "narHash": "sha256-0Y4CiOIszhHDDXHFmvHUpmhUotKOIn0m3jpMlm6zUTE=",
+        "lastModified": 1691730710,
+        "narHash": "sha256-q/UBet5RdX8CBjOIpI2Y8EB8DXYr9cb7WuNGTP9HKf8=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "24f9162b26f0debd163f6d94752aa2acb9db395a",
+        "rev": "f61352cf8066ddd3dfe9058e62184bae7382672d",
         "type": "github"
       },
       "original": {
@@ -40,11 +40,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1691143977,
-        "narHash": "sha256-zXHmmghQdDLecVxFedRxSny4FtVH9lig1/BKObsHwfg=",
+        "lastModified": 1691672736,
+        "narHash": "sha256-HNPA/dKHerA0p4OsToEcW/DtTSXBcK5gFRsy/yPgV/Y=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "15043a65915bcc16ad207d65b202659e4988066b",
+        "rev": "6e1eff9aac0e8d84bda7f2d60ba6108eea9b7e79",
         "type": "github"
       },
       "original": {
@@ -60,11 +60,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1691129454,
-        "narHash": "sha256-5Q/o8rCB3eEsdGT8RFxr8QmVpiN/laVPxEI8mx+QCww=",
+        "lastModified": 1691793683,
+        "narHash": "sha256-fUrOWadzfqyX6mLZjzCN+Gwu5VUu6lzbVYRWEZj94pc=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "cc87dda31a5b5637ade7ddcfe5199f2df5fd47df",
+        "rev": "8c5d81997e56a72fbb1392846a146cab2eb74b7f",
         "type": "github"
       },
       "original": {
@@ -109,7 +109,7 @@
     "osu": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-TYRQFBawnAYuSfBTbCdHDC2D9YgL3p2d7MdgbQEah0A=",
+        "narHash": "sha256-DtqOK4GJ3JJagpv04wmRfD44Xt3Td939i6P8ceYUbFw=",
         "type": "file",
         "url": "https://github.com/ppy/osu/releases/latest/download/osu.AppImage"
       },

@@ -49,7 +49,7 @@ set smartcase
 
 " Character matching
 set matchpairs+=<:>
-set matchtime=1
+set matchtime=69420
 set showmatch
 
 " Line numbers
