@@ -21,7 +21,7 @@ return {
 			defaults = {
 				path_display = { "smart" },
 				prompt_prefix = "  ",
-				selection_caret = "=>",
+				selection_caret = "=> ",
 
 				mappings = {
 					["i"] = {
@@ -51,7 +51,7 @@ return {
 		telescope.load_extension("ui-select")
 		telescope.load_extension("fzf")
 
-		local function ivy(opts)
+		local ivy = function(opts)
 			local ret = themes.get_ivy({
 				layout_config = {
 					height = 0.4,
@@ -75,13 +75,14 @@ return {
 			"dist/*",
 			".git/*",
 			"desktop/icons/*",
+			".sqlx/*",
 		}
 
 		keymap("n", "<C-f>", function()
 			pickers.current_buffer_fuzzy_find(ivy())
 		end)
 
-		local function search_dotfiles(subdir)
+		local search_dotfiles = function(subdir)
 			subdir = subdir or ""
 			pickers.find_files(ivy({
 				prompt_title = ".dotfiles" .. subdir,
@@ -154,15 +155,24 @@ return {
 		end)
 
 		keymap("n", "<C-/>", function()
-			pickers.grep_string(ivy())
+			pickers.grep_string(ivy({
+				use_regex = true,
+			}))
 		end)
 
 		keymap("n", "<Leader>fd", function()
-			pickers.diagnostics(ivy())
+			-- FIXME: <https://github.com/nvim-telescope/telescope.nvim/issues/2661>
+			pickers.diagnostics(ivy({
+				severity_bound = "ERROR",
+			}))
 		end)
 
 		keymap("n", "<Leader>fk", function()
 			pickers.keymaps(ivy())
+		end)
+
+		keymap("n", "<Leader>fo", function()
+			pickers.oldfiles(ivy())
 		end)
 
 		keymap("n", "<Leader>fa", function()

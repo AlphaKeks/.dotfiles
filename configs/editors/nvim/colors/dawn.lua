@@ -40,7 +40,7 @@
 source("~/.vim/colors/dawn.vim")
 vim.g.colors_name = "dawn"
 
-function hi(group, opts)
+_G.hi = function(group, opts)
 	nvim_set_hl(0, group, opts or {})
 end
 
@@ -173,6 +173,12 @@ hi("LspReferenceWrite", {
 -- {{{ Treesitter
 
 hi("@constructor", {
+	fg = Dawn.flamingo,
+	bold = true,
+	italic = true,
+})
+
+hi("@constructor.lua", {
 	link = "Delimiter",
 })
 
@@ -203,6 +209,11 @@ hi("@property", {
 
 hi("@text.reference", {
 	fg = Dawn.mauve,
+	bold = true,
+})
+
+hi("@text.danger.comment", {
+	fg = Dawn.red,
 	bold = true,
 })
 
@@ -309,6 +320,10 @@ hi("@lsp.typemod.enum", {
 
 hi("@lsp.typemod.enumMember", {
 	link = "@lsp.type.enumMember",
+})
+
+hi("@lsp.typemod.function", {
+	link = "Function",
 })
 
 hi("@lsp.typemod.interface", {

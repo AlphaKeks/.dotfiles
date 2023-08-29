@@ -1,6 +1,6 @@
-local lsp = require("lsp")
+local lsp = require("alphakeks.lsp")
 
-local function tsserver()
+local tsserver = function()
 	return {
 		name = "tsserver",
 		cmd = { "typescript-language-server", "--stdio" },
@@ -24,6 +24,6 @@ end
 
 return {
 	tsserver = tsserver,
-	prettier = require("typescript.prettier"),
-	eslint = require("typescript.eslint"),
+	prettier = require("alphakeks.typescript.prettier"),
+	eslint = require("alphakeks.typescript.eslint"),
 }

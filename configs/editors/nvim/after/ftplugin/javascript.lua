@@ -1,8 +1,6 @@
 source("~/.vim/after/ftplugin/javascript.vim")
 
-vim.bo.formatprg = nil
-
-local typescript = require("typescript")
+local typescript = require("alphakeks.typescript")
 
 vim.lsp.start(typescript.tsserver())
 

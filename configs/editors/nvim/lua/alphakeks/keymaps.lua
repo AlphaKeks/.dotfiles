@@ -1,4 +1,4 @@
-local function a_num(num)
+local a_num = function(num)
 	local expr = num .. "k"
 	local op = vim.v.operator
 

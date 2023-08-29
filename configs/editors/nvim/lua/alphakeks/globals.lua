@@ -24,7 +24,7 @@ vim.error = function(msg, ...)
 end
 
 ---Fully reload a module
-function Reload(...)
+_G.Reload = function(...)
 	local plenary_installed, plenary = pcall(require, "plenary.reload")
 
 	if plenary_installed then
@@ -33,7 +33,7 @@ function Reload(...)
 end
 
 ---Fully reload a module and re-require it
-function Require(...)
+_G.Require = function(...)
 	Reload(...)
 	return require(...)
 end
@@ -56,18 +56,21 @@ end
 ---
 ---@param command string | string[] List of command arguments
 ---@param callback fun(result: table)? Callback to run once the command finishes
----@param opts { sync: boolean?, ignore_errors: boolean?, error_msg: string? }?
----@return SystemCompleted? result Will only be returned if `sync` was `true`
-function System(command, callback, opts)
+---@param opts { sync: boolean?, ignore_errors: boolean?, error_msg: string?, cmd: SystemOpts? }? Extra options
+---@return SystemCompleted? result Will only be returned if `opts.sync` was `true`
+_G.System = function(command, callback, opts)
 	opts = if_nil(opts, {})
 	opts.sync = if_nil(opts.sync, false)
 	opts.ignore_errors = if_nil(opts.ignore_errors, false)
+	opts.cmd = if_nil(opts.cmd, {})
 
 	if type(command) == "string" then
 		command = { command }
 	end
 
-	local result = vim.system(command, { text = true }, vim.schedule_wrap(function(result)
+	local cmd_opts = vim.tbl_deep_extend("force", { text = true }, opts.cmd)
+
+	local result = vim.system(command, cmd_opts, vim.schedule_wrap(function(result)
 		if (not opts.ignore_errors) and result.code ~= 0 then
 			local message = opts.error_msg or "Failed to run shell command"
 			vim.error(message .. ": %s", vim.inspect(result))
@@ -92,20 +95,25 @@ new = vim.cmd.new
 norm = vim.cmd.norm
 redrawstatus = vim.cmd.redrawstatus
 source = vim.cmd.source
+split = vim.cmd.split
 startinsert = vim.cmd.startinsert
 tabe = vim.cmd.tabe
 term = vim.cmd.term
+vnew = vim.cmd.new
+vsplit = vim.cmd.vsplit
 wincmd = vim.cmd.wincmd
 
 -- vim.fn
 append = vim.fn.append
 bufnr = vim.fn.bufnr
 col = vim.fn.col
+complete = vim.fn.complete
 expand = vim.fn.expand
 getline = vim.fn.getline
 keytrans = vim.fn.keytrans
 line = vim.fn.line
 luaeval = vim.fn.luaeval
+match = vim.fn.match
 mode = vim.fn.mode
 prompt_setcallback = vim.fn.prompt_setcallback
 pum_getpos = vim.fn.pum_getpos
@@ -114,6 +122,7 @@ readdir = vim.fn.readdir
 readfile = vim.fn.readfile
 setqflist = vim.fn.setqflist
 stdpath = vim.fn.stdpath
+tolower = vim.fn.tolower
 writefile = vim.fn.writefile
 
 -- vim.api
@@ -121,15 +130,15 @@ for name, value in pairs(vim.api) do
 	_G[name] = value
 end
 
-autocmd = function(events, opts)
+_G.autocmd = function(events, opts)
 	return vim.api.nvim_create_autocmd(events, opts)
 end
 
-augroup = function(name, opts)
+_G.augroup = function(name, opts)
 	return vim.api.nvim_create_augroup(name, if_nil(opts, { clear = true }))
 end
 
-nvim_clear_autocmds = function(opts)
+_G.nvim_clear_autocmds = function(opts)
 	if type(opts) == "string" then
 		opts = { group = opts }
 	end
@@ -137,14 +146,18 @@ nvim_clear_autocmds = function(opts)
 	return vim.api.nvim_clear_autocmds(opts)
 end
 
-usercmd = function(name, command, opts)
+_G.usercmd = function(name, command, opts)
 	return vim.api.nvim_create_user_command(name, command, if_nil(opts, {}))
 end
 
-nvim_get_runtime_file = function(pattern, all)
+_G.buf_usercmd = function(buf, name, command, opts)
+	return vim.api.nvim_buf_create_user_command(buf, name, command, if_nil(opts, {}))
+end
+
+_G.nvim_get_runtime_file = function(pattern, all)
 	return vim.api.nvim_get_runtime_file(pattern, if_nil(all, true))
 end
 
-nvim_buf_delete = function(bufnr, opts)
+_G.nvim_buf_delete = function(bufnr, opts)
 	vim.api.nvim_buf_delete(bufnr, if_nil(opts, {}))
 end

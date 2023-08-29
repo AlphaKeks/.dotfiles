@@ -1,4 +1,4 @@
-lua require("globals")
+lua require("alphakeks.globals")
 
 source ~/.vim/vimrc.d/options.vim
 source ~/.vim/vimrc.d/keymaps.vim

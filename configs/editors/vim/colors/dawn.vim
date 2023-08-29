@@ -84,8 +84,11 @@ hi! link CursorColumn ColorColumn
 hi! link CursorLine CursorColumn
 hi! Directory guifg=#89B4FA
 hi! DiffAdd guifg=#A6E3A1 guibg=NONE
+hi! link diffAdded DiffAdd
 hi! DiffChange guifg=#89B4FA guibg=NONE
+hi! link diffChanged DiffChange
 hi! DiffDelete guifg=#F38BA8 guibg=NONE
+hi! link diffRemoved DiffDelete
 hi! DiffText guifg=#89B4FA guibg=NONE
 hi! EndOfBuffer guifg=#3C5E7F
 hi! ErrorMsg guifg=#F38BA8 guibg=NONE

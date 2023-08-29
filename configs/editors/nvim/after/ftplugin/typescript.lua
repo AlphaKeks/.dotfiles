@@ -1,10 +1,8 @@
 source("~/.vim/after/ftplugin/typescript.vim")
 
-vim.bo.formatprg = nil
-
-local typescript = require("typescript")
+local typescript = require("alphakeks.typescript")
 
 vim.lsp.start(typescript.tsserver())
 
 typescript.prettier.setup()
-typescript.eslint.setup()
+-- typescript.eslint.setup()

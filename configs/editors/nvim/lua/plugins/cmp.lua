@@ -1,6 +1,8 @@
 return {
 	"hrsh7th/nvim-cmp",
 
+	enabled = false,
+
 	event = "InsertEnter",
 	dependencies = {
 		"L3MON4D3/LuaSnip",
@@ -14,37 +16,37 @@ return {
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 
+		require("luasnip.loaders.from_lua").lazy_load({ paths = stdpath("config") .. "/snippets" })
+		-- require("alphakeks.kz_maps_cmp")
+
 		cmp.setup({
 			preselect = cmp.PreselectMode.None,
 			mapping = cmp.mapping.preset.insert({
-				["<cr>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }),
-				["<Right>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Insert }),
 				["<C-Space>"] = cmp.mapping.complete(),
-				["<C-d>"] = cmp.mapping.scroll_docs(4),
-				["<C-u>"] = cmp.mapping.scroll_docs(-4),
-				["<C-n>"] = cmp.mapping(function(fallback)
-					if cmp.visible() then
-						cmp.select_next_item()
-					else
-						fallback()
-					end
-				end),
-				["<C-p>"] = cmp.mapping(function(fallback)
-					if cmp.visible() then
-						cmp.select_prev_item()
-					else
-						fallback()
-					end
-				end),
-				["<C-j>"] = cmp.mapping(function(fallback)
-					if luasnip.expand_or_jumpable() then
-						luasnip.expand_or_jump()
+
+				["<cr>"] = cmp.mapping.confirm({
+					select = true,
+					behavior = cmp.ConfirmBehavior.Insert
+				}),
+
+				["<Right>"] = cmp.mapping.confirm({
+					select = true,
+					behavior = cmp.ConfirmBehavior.Insert
+				}),
+
+				["<C-j>"] = cmp.mapping.scroll_docs(4),
+				["<C-k>"] = cmp.mapping.scroll_docs(-4),
+
+				["<C-l>"] = cmp.mapping(function(fallback)
+					if luasnip.locally_jumpable(1) then
+						luasnip.jump(1)
 					else
 						fallback()
 					end
 				end, { "i", "s" }),
-				["<C-k>"] = cmp.mapping(function(fallback)
-					if luasnip.jumpable(-1) then
+
+				["<C-h>"] = cmp.mapping(function(fallback)
+					if luasnip.locally_jumpable(-1) then
 						luasnip.jump(-1)
 					else
 						fallback()
@@ -57,10 +59,19 @@ return {
 			},
 
 			sources = {
-				{ name = "luasnip" },
 				{ name = "path" },
 				{ name = "nvim_lsp" },
-				{ name = "buffer" },
+				{ name = "luasnip" },
+				{
+					name = "buffer",
+					option = {
+						get_bufnrs = function()
+							return vim.tbl_map(function(win)
+								return nvim_win_get_buf(win)
+							end, nvim_list_wins())
+						end
+					},
+				}
 			},
 
 			formatting = {
@@ -86,15 +97,12 @@ return {
 			},
 		})
 
-		keymap("i", "<C-n>", cmp.complete)
-		keymap("i", "<C-p>", cmp.complete)
-
-		-- Fix luasnip sometimes hijacking <Tab> for longer than it's supposed to
-		autocmd("InsertLeave", {
-			group = augroup("luasnip-clean-snippet-nodes"),
-			callback = function()
-				luasnip.session.current_nodes[bufnr()] = nil
-			end,
+		keymap({ "i", "s" }, "<ESC>", function()
+			luasnip.session.current_nodes[bufnr()] = nil
+			return "<ESC>"
+		end, {
+			expr = true,
+			desc = "Cleanup luasnip nodes when entering normal mode",
 		})
 	end,
 }

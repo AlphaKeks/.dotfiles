@@ -1,6 +1,8 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 
+	build = ":TSUpdate",
+
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-textobjects"
 	},
@@ -48,7 +50,6 @@ return {
 						["ac"] = "@class.outer",
 						["ia"] = "@parameter.inner",
 						["aa"] = "@parameter.outer",
-						["is"] = "@parameter.scope",
 						["as"] = "@parameter.scope",
 					},
 				},

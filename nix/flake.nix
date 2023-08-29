@@ -3,7 +3,8 @@
 {
 	inputs = {
 		nixpkgs = {
-			url = "github:nixos/nixpkgs/645ff62e09d294a30de823cb568e9c6d68e92606";
+			# url = "github:nixos/nixpkgs/645ff62e09d294a30de823cb568e9c6d68e92606";
+			url = "github:nixos/nixpkgs/nixos-unstable";
 		};
 
 		hardware = {

@@ -40,9 +40,9 @@ local modes = {
 }
 
 local diagnostic_opts = {
-	{ severity = 4, name = "Hint",  icon = "  " },
-	{ severity = 3, name = "Info",  icon = "  " },
-	{ severity = 2, name = "Warn",  icon = "  " },
+	{ severity = 4, name = "Hint", icon = "  " },
+	{ severity = 3, name = "Info", icon = "  " },
+	{ severity = 2, name = "Warn", icon = "  " },
 	{ severity = 1, name = "Error", icon = "  " },
 }
 
@@ -51,6 +51,15 @@ local lsp_messages = {}
 local modules = {
 	mode = function()
 		return modes[mode()] or "UNK"
+	end,
+
+	lsp_info = function()
+		for message in vim.gsplit(vim.lsp.status(), ", ") do
+			table.insert(lsp_messages, message)
+		end
+
+		local latest_message = table.remove(lsp_messages, 1) or ""
+		return "%#StatusMode#" .. latest_message:gsub("%%", "%%%%")
 	end,
 
 	diagnostics = function()
@@ -66,22 +75,17 @@ local modules = {
 		return str
 	end,
 
-	lsp_info = function()
-		for message in vim.gsplit(vim.lsp.status(), ", ") do
-			table.insert(lsp_messages, message)
-		end
-
-		local latest_message = table.remove(lsp_messages, 1) or ""
-		return "%#StatusMode#" .. latest_message:gsub("%%", "%%%%")
+	ruler = function()
+		return string.format("%%#StatusMode#%03d:%03d", line("."), col("."))
 	end,
 }
 
-function LeftStatusline()
+_G.LeftStatusline = function()
 	return ("%s %s"):format(separator, modules:mode())
 end
 
-function RightStatusline()
-	return ("%s %s %s"):format(modules:lsp_info(), modules:diagnostics(), separator)
+_G.RightStatusline = function()
+	return ("%s %s %s %s"):format(modules:lsp_info(), modules:diagnostics(), modules:ruler(), separator)
 end
 
 vim.opt.showmode = false

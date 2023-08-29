@@ -10,7 +10,7 @@ ShowKeys = {
 }
 
 ---@param opts { display?: "window" | "winbar" }
-function ShowKeys:setup(opts)
+ShowKeys.setup = function(self, opts)
 	opts = if_nil(opts, {})
 	opts.display = if_nil(opts.display, "window")
 	self.opts = opts
@@ -45,7 +45,7 @@ function ShowKeys:setup(opts)
 		end
 
 		if self.opts.display == "window" and self.bufnr and self.win_id then
-			buf_set_lines(self.bufnr, 0, -1, false, { self.text })
+			nvim_buf_set_lines(self.bufnr, 0, -1, false, { self.text })
 		elseif self.opts.display == "winbar" then
 			redrawstatus()
 		end
@@ -54,8 +54,8 @@ function ShowKeys:setup(opts)
 	self.already_setup = true
 end
 
-function ShowKeys:create_window()
-	self.win_id = open_win(self.bufnr or 0, false, {
+ShowKeys.create_window = function(self)
+	self.win_id = nvim_open_win(self.bufnr or 0, false, {
 		title = "Keys",
 		border = "rounded",
 		style = "minimal",
@@ -70,14 +70,14 @@ function ShowKeys:create_window()
 	})
 end
 
-function ShowKeys:show_window()
-	self.bufnr = create_buf(false, true)
+ShowKeys.show_window = function(self)
+	self.bufnr = nvim_create_buf(false, true)
 	self:create_window()
 end
 
-function ShowKeys:close_window()
+ShowKeys.close_window = function(self)
 	if self.win_id then
-		buf_delete(win_get_buf(self.win_id))
+		nvim_buf_delete(nvim_win_get_buf(self.win_id))
 	end
 
 	self.bufnr = nil

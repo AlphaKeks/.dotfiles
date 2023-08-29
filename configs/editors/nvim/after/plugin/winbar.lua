@@ -1,4 +1,4 @@
-function Winbar()
+_G.Winbar = function()
 	return string.format(
 		"%%#StatusWinbar#%s  %s",
 		expand("%:p:."),

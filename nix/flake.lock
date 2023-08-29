@@ -20,11 +20,11 @@
     },
     "hardware": {
       "locked": {
-        "lastModified": 1691730710,
-        "narHash": "sha256-q/UBet5RdX8CBjOIpI2Y8EB8DXYr9cb7WuNGTP9HKf8=",
+        "lastModified": 1691871742,
+        "narHash": "sha256-6yDNjfbAMpwzWL4y75fxs6beXHRANfYX8BNSPjYehck=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "f61352cf8066ddd3dfe9058e62184bae7382672d",
+        "rev": "430a56dd16fe583a812b2df44dca002acab2f4f6",
         "type": "github"
       },
       "original": {
@@ -40,11 +40,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1691672736,
-        "narHash": "sha256-HNPA/dKHerA0p4OsToEcW/DtTSXBcK5gFRsy/yPgV/Y=",
+        "lastModified": 1692260837,
+        "narHash": "sha256-2FpkX1zl+7ni7djK7NeE1ZGupRUwZgjW+RPCSBgDf4k=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "6e1eff9aac0e8d84bda7f2d60ba6108eea9b7e79",
+        "rev": "6a94c1a59737783c282c4031555a289c28b961e4",
         "type": "github"
       },
       "original": {
@@ -60,11 +60,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1691793683,
-        "narHash": "sha256-fUrOWadzfqyX6mLZjzCN+Gwu5VUu6lzbVYRWEZj94pc=",
+        "lastModified": 1692286736,
+        "narHash": "sha256-0bgpYN48LBoCMuzMDDWlrfV7xNHCMyRl692o8f630+0=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "8c5d81997e56a72fbb1392846a146cab2eb74b7f",
+        "rev": "88887a7be707773f908dd6e597f0293d3c1a0faa",
         "type": "github"
       },
       "original": {
@@ -92,24 +92,24 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1688231357,
-        "narHash": "sha256-ZOn16X5jZ6X5ror58gOJAxPfFLAQhZJ6nOUeS4tfFwo=",
+        "lastModified": 1692174805,
+        "narHash": "sha256-xmNPFDi/AUMIxwgOH/IVom55Dks34u1g7sFKKebxUm0=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "645ff62e09d294a30de823cb568e9c6d68e92606",
+        "rev": "caac0eb6bdcad0b32cb2522e03e4002c8975c62e",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
-        "rev": "645ff62e09d294a30de823cb568e9c6d68e92606",
         "type": "github"
       }
     },
     "osu": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-DtqOK4GJ3JJagpv04wmRfD44Xt3Td939i6P8ceYUbFw=",
+        "narHash": "sha256-XLztr0eqc+Z7iRyNNP3EZtkzpnVwtAFt6F4qV0ydG7Y=",
         "type": "file",
         "url": "https://github.com/ppy/osu/releases/latest/download/osu.AppImage"
       },

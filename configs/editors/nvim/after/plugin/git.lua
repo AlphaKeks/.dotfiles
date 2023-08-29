@@ -1,6 +1,12 @@
-usercmd("Git", function(cmd)
-	Git(cmd.fargs)
-end, {
-	nargs = "?",
-	desc = "Run any git command",
-})
+-- usercmd("Git", function(cmd)
+-- 	local args = {}
+--
+-- 	for arg in vim.gsplit(cmd.args, " ") do
+-- 		table.insert(args, arg)
+-- 	end
+--
+-- 	Git(args)
+-- end, {
+-- 	nargs = "?",
+-- 	desc = "Run any git command",
+-- })

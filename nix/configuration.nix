@@ -516,6 +516,7 @@ in
 						taplo
 						nodePackages_latest.typescript-language-server
 						nodePackages_latest.prettier
+						prettierd
 						nodePackages_latest.eslint
 						nodePackages_latest.eslint_d
 						pgformatter

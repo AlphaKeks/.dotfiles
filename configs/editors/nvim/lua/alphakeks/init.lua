@@ -1,4 +1,4 @@
-require("keymaps")
+require("alphakeks.keymaps")
 
 -- {{{ Lazy
 
@@ -18,7 +18,7 @@ local lazy_setup = function()
 
 		ui = {
 			wrap = true,
-			border = "solid",
+			border = "single",
 		},
 
 		change_detection = {
@@ -57,7 +57,7 @@ end
 
 -- {{{ Quickfix List
 
-function SendToQf(item, custom_title)
+_G.SendToQf = function(item, custom_title)
 	if not item then
 		return item
 	end
@@ -112,7 +112,7 @@ end
 
 -- {{{ Git
 
-function Git(args)
+_G.Git = function(args)
 	if #args == 0 then
 		args = { "status" }
 	end
@@ -146,8 +146,8 @@ end
 
 -- {{{ Reload
 
-function ReloadPlugin(plugin)
-	local ok, spec = pcall(require, "plugins." .. plugin)
+_G.ReloadPlugin = function(plugin)
+	local ok, spec = pcall(Require, "plugins." .. plugin)
 
 	if ok then
 		spec.config()
@@ -161,7 +161,7 @@ end
 
 -- {{{ Run on save
 
-function RunOnSave(code)
+_G.RunOnSave = function(code)
 	autocmd("BufWritePost", {
 		group = augroup("run-on-save", { clear = false }),
 		buffer = bufnr(),

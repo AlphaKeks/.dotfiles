@@ -1,27 +1,27 @@
 local M = { data = {} }
 
-function M:new(tbl)
+M.new(self, tbl)
 	self.data = tbl
 	return self
 end
 
-function M:next()
+M.next(self)
 	return table.remove(self.data, 1)
 end
 
-function M:count()
+M.count(self)
 	return #self.data
 end
 
-function M:last()
+M.last(self)
 	return table.remove(self.data, #self)
 end
 
-function M:nth(n)
+M.nth(self, n)
 	return table.remove(self.data, n)
 end
 
-function M:map(f)
+M.map(self, f)
 	local new = {}
 
 	for _, item in ipairs(self.data) do
@@ -33,13 +33,13 @@ function M:map(f)
 	return self
 end
 
-function M:for_each(f)
+M.for_each(self, f)
 	for _, item in ipairs(self.data) do
 		f(item)
 	end
 end
 
-function M:filter(predicate)
+M.filter(self, predicate)
 	local new = {}
 
 	for _, item in ipairs(self.data) do
@@ -52,7 +52,7 @@ function M:filter(predicate)
 	return self
 end
 
-function M:filter_map(f)
+M.filter_map(self, f)
 	local new = {}
 
 	for _, item in ipairs(self.data) do
@@ -66,11 +66,11 @@ function M:filter_map(f)
 	return self
 end
 
-function M:collect()
+M.collect(self)
 	return self.data
 end
 
-function M:fold(initial, f)
+M.fold(self, initial, f)
 	for _, item in ipairs(self.data) do
 		initial = f(initial, item)
 	end
@@ -78,7 +78,7 @@ function M:fold(initial, f)
 	return initial
 end
 
-function M:all(predicate)
+M.all(self, predicate)
 	for _, item in ipairs(self.data) do
 		if not predicate(item) then
 			return false
@@ -88,7 +88,7 @@ function M:all(predicate)
 	return true
 end
 
-function M:any(predicate)
+M.any(self, predicate)
 	for _, item in ipairs(self.data) do
 		if predicate(item) then
 			return true
@@ -98,7 +98,7 @@ function M:any(predicate)
 	return false
 end
 
-function M:position(predicate)
+M.position(self, predicate)
 	for i, item in ipairs(self.data) do
 		if predicate(item) then
 			return i

@@ -1,5 +1,5 @@
-function LuaRepl()
-	local function callback(text)
+_G.LuaRepl = function()
+	local callback = function(text)
 		local result = eval(text)
 		append(line("$") - 1, result)
 	end

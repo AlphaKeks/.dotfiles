@@ -2,11 +2,11 @@ let g:mapleader = " "
 map <Space> <Nop>
 
 nnoremap <Leader>e :Explore<CR>
-nnoremap <C-s> :write<CR>
-nnoremap <silent> <ESC> :silent nohlsearch<CR>
+nnoremap <C-s> :silent write<CR>
+nnoremap <ESC> :silent nohlsearch<CR>
 
 " Save and execute current file
-nnoremap <Leader>x :write <Bar> source <CR>
+nnoremap <Leader>x :silent write <Bar> source <CR>
 
 " Don't yank individual characters when deleting them
 nnoremap x "_x
@@ -57,6 +57,7 @@ nnoremap ]q :cnext<CR>
 
 " :terminal
 tnoremap <C-]> <C-\><C-n>
+tnoremap <S-Space> <Space>
 
 " FZF
 nnoremap <silent> <Leader>ff :FZF<CR>

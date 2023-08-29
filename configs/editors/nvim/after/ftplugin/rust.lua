@@ -2,9 +2,9 @@ source("~/.vim/after/ftplugin/rust.vim")
 
 vim.bo.formatprg = nil
 
-local lsp = require("lsp")
+local lsp = require("alphakeks.lsp")
 -- local rust_analyzer = vim.env.HOME .. "/.local/bin/rust-analyzer"
-local rust_analyzer = "rust-analyzer"
+local rust_analyzer = { "rustup", "run", "stable", "rust-analyzer" }
 local rustfmt = vim.fs.find({ "rustfmt.toml", ".rustfmt.toml" }, { upward = true })
 local rustfmt_opts = {}
 
@@ -22,7 +22,7 @@ end
 
 vim.lsp.start({
 	name = "rust-analyzer",
-	cmd = { rust_analyzer },
+	cmd = rust_analyzer,
 	capabilities = lsp.capabilities,
 	root_dir = lsp.find_root({ "Cargo.toml", "rust-project.json" }),
 	settings = {
@@ -61,7 +61,9 @@ vim.lsp.start({
 		},
 	},
 
-	on_attach = function(_, bufnr)
+	on_attach = function(_ --[[ client ]], bufnr)
+		-- client.server_capabilities.semanticTokensProvider = nil
+
 		usercmd("CargoReload", function()
 			vim.lsp.buf_request(bufnr, "rust-analyzer/reloadWorkspace", nil, function(err)
 				if err then

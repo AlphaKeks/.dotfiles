@@ -1,6 +1,6 @@
 source("~/.vim/after/ftplugin/lua.vim")
 
-local lsp = require("lsp")
+local lsp = require("alphakeks.lsp")
 
 vim.lsp.start({
 	name = "lua_ls",
