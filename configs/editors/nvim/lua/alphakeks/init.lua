@@ -1,57 +1,21 @@
 require("alphakeks.keymaps")
 
--- {{{ Lazy
+-- {{{ Plugins
 
-local lazy_path = stdpath("data") .. "/lazy/lazy.nvim"
-local lazy_setup = function()
-	vim.opt.runtimepath:prepend(lazy_path)
+local add_local = require("alphakeks.plugins").add_local
+local add_remote = require("alphakeks.plugins").add_remote
 
-	require("lazy").setup("plugins", {
-		defaults = {
-			lazy = false,
-		},
-
-		install = {
-			missing = true,
-			colorscheme = { "dawn", "habamax" },
-		},
-
-		ui = {
-			wrap = true,
-			border = "single",
-		},
-
-		change_detection = {
-			notify = false,
-		},
-
-		performance = {
-			rtp = {
-				reset = false,
-				disabled_plugins = {
-					"netrwPlugin",
-				},
-			},
-		},
-	})
-end
-
-local lazy_installed = vim.uv.fs_stat(lazy_path)
-
-if lazy_installed then
-	lazy_setup()
-else
-	local command = {
-		"git", "clone", "--branch=stable",
-		"https://github.com/folke/lazy.nvim",
-		lazy_path,
-	}
-
-	System(command, function()
-		vim.info("Successfully installed lazy.nvim")
-		lazy_setup()
-	end)
-end
+add_local(vim.env.HOME .. "/Projects/balls.nvim")
+add_remote("nvim-lua/plenary.nvim")
+add_remote("nvim-telescope/telescope.nvim")
+add_remote("nvim-telescope/telescope-ui-select.nvim")
+add_remote("nvim-telescope/telescope-fzf-native.nvim", { on_sync = "make" })
+add_remote("nvim-tree/nvim-web-devicons")
+add_remote("stevearc/oil.nvim")
+add_remote("nvim-treesitter/nvim-treesitter", { on_sync = ":TSUpdate all" })
+add_remote("nvim-treesitter/nvim-treesitter-textobjects")
+add_remote("numToStr/Comment.nvim")
+add_remote("tpope/vim-fugitive")
 
 -- }}}
 
