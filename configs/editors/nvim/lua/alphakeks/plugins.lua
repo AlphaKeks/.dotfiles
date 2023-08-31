@@ -15,8 +15,8 @@ local add_remote = function(plugin_name, plugin_opts)
 
 	plugin_opts = if_nil(plugin_opts, {})
 	plugin.repo = vim.split(plugin_name, "/")
-	plugin.name = plugin_name
-	plugin.path = stdpath("data") .. "/site/pack/" .. plugin.name .. "/start/" .. plugin.name
+	plugin.name = plugin.repo[2]
+	plugin.path = stdpath("data") .. "/site/pack/balls/start/" .. plugin.name
 
 	if plugin_opts.on_sync and type(plugin_opts.on_sync) == "string" then
 		if vim.startswith(plugin_opts.on_sync, ":") then
@@ -55,7 +55,7 @@ local add_remote = function(plugin_name, plugin_opts)
 				return
 			end
 
-			vim.cmd("packadd! " .. plugin.path)
+			vim.cmd("helptags ALL")
 
 			if plugin.on_sync then
 				pcall(plugin.on_sync)
@@ -73,6 +73,8 @@ usercmd("SyncPlugins", function()
 				vim.error("Failed to sync plugin repository: %s", vim.inspect(result))
 				return
 			end
+
+			vim.cmd("helptags ALL")
 
 			if plugin.on_sync then
 				plugin.on_sync()
