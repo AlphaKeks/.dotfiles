@@ -1,5 +1,5 @@
 autocmd("TermOpen", {
-	command = "setlocal nonumber relativenumber scrolloff=0",
+	command = "setlocal nonumber relativenumber scrolloff=0 statuscolumn=",
 })
 
 usercmd("Term", function()

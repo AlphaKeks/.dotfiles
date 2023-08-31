@@ -100,9 +100,9 @@ hi! IncSearch guifg=#7480C2 guibg=#11111B
 hi! LineNr guifg=#6C7086 guibg=NONE
 hi! link LineNrAbove LineNr
 hi! link LineNrBelow LineNr
-hi! CursorLineNr guifg=#F9E2AF guibg=NONE gui=bold cterm=NONE
-hi! CursorLineFold guifg=#74C7EC guibg=#181825
-hi! CursorLineSign guifg=#74C7EC guibg=#181825
+hi! CursorLineNr guifg=#F9E2AF guibg=#1E1E2E gui=bold cterm=NONE
+hi! CursorLineFold guifg=#74C7EC guibg=#1E1E2E
+hi! CursorLineSign guifg=#74C7EC guibg=#1E1E2E
 hi! MatchParen guifg=#FAB387 guibg=NONE
 hi! ModeMsg guifg=#CBA6F7 guibg=NONE gui=italic
 hi! link MoreMsg ModeMsg

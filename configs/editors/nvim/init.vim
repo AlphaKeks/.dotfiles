@@ -6,6 +6,8 @@ source ~/.vim/vimrc.d/keymaps.vim
 set completeopt-=preview
 set inccommand=split
 set laststatus=3
+" set listchars=tab:\ \ ,trail:-
+" let &statuscolumn=' %s %{v:relnum? v:relnum : v:lnum}' . repeat(' ', 15)
 set mouse=
 set pumblend=10
 set undodir=~/.config/nvim/undo

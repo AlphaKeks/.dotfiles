@@ -77,7 +77,7 @@ set mousehide
 set path=.,**
 set previewheight=10
 set ruler
-set scrolloff=6
+set scrolloff=12
 set shortmess=ilmnrwxost
 set showcmd
 set signcolumn=yes

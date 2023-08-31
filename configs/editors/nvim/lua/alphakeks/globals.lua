@@ -56,7 +56,7 @@ end
 ---
 ---@param command string | string[] List of command arguments
 ---@param callback fun(result: table)? Callback to run once the command finishes
----@param opts { sync: boolean?, ignore_errors: boolean?, error_msg: string?, cmd: SystemOpts? }? Extra options
+---@param opts { sync: boolean?, ignore_errors: boolean?, cmd: SystemOpts? }? Extra options
 ---@return SystemCompleted? result Will only be returned if `opts.sync` was `true`
 _G.System = function(command, callback, opts)
 	opts = if_nil(opts, {})
@@ -71,12 +71,6 @@ _G.System = function(command, callback, opts)
 	local cmd_opts = vim.tbl_deep_extend("force", { text = true }, opts.cmd)
 
 	local result = vim.system(command, cmd_opts, vim.schedule_wrap(function(result)
-		if (not opts.ignore_errors) and result.code ~= 0 then
-			local message = opts.error_msg or "Failed to run shell command"
-			vim.error(message .. ": %s", vim.inspect(result))
-			return
-		end
-
 		if callback then
 			callback(result)
 		end
