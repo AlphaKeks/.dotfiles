@@ -2,15 +2,12 @@ require("alphakeks.keymaps")
 
 -- {{{ Plugins
 
-local add_local = require("alphakeks.plugins").add_local
 local add_remote = require("alphakeks.plugins").add_remote
 
-add_local(vim.env.HOME .. "/Projects/balls.nvim")
 add_remote("nvim-lua/plenary.nvim")
 add_remote("nvim-telescope/telescope.nvim")
 add_remote("nvim-telescope/telescope-ui-select.nvim")
 add_remote("nvim-telescope/telescope-fzf-native.nvim", { on_sync = "make" })
-add_remote("nvim-tree/nvim-web-devicons")
 add_remote("stevearc/oil.nvim")
 add_remote("nvim-treesitter/nvim-treesitter", { on_sync = ":TSUpdate all" })
 add_remote("nvim-treesitter/nvim-treesitter-textobjects")

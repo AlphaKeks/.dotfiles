@@ -67,6 +67,15 @@ local add_remote = function(plugin_name, plugin_opts)
 end
 
 usercmd("SyncPlugins", function()
+	local plugins = vim.tbl_keys(PLUGINS)
+
+	for directory in vim.fs.dir(stdpath("data") .. "/site/pack/balls/start/") do
+		if not vim.tbl_contains(plugins, directory) then
+			System({ "rm", "-rf", stdpath("data") .. "/site/pack/balls/start/" .. directory })
+			vim.info("Removed `%s`.", directory)
+		end
+	end
+
 	for name, plugin in pairs(PLUGINS) do
 		System({ "git", "pull" }, function(result)
 			if result.code ~= 0 then

@@ -28,7 +28,7 @@ else
 					snippetSupport = false,
 					commitCharactersSupport = true,
 					deprecatedSupport = true,
-					preselectSupport = true,
+					preselectSupport = false,
 					tagSupport = {
 						valueSet = {
 							1, -- Deprecated
@@ -163,8 +163,6 @@ autocmd("LspAttach", {
 	group = M.augroups.on_attach,
 	callback = function(cmd)
 		M.setup_keymaps(cmd.buf)
-		-- vim.bo[cmd.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-		vim.bo[cmd.buf].omnifunc = require("balls").omnifunc
 
 		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 			border = "single",

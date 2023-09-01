@@ -22,7 +22,7 @@ set colorcolumn=101
 
 " Completion
 set complete=.,w
-set completeopt=menu,menuone,preview,noinsert,noselect
+set completeopt=menu,menuone,preview
 " TODO: set completepopup
 set pumheight=10
 

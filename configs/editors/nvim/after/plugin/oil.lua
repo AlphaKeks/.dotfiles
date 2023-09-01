@@ -6,8 +6,8 @@ end
 
 oil.setup({
 	columns = {
-		"icon",
 		"mtime",
+		"permissions",
 	},
 
 	buf_options = {
