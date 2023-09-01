@@ -9,6 +9,7 @@ treesitter.setup({
 		"vimdoc",
 		"vim",
 		"lua",
+		"bash",
 		"rust",
 		"comment",
 	},
