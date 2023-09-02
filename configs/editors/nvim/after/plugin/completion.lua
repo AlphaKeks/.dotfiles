@@ -179,17 +179,21 @@ autocmd("CompleteChanged", {
 				"",
 				string.rep("-", max_length),
 				"```",
-				completion.user_data.detail,
-				"```" .. vim.o.filetype,
 			}
+
+			for line in vim.gsplit(completion.user_data.detail, "\n") do
+				table.insert(header, 4, line)
+			end
+
+			table.insert(header, "```" .. vim.o.filetype)
 
 			for _, line in ipairs(header) do
 				table.insert(documentation_lines, 1, line)
 			end
 		end
 
-		local window_opts = {
-			height = event_data.height,
+		local float_opts = {
+			height = math.min(#documentation_lines, math.floor(vim.o.lines / 2)),
 			width = max_length,
 			offset_x = event_data.width - #(if_nil(completion.word, "")) + 1,
 			close_events = { "CompleteChanged", "CompleteDone", "InsertLeave" },
@@ -198,7 +202,7 @@ autocmd("CompleteChanged", {
 		}
 
 		vim.schedule(function()
-			vim.lsp.util.open_floating_preview(documentation_lines, "markdown", window_opts)
+			vim.lsp.util.open_floating_preview(documentation_lines, "markdown", float_opts)
 		end)
 	end,
 })
@@ -238,9 +242,6 @@ keymap("i", "<CR>", function()
 	if ft == "rust" then
 		import_prefix = "use"
 		import_text = string.format("use %s;", import_path)
-	elseif ft == "javascript" or ft == "typescript" then
-		import_prefix = "import"
-		import_text = string.format("import { %s } from \"%s\";", item.word, import_path)
 	end
 
 	if not (import_prefix and import_text) then
@@ -250,16 +251,14 @@ keymap("i", "<CR>", function()
 	local lines = nvim_buf_get_lines(0, 0, -1, false)
 
 	for idx, line in ipairs(lines) do
-		local is_import = vim.startswith(line, import_prefix)
-		if is_import then
+		if vim.startswith(line, import_prefix) then
 			nvim_buf_set_lines(0, idx - 1, idx - 1, false, { import_text })
 			return
 		end
 	end
 
 	for idx, line in ipairs(lines) do
-		local is_comment = vim.startswith(line, "//")
-		if not is_comment then
+		if not vim.startswith(line, "//") then
 			nvim_buf_set_lines(0, idx - 1, idx - 1, false, { import_text, "" })
 			return
 		end

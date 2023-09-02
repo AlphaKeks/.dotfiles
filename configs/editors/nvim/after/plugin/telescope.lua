@@ -74,7 +74,7 @@ keymap("n", "<C-f>", function()
 end)
 
 local search_dotfiles = function(subdir)
-	subdir = subdir or ""
+	subdir = if_nil(subdir, "")
 	pickers.find_files(ivy({
 		prompt_title = ".dotfiles" .. subdir,
 		hidden = true,
@@ -172,6 +172,10 @@ end)
 
 keymap("n", "<Leader>ft", function()
 	pickers.filetypes(ivy())
+end)
+
+keymap("n", "<Leader>fqf", function()
+	pickers.quickfix(ivy())
 end)
 
 keymap("n", "<Leader>fr", function()

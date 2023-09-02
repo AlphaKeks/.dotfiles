@@ -519,6 +519,7 @@ in
 						prettierd
 						nodePackages_latest.eslint
 						nodePackages_latest.eslint_d
+						nodePackages.svelte-language-server
 						pgformatter
 						virt-manager
 
