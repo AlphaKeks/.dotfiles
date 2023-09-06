@@ -1,4 +1,5 @@
 local METHOD = "textDocument/completion"
+local fzf = require("fzf_lib")
 
 ---@class Completion
 ---@field word string The text that will be inserted
@@ -26,7 +27,8 @@ function BallsCompletion(findstart, base)
 	local words = {}
 
 	local callback = function()
-		if mode() == "i" or mode() == "ic" then
+		local mode = nvim_get_mode().mode
+		if mode == "i" or mode == "ic" then
 			complete(start_column, words)
 		end
 	end
@@ -49,22 +51,24 @@ function BallsCompletion(findstart, base)
 
 		client.request(METHOD, params, function(error, result)
 			if error then
-				vim.error("Error requesting LSP completions: %s", vim.inspect(error))
-				return
+				return vim.error("Error requesting LSP completions: %s", vim.inspect(error))
 			end
 
 			if not result then
-				vim.warn("No LSP completions.")
-				return
+				return vim.warn("No LSP completions.")
 			end
 
-			if mode() ~= "i" and mode() ~= "ic" then
+			local mode = nvim_get_mode().mode
+			if not (mode == "i" or mode == "ic") then
 				return
 			end
 
 			if not base or #base == 0 then
 				base = current_line:sub(start_column)
 			end
+
+			local slab = fzf.allocate_slab()
+			local pattern_obj = fzf.parse_pattern(base, 0)
 
 			for _, item in ipairs(result.items) do
 				local word = nil
@@ -84,7 +88,9 @@ function BallsCompletion(findstart, base)
 					word = word:sub(2)
 				end
 
-				if #base > 0 and #matchfuzzy({ word }, base) == 0 then
+				local score = fzf.get_score(word, pattern_obj, slab)
+
+				if #base > 0 and score == 0 then
 					goto continue
 				end
 
@@ -106,6 +112,7 @@ function BallsCompletion(findstart, base)
 					icase = 69,
 					user_data = {
 						detail = item.detail,
+						score = score,
 					},
 				}
 
@@ -130,6 +137,17 @@ function BallsCompletion(findstart, base)
 				::continue::
 			end
 
+			table.sort(words, function(a, b)
+				if a.user_data.score == b.user_data.score then
+					return #a.word < #b.word
+				else
+					return a.user_data.score > b.user_data.score
+				end
+			end)
+
+			fzf.free_pattern(pattern_obj)
+			fzf.free_slab(slab)
+
 			vim.schedule(callback)
 		end, buffer_id)
 	end
@@ -137,7 +155,7 @@ function BallsCompletion(findstart, base)
 	return -2
 end
 
-local group = augroup("balls-completion")
+local group = augroup("alphakeks-completion")
 
 autocmd("CompleteChanged", {
 	group = group,
@@ -154,8 +172,6 @@ autocmd("CompleteChanged", {
 
 		local event_data = vim.deepcopy(vim.v.event)
 		local completion = event_data.completed_item --[[@as Completion]]
-		local documentation = if_nil(completion.info, "")
-		local documentation_lines = {}
 		local max_length = 0
 		local has_detail = completion.user_data
 				and completion.user_data.detail
@@ -165,10 +181,10 @@ autocmd("CompleteChanged", {
 			max_length = #completion.user_data.detail
 		end
 
-		for line in vim.gsplit(documentation, "\n") do
-			table.insert(documentation_lines, line)
+		local documentation = vim.tbl_map(function(line)
 			max_length = math.min(math.max(max_length, #line), 100)
-		end
+			return line
+		end, vim.split(if_nil(completion.info, ""), "\n"))
 
 		if max_length == 0 then
 			return
@@ -188,12 +204,12 @@ autocmd("CompleteChanged", {
 			table.insert(header, "```" .. vim.o.filetype)
 
 			for _, line in ipairs(header) do
-				table.insert(documentation_lines, 1, line)
+				table.insert(documentation, 1, line)
 			end
 		end
 
 		local float_opts = {
-			height = math.min(#documentation_lines, math.floor(vim.o.lines / 2)),
+			height = math.min(#documentation, math.floor(vim.o.lines / 2)),
 			width = max_length,
 			offset_x = event_data.width - #(if_nil(completion.word, "")) + 1,
 			close_events = { "CompleteChanged", "CompleteDone", "InsertLeave" },
@@ -202,26 +218,14 @@ autocmd("CompleteChanged", {
 		}
 
 		vim.schedule(function()
-			vim.lsp.util.open_floating_preview(documentation_lines, "markdown", float_opts)
+			vim.lsp.util.open_floating_preview(documentation, "markdown", float_opts)
 		end)
 	end,
 })
 
-autocmd("LspAttach", {
-	group = group,
-	callback = function(event)
-		local client = vim.lsp.get_client_by_id(event.data.client_id)
-
-		if client and client.server_capabilities["completionProvider"] then
-			vim.bo[event.buf].omnifunc = "v:lua.BallsCompletion"
-		end
-	end,
-})
-
 keymap("i", "<CR>", function()
-	if vim.fn.pumvisible() == 0 then
-		local enter = nvim_replace_termcodes("<CR>", true, false, true)
-		nvim_feedkeys(enter, "n", false)
+	if pumvisible() == 0 then
+		nvim_feedkeys(nvim_replace_termcodes("<CR>", true, false, true), "n", false)
 		return
 	end
 
@@ -265,4 +269,6 @@ keymap("i", "<CR>", function()
 	end
 
 	nvim_buf_set_lines(0, 0, 0, false, { import_text, "" })
-end)
+end, { buffer = true })
+
+return "v:lua.BallsCompletion"

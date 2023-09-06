@@ -1,44 +1,35 @@
-vim.bo.tabstop = 8
-vim.bo.softtabstop = 8
-vim.bo.shiftwidth = 8
+local augroup = augroup("alphakeks-sql")
 
 local eval_sql = function(connect)
-	local sql = nvim_buf_get_lines(0, 0, -1, false)
-
 	System(connect, function(result)
 		if result.code ~= 0 then
 			return vim.error("Failed to execute SQL: %s", vim.inspect(result))
 		end
 
-		local output = {}
+		local items = vim.tbl_map(function(line)
+			return { text = line }
+		end, vim.split(result.stdout, "\n", { trimempty = true }))
 
-		for line in vim.gsplit(result.stdout, "\n", { trimempty = true }) do
-			table.insert(output, { text = line })
-		end
-
-		table.remove(output, 1)
+		table.remove(items, 1)
 
 		for line in vim.gsplit(result.stderr, "\n", { trimempty = true }) do
-			table.insert(output, { text = line })
+			table.insert(items, { text = line })
 		end
 
-		setqflist({}, "r", { title = "SQL Output", items = output })
+		setqflist({}, "r", { title = "SQL Output", items = items })
 		copen()
-		wincmd("p")
-	end, {
-		cmd = {
-			stdin = sql,
-		},
-	})
+		nvim_input("G<CR>")
+	end, { stdin = nvim_buf_get_lines(0, 0, -1, false) })
 end
 
-usercmd("SQLConnect", function(cmd)
+command("SQLConnect", function(cmd)
 	autocmd("BufWritePost", {
-		group = augroup("sql-on-save-" .. tostring(nvim_get_current_buf())),
+		group = augroup,
 		callback = function()
 			eval_sql(cmd.fargs)
 		end,
 	})
 end, {
+	buffer = true,
 	nargs = "+",
 })

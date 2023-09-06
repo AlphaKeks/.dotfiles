@@ -1,250 +1,232 @@
-local M = {}
+local LSP = {}
 
-M.find_root = function(pattern)
-	local files = vim.fs.find(pattern, { upward = true })
-	return vim.fs.dirname(files[1])
-end
-
-M.augroups = {
+LSP.augroups = {
 	on_attach = augroup("lsp-on-attach"),
-	format_on_save = augroup("lsp-format-on-save"),
-	highlight_word = augroup("lsp-highlight-word"),
-	progress = augroup("lsp-progress-updates"),
-	inlay_hints = augroup("lsp-inlay-hints"),
+	on_save = augroup("lsp-on-save"),
+	highlights = augroup("lsp-highlights"),
+	progress = augroup("lsp-progress"),
 }
 
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-
-local cmp_installed, cmp = pcall(require, "cmp_nvim_lsp")
-
-if cmp_installed then
-	M.capabilities = vim.tbl_deep_extend("force", M.capabilities, cmp.default_capabilities())
-else
-	M.capabilities = vim.tbl_deep_extend("force", M.capabilities, {
-		textDocument = {
-			completion = {
-				dynamicRegistration = false,
-				completionItem = {
-					snippetSupport = false,
-					commitCharactersSupport = true,
-					deprecatedSupport = true,
-					preselectSupport = false,
-					tagSupport = {
-						valueSet = {
-							1, -- Deprecated
-						},
-					},
-					insertReplaceSupport = true,
-					resolveSupport = {
-						properties = {
-							"documentation",
-							"detail",
-							"additionalTextEdits",
-							"sortText",
-							"filterText",
-							"insertText",
-							"textEdit",
-							"insertTextFormat",
-							"insertTextMode",
-						},
-					},
-					insertTextModeSupport = {
-						valueSet = {
-							1, -- asIs
-							2, -- adjustIndentation
-						},
-					},
-					labelDetailsSupport = true,
+LSP.capabilities = vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), {
+	textDocument = {
+		completion = {
+			dynamicRegistration = false,
+			completionItem = {
+				snippetSupport = false,
+				commitCharactersSupport = true,
+				deprecatedSupport = true,
+				preselectSupport = false,
+				tagSupport = {
+					valueSet = { 1 },
 				},
-				contextSupport = true,
-				insertTextMode = 1,
-				completionList = {
-					itemDefaults = {
-						"commitCharacters",
-						"editRange",
+				insertReplaceSupport = true,
+				resolveSupport = {
+					properties = {
+						"documentation",
+						"detail",
+						"additionalTextEdits",
+						"sortText",
+						"filterText",
+						"insertText",
+						"textEdit",
 						"insertTextFormat",
 						"insertTextMode",
-						"data",
 					},
-				}
+				},
+				insertTextModeSupport = {
+					valueSet = { 1, 2 },
+				},
+				labelDetailsSupport = true,
 			},
+			contextSupport = true,
+			insertTextMode = 1,
+			completionList = {
+				itemDefaults = {
+					"commitCharacters",
+					"editRange",
+					"insertTextFormat",
+					"insertTextMode",
+					"data",
+				},
+			}
 		},
+	},
+})
+
+LSP.find_root = function(pattern, find_dir)
+	find_dir = if_nil(find_dir, false)
+
+	local matches = vim.fs.find(pattern, {
+		upward = true,
+		type = find_dir and "directory" or "file",
 	})
-end
 
-local lsp_format = function()
-	if not pcall(vim.lsp.buf.format) then
-		vim.error("Failed to format buffer.")
+	if not find_dir then
+		return vim.fs.dirname(matches[1])
 	end
+
+	return matches[1]
 end
 
-M.format_on_save = function(bufnr)
+LSP.keymaps = function(buffer)
+	buffer = if_nil(buffer, nvim_get_current_buf())
+
+	local bufmap = function(modes, lhs, rhs)
+		return keymap(modes, lhs, rhs, { buffer = buffer })
+	end
+
+	bufmap("n", "ga", vim.lsp.buf.code_action)
+	bufmap("n", "gd", vim.lsp.buf.definition)
+	bufmap("n", "<Leader><Leader>", vim.lsp.buf.hover)
+	bufmap("n", "gi", vim.lsp.buf.implementation)
+	bufmap("n", "gR", vim.lsp.buf.references)
+	bufmap("i", "<C-h>", vim.lsp.buf.signature_help)
+	bufmap("n", "gD", vim.lsp.buf.type_definition)
+	bufmap("n", "gs", vim.lsp.buf.workspace_symbol)
+
+	bufmap("n", "gr", function()
+		vim.ui.input({ prompt = "Rename > " }, function(input)
+			if input then
+				vim.lsp.buf.rename(input)
+			end
+		end)
+	end)
+
+	bufmap("n", "gI", function()
+		pcall(vim.lsp.buf.inlay_hint, buffer)
+	end)
+end
+
+LSP.format_on_save = function(buffer)
+	buffer = if_nil(buffer, nvim_get_current_buf())
+
 	autocmd("BufWritePre", {
-		desc = "Format the current buffer on save via LSP",
-		group = M.augroups.format_on_save,
-		buffer = bufnr,
-		callback = lsp_format,
+		group = LSP.augroups.on_save,
+		buffer = buffer,
+		desc = "Formats the current buffer using LSP before saving",
+		callback = function(event)
+			vim.lsp.buf.format({ bufnr = event.buf })
+		end,
 	})
 end
 
-local toggle_inlay_hints = function(bufnr)
-	if not pcall(vim.lsp.inlay_hint, bufnr) then
-		vim.error("Failed to toggle inlay hints in buffer %s", bufnr)
-	end
-end
+LSP.highlights = function(buffer)
+	buffer = if_nil(buffer, nvim_get_current_buf())
 
-M.setup_keymaps = function(bufnr)
-	local bmap = function(modes, lhs, rhs)
-		return keymap(modes, lhs, rhs, { buffer = bufnr, silent = true })
-	end
-
-	bmap("n", "gd", vim.lsp.buf.definition)
-	bmap("n", "gD", vim.lsp.buf.type_definition)
-	bmap("n", "<Leader><Leader>", vim.lsp.buf.hover)
-	bmap("n", "ga", vim.lsp.buf.code_action)
-	bmap("n", "gr", vim.lsp.buf.rename)
-	bmap("n", "gR", vim.lsp.buf.references)
-	bmap("n", "gi", vim.lsp.buf.implementation)
-	bmap("n", "<Leader>gi", function() toggle_inlay_hints(0) end)
-	bmap("i", "<C-h>", vim.lsp.buf.signature_help)
-end
-
-M.inlay_hints = function(buf)
-	buf = if_nil(buf, bufnr())
-
-	toggle_inlay_hints(buf)
-
-	-- autocmd({ "InsertLeave", "InsertEnter" }, {
-	-- 	desc = "Toggle Inlay Hints when leaving / entering insert mode",
-	-- 	group = M.augroups.inlay_hints,
-	-- 	buffer = bufnr,
-	-- 	callback = function()
-	-- 		toggle_inlay_hints(bufnr)
-	-- 	end,
-	-- })
-end
-
-M.highlight_word = function(bufnr)
 	autocmd({ "CursorMoved", "CursorMovedI" }, {
-		desc = "Highlights the word under the cursor and all other occurrences of it",
-		group = M.augroups.highlight_word,
-		buffer = bufnr,
-		callback = function()
-			local ts_installed, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
-			if not ts_installed then
-				vim.warn("Treesitter is not installed.")
-				nvim_clear_autocmds({ buffer = bufnr, group = M.augroups.highlight_word })
+		group = LSP.augroups.highlights,
+		buffer = buffer,
+		desc = "Highlights the word under the cursor and all references to it",
+		callback = function(event)
+			local treesitter_installed, treesitter = pcall(require, "nvim-treesitter.ts_utils")
+
+			if not treesitter_installed then
+				vim.warn("treesitter is not installed")
+				nvim_clear_autocmds({ buffer = event.buf, group = LSP.augroups.highlights })
+
 				return
 			end
 
-			local current_node = ts_utils.get_node_at_cursor()
+			local current_node = treesitter.get_node_at_cursor()
+
 			if not current_node then
 				vim.lsp.buf.clear_references()
 				return
 			end
 
-			local node_text = vim.treesitter.get_node_text(current_node, bufnr)
-			if CURRENT_NODE == node_text then
+			local node_text = vim.treesitter.get_node_text(current_node, event.buf)
+
+			if vim.g.CURRENT_NODE == node_text then
 				return
 			end
 
 			vim.lsp.buf.clear_references()
-			CURRENT_NODE = node_text
+			vim.g.CURRENT_NODE = node_text
 
-			local node_type = vim.treesitter.get_node():type()
-			if node_type == "identifier" or node_type == "property_identifier" then
+			if current_node:type() == "identifier" or current_node:type() == "property_identifier" then
 				vim.lsp.buf.document_highlight()
 			end
 		end,
 	})
 end
 
+LSP.disable_semantic_highlights = function(client)
+	client.server_capabilities.semanticTokensProvider = nil
+	return client
+end
+
 autocmd("LspAttach", {
-	group = M.augroups.on_attach,
-	callback = function(cmd)
-		M.setup_keymaps(cmd.buf)
+	group = LSP.augroups.on_attach,
+	desc = "Runs once when a language server attaches",
+	callback = function(event)
+		LSP.keymaps(event.buf)
 
-		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-			border = "single",
-		})
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+		assert(client)
 
-		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-			border = "single",
-		})
+		local is_tsserver = client.name == "tsserver"
+		local supports_formatting = client.server_capabilities.documentFormattingProvider
+		local supports_highlighting = client.server_capabilities.documentHighlightProvider
+		local supports_completion = client.server_capabilities.completionProvider
 
-		local client = vim.lsp.get_client_by_id(cmd.data.client_id)
-		-- SendToQf(client)
-
-		if not client then
-			return
+		if not is_tsserver and supports_formatting then
+			LSP.format_on_save(event.buf)
 		end
 
-		if client.server_capabilities.documentFormattingProvider
-				and client.name ~= "tsserver" -- We like prettier more
-		then
-			M.format_on_save(cmd.buf)
+		if supports_highlighting then
+			LSP.highlights(event.buf)
 		end
 
-		-- if client.server_capabilities.inlayHintProvider then
-		-- 	M.inlay_hints(opts.buf)
-		-- end
-
-		if client.server_capabilities.documentHighlightProvider then
-			M.highlight_word(cmd.buf)
+		if supports_completion then
+			vim.bo[event.buf].omnifunc = require("alphakeks.completion")
 		end
 
-		usercmd("LspFormat", lsp_format, { desc = "Formats the current buffer via LSP" })
-
-		buf_usercmd(cmd.buf, "LspLog", function(cmd)
-			local arg = cmd.args
-			local log_path = stdpath("state") .. "/lsp.log"
-
-			if #arg == 0 or arg == "edit" then
-				edit(log_path)
-			elseif arg == "qf" then
-				local lines = ""
-
-				for _, line in ipairs(readfile(log_path)) do
-					for subline in vim.gsplit(line, "\\n") do
-						lines = lines .. "\n\n" .. subline
-					end
-				end
-
-				SendToQf(lines)
-			elseif arg == "clean" then
-				System({ "rm", log_path }, function()
-					System({ "touch", log_path })
-					vim.info("Successfully cleaned LSP log.")
-				end)
-			else
-				vim.error("`%s` is not a valid argument.", arg)
-			end
-		end, {
-			desc = "view / edit / clean the LSP log file",
-			nargs = "?",
-			complete = function()
-				return { "edit", "qf", "clean" }
-			end,
-		})
-
-		buf_usercmd(cmd.buf, "LspInfo", function()
-			local servers = vim.lsp.get_clients()
+		command("LspInfo", function()
+			local clients = vim.lsp.get_clients({ bufnr = event.buf })
 			local list = "Attached LSP Servers:"
 
-			for _, server in ipairs(servers) do
-				list = string.format("%s\n • %s (%s)", list, server.name, server.id)
+			for _, client in ipairs(clients) do
+				list = list .. string.format("\n• %s (%d)", client.name, client.id)
 			end
 
 			SendToQf(list)
-		end, { desc = "Shows currently active LSP servers" })
+		end, { buffer = true })
+
+		command("LspLog", function(cmd)
+			local log_path = stdpath("state") .. "/lsp.log"
+
+			if #cmd.args == 0 or cmd.args == "edit" then
+				edit(log_path)
+			elseif cmd.args == "clean" then
+				System({ "rm", log_path }, function(result)
+					System({ "touch", log_path })
+					vim.info("Cleaned LSP log.")
+				end)
+			end
+		end, {
+			buffer = true,
+			nargs = "?",
+			complete = function(input)
+				return vim.tbl_filter(function(item)
+					return vim.starts_with(item, input)
+				end, { "edit", "clean" })
+			end,
+		})
+
+		command("LspFormat", function()
+			vim.lsp.buf.format({ bufnr = event.buf })
+		end, { buffer = true })
 	end,
 })
 
 autocmd("LspProgress", {
-	group = M.augroups.progress,
+	group = LSP.augroups.progress,
+	desc = "Refreshes the statusline when LSP updates come in",
 	callback = function()
 		redrawstatus()
 	end,
 })
 
-return M
+return LSP
+
+-- vim: foldmethod=indent foldlevel=0

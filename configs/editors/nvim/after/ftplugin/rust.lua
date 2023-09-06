@@ -1,19 +1,18 @@
-source("~/.vim/after/ftplugin/rust.vim")
-
-vim.bo.formatprg = nil
-
 local lsp = require("alphakeks.lsp")
--- local rust_analyzer = vim.env.HOME .. "/.local/bin/rust-analyzer"
 local rust_analyzer = { "rustup", "run", "stable", "rust-analyzer" }
-local rustfmt = vim.fs.find({ "rustfmt.toml", ".rustfmt.toml" }, { upward = true })
-local rustfmt_opts = {}
+local rust_toolchain = vim.fs.find({ "rust-toolchain" }, { upward = true })
 
-if not rustfmt[1] then
+if rust_toolchain[1] then
+	rust_analyzer[3] = readfile(rust_toolchain[1])
+end
+
+local rustfmt_opts = {}
+local rustfmt = vim.fs.find({ "rustfmt.toml", ".rustfmt.toml" }, { upward = true })
+
+if vim.tbl_isempty(rustfmt) then
 	rustfmt_opts.overrideCommand = { "rustfmt", "+nightly", "--emit", "stdout" }
 else
-	local contents = readfile(rustfmt[1])
-
-	for _, line in ipairs(contents) do
+	for _, line in ipairs(readfile(rustfmt[1])) do
 		if line == "unstable_features = true" then
 			rustfmt_opts.overrideCommand = { "rustfmt", "+nightly", "--emit", "stdout" }
 		end
@@ -23,8 +22,8 @@ end
 vim.lsp.start({
 	name = "rust-analyzer",
 	cmd = rust_analyzer,
+	root_dir = lsp.find_root({ "Cargo.toml" }),
 	capabilities = lsp.capabilities,
-	root_dir = lsp.find_root({ "Cargo.toml", "rust-project.json" }),
 	settings = {
 		["rust-analyzer"] = {
 			cargo = {
@@ -52,7 +51,7 @@ vim.lsp.start({
 				},
 
 				lifetimeElisionHints = {
-					enable = false,
+					enable = true,
 					useParameterNames = true,
 				},
 			},
@@ -61,19 +60,17 @@ vim.lsp.start({
 		},
 	},
 
-	on_attach = function(_ --[[ client ]], bufnr)
-		-- client.server_capabilities.semanticTokensProvider = nil
-
-		usercmd("CargoReload", function()
-			vim.lsp.buf_request(bufnr, "rust-analyzer/reloadWorkspace", nil, function(err)
-				if err then
-					vim.error("Error reloading workspace: " .. vim.inspect(err))
-				else
-					vim.info("Cargo workspace reloaded.")
+	---@param client lsp.Client
+	---@param buffer integer
+	on_attach = function(client, buffer)
+		command("CargoReload", function()
+			client.request("rust-analyzer/reloadWorkspace", nil, function(error)
+				if error then
+					return vim.error("Failed to reload cargo workspace: %s", vim.inspect(error))
 				end
-			end)
-		end, {
-			desc = "Tells rust-analyzer to read Cargo.toml again",
-		})
+
+				vim.info("Reloaded cargo workspace.")
+			end, buffer)
+		end, { buffer = true })
 	end,
 })

@@ -5,15 +5,7 @@ if not treesitter_installed then
 end
 
 treesitter.setup({
-	ensure_installed = {
-		"vimdoc",
-		"vim",
-		"lua",
-		"bash",
-		"rust",
-		"comment",
-	},
-
+	ensure_installed = { "vim", "vimdoc", "bash", "comment", "lua", "rust" },
 	auto_install = true,
 
 	highlight = {

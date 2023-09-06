@@ -1,11 +1,11 @@
 local lsp = require("alphakeks.lsp")
 
-local tsserver = function()
-	return {
+local setup = function()
+	vim.lsp.start({
 		name = "tsserver",
 		cmd = { "typescript-language-server", "--stdio" },
-		capabilities = lsp.capabilities,
 		root_dir = lsp.find_root({ "package.json" }),
+		capabilities = lsp.capabilities,
 		init_options = {
 			hostInfo = "neovim",
 			preferences = {
@@ -19,11 +19,9 @@ local tsserver = function()
 				importModuleSpecifierPreference = "non-relative",
 			},
 		},
-	}
+	})
 end
 
 return {
-	tsserver = tsserver,
-	prettier = require("alphakeks.typescript.prettier"),
-	eslint = require("alphakeks.typescript.eslint"),
+	setup = setup,
 }

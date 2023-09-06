@@ -1,47 +1,43 @@
-" Name:          dawn.vim
-" Author:        AlphaKeks <alphakeks@dawn.sh>
-" Maintainer:    AlphaKeks <alphakeks@dawn.sh>
-" Repository:    https://github.com/AlphaKeks/.dotfiles
-" License:       MIT
-"
-" Color palette: https://github.com/catppuccin/nvim
-"   rosewater -> "#F5E0DC"
-"   flamingo  -> "#F2CDCD"
-"   pink      -> "#F5C2E7"
-"   mauve     -> "#CBA6F7"
-"   red       -> "#F38BA8"
-"   maroon    -> "#EBA0AC"
-"   peach     -> "#FAB387"
-"   yellow    -> "#F9E2AF"
-"   green     -> "#A6E3A1"
-"   teal      -> "#94E2D5"
-"   sky       -> "#89DCEB"
-"   sapphire  -> "#74C7EC"
-"   blue      -> "#89B4FA"
-"   lavender  -> "#B4BEFE"
-"   text      -> "#CDD6F4"
-"   subtext1  -> "#BAC2DE"
-"   subtext0  -> "#A6ADC8"
-"   overlay2  -> "#9399B2"
-"   overlay1  -> "#7F849C"
-"   overlay0  -> "#6C7086"
-"   surface2  -> "#585B70"
-"   surface1  -> "#45475A"
-"   surface0  -> "#313244"
-"   base      -> "#1E1E2E"
-"   mantle    -> "#181825"
-"   crust     -> "#11111B"
-"   none      -> "NONE"
-"
-" These are my own (͡ ͡° ͜ つ ͡͡°)
-"   slate     -> "#3C5E7F"
-"   poggers   -> "#7480C2"
-
+let g:colors_name = 'dawn'
 set background=dark
-let g:colors_name="dawn"
+highlight clear
 
-" {{{ Useful abbreviations for this file
+function! s:highlight(group, attrs)
+	let command = 'highlight! ' . a:group
 
+	let term = get(a:attrs, 'term', 'NONE')
+	let command ..= ' term=' . term
+
+	let cterm = get(a:attrs, 'cterm', 'NONE')
+	let command ..= ' cterm=' . cterm
+
+	let ctermfg = get(a:attrs, 'ctermfg', 'NONE')
+	let command ..= ' ctermfg=' . ctermfg
+
+	let ctermbg = get(a:attrs, 'ctermbg', 'NONE')
+	let command ..= ' ctermbg=' . ctermbg
+
+	let gui = get(a:attrs, 'gui', 'NONE')
+	let command ..= ' gui=' . gui
+
+	let guifg = get(a:attrs, 'guifg', 'NONE')
+	let command ..= ' guifg=' . guifg
+
+	let guibg = get(a:attrs, 'guibg', 'NONE')
+	let command ..= ' guibg=' . guibg
+
+	let guisp = get(a:attrs, 'guisp', 'NONE')
+	let command ..= ' guisp=' . guisp
+
+	execute command
+endfunction
+
+function! s:link(group, link)
+	execute 'highlight! link ' . a:group . ' ' . a:link
+endfunction
+
+" {{{
+"
 " abbreviate <buffer> rosewater #F5E0DC
 " abbreviate <buffer> flamingo #F2CDCD
 " abbreviate <buffer> pink #F5C2E7
@@ -71,113 +67,118 @@ let g:colors_name="dawn"
 " abbreviate <buffer> none NONE
 " abbreviate <buffer> slate #3C5E7F
 " abbreviate <buffer> poggers #7480C2
-
+"
 " }}}
 
-" {{{ Editor
+call s:highlight('ColorColumn', { 'guibg': '#181825' })
+call s:link('Conceal', 'ColorColumn')
+call s:highlight('Directory', { 'guifg': '#74C7EC', 'gui': 'bold' })
+call s:highlight('EndOfBuffer', { 'guifg': '#313244' })
+call s:highlight('ErrorMsg', { 'guifg': '#F38BA8' })
+call s:highlight('Ignore', { 'guifg': '#3C5E7F', 'guibg': '#181825' })
+call s:highlight('MatchParen', { 'guifg': '#FAB387', 'gui': 'bold' })
+call s:highlight('ModeMsg', { 'guifg': '#CBA6F7', 'gui': 'italic'})
+call s:highlight('MoreMsg', { 'guifg': '#FAB387', 'gui': 'bold'})
+call s:highlight('NonText', { 'guifg': '#3C5E7F', 'guibg': '#11111B' })
+call s:highlight('Normal', { 'guifg': '#CDD6F4', 'guibg': '#11111B' })
+call s:link('Question', 'MoreMsg')
+call s:highlight('SpecialKey', { 'guifg': '#313244' })
+call s:highlight('Title', { 'guifg': '#7480C2' })
+call s:highlight('VertSplit', { 'guifg': '#CDD6F4', 'guibg': 'NONE' })
+call s:highlight('Visual', { 'guifg': '#11111B', 'guibg': '#7480C2' })
+call s:link('VisualNOS', 'Visual')
+call s:highlight('WarningMsg', { 'guifg': '#FAB387' })
 
-hi! ColorColumn guibg=#1E1E2E
-hi! Conceal guifg=#74C7EC guibg=NONE gui=bold
-hi! Cursor guifg=#11111B guibg=#CDD6F4
-hi! link lCursor Cursor
-hi! link CursorColumn ColorColumn
-hi! link CursorLine CursorColumn
-hi! Directory guifg=#89B4FA
-hi! DiffAdd guifg=#A6E3A1 guibg=NONE
-hi! link diffAdded DiffAdd
-hi! DiffChange guifg=#89B4FA guibg=NONE
-hi! link diffChanged DiffChange
-hi! DiffDelete guifg=#F38BA8 guibg=NONE
-hi! link diffRemoved DiffDelete
-hi! DiffText guifg=#89B4FA guibg=NONE
-hi! EndOfBuffer guifg=#3C5E7F
-hi! ErrorMsg guifg=#F38BA8 guibg=NONE
-hi! VertSplit guifg=NONE guibg=#B4BEFE
-hi! Folded guifg=#3C5E7F guibg=#181825 gui=italic
-hi! FoldColumn guifg=#74C7EC guibg=#181825
-hi! link SignColumn FoldColumn
-hi! IncSearch guifg=#7480C2 guibg=#11111B
-hi! LineNr guifg=#6C7086 guibg=NONE
-hi! link LineNrAbove LineNr
-hi! link LineNrBelow LineNr
-hi! CursorLineNr guifg=#F9E2AF guibg=#1E1E2E gui=bold cterm=NONE
-hi! CursorLineFold guifg=#74C7EC guibg=#1E1E2E
-hi! CursorLineSign guifg=#74C7EC guibg=#1E1E2E
-hi! MatchParen guifg=#FAB387 guibg=NONE
-hi! ModeMsg guifg=#CBA6F7 guibg=NONE gui=italic
-hi! link MoreMsg ModeMsg
-hi! NonText guifg=#CDD6F4 guibg=NONE
-hi! Normal guifg=#CDD6F4 guibg=#181825
-hi! Pmenu guifg=#585B70 guibg=#1E1E2E
-hi! PmenuSel guifg=#CDD6F4 guibg=#313244 gui=bold
-hi! PmenuKind guifg=#7480C2 guibg=#1E1E2E
-hi! PmenuKindSel guifg=#7480C2 guibg=#313244 gui=bold
-hi! PmenuExtra guifg=#7480C2 guibg=#1E1E2E
-hi! PmenuExtraSel guifg=#7480C2 guibg=#313244 gui=bold
-hi! PmenuSbar guibg=#11111B
-hi! PmenuThumb guibg=#313244
-hi! Question guifg=#A6E3A1
-hi! link QuickFixLine CursorLine
-hi! Search guifg=#11111B guibg=#F9E2AF
-hi! CurSearch guifg=#11111B guibg=#F38BA8
-hi! SpecialKey guifg=#CBA6F7 gui=italic
-hi! SpellBad guifg=#11111B guibg=#F38BA8 gui=italic
-hi! link SpellCap SpellBad
-hi! link SpellLocal SpellBad
-hi! link SpellRare SpellBad
-hi! StatusLine guifg=#11111B guibg=#B4BEFE
-hi! StatusLineNC guifg=#181825 guibg=#CDD6F4
-hi! link StatusLineTerm StatusLine
-hi! link StatusLineTermNC StatusLineNC
-hi! TabLine guifg=#313244 guibg=#11111B gui=NONE
-hi! TabLineFill guifg=#181825 guibg=#11111B
-hi! TabLineSel guifg=#B4BEFE guibg=#181825
-hi! link Terminal Normal
-hi! Title guifg=#A6E3A1 gui=bold
-hi! Visual guibg=#45475A
-hi! link VisualNOS Visual
-hi! WarningMsg guifg=#FAB387 guibg=NONE
-hi! WhiteSpace guifg=#313244 guibg=NONE
-hi! link WildMenu PmenuSel
+" search
+call s:highlight('Search', { 'guifg': '#11111B', 'guibg': '#F9E2AF' })
+call s:highlight('CurSearch', { 'guifg': '#11111B', 'guibg': '#F38BA8' })
+call s:highlight('IncSearch', { 'guifg': '#11111B', 'guibg': '#7480C2' })
 
-" }}}
+" cursor
+call s:highlight('Cursor', { 'guifg': '#11111B', 'guibg': '#FFFFFF' })
+call s:link('lCursor', 'Cursor')
+call s:highlight('CursorColumn', { 'guibg': '#181825' })
+call s:link('CursorLine', 'CursorColumn')
+call s:link('CursorLineFold', 'CursorLine')
+call s:link('CursorLineSign', 'CursorLine')
 
-" {{{ Syntax
+" statuscolumn
+call s:highlight('LineNr', { 'guifg': '#585B70' })
+call s:highlight('CursorLineNr', { 'guifg': '#F9E2AF', 'guibg': '#181825' })
+call s:link('SignColumn', 'LineNr')
 
-hi! Boolean guifg=#F38BA8
-hi! Character guifg=#94E2D5
-hi! Comment guifg=#3C5E7F gui=italic
-hi! Conditional guifg=#CBA6F7
-hi! Constant guifg=#FAB387 gui=bold
-hi! Define guifg=#F5C2E7
-hi! Delimiter guifg=#A6ADC8
-hi! Error guifg=#F38BA8 guibg=NONE gui=bold
-hi! link Exception Error
-hi! link Float Number
-hi! Function guifg=#89B4FA
-hi! Identifier guifg=#CDD6F4
-hi! link Ignore Comment
-hi! Include guifg=#CBA6F7
-hi! Keyword guifg=#CBA6F7
-hi! Label guifg=#74C7EC
-hi! Macro guifg=#CBA6F7 gui=italic
-hi! Number guifg=#F38BA8
-hi! Operator guifg=#A6ADC8
-hi! PreCondit guifg=#F5C2E7 gui=bold
-hi! PreProc guifg=#F5C2E7 gui=bold
-hi! Repeat guifg=#CBA6F7
-hi! Special guifg=#CBA6F7 gui=bold
-hi! SpecialChar guifg=#94E2D5
-hi! SpecialComment guifg=#A6E3A1 gui=italic
-hi! StorageClass guifg=#74C7EC
-hi! String guifg=#A6E3A1
-hi! link Structure Type
-hi! Tag guifg=#EBA0AC
-hi! Todo guifg=#F9E2AF guibg=NONE gui=bold
-hi! Type guifg=#7480C2 gui=bold,italic
-hi! link Typedef Type
-hi! Underlined gui=underline
+" statusline
+call s:highlight('StatusLine', { 'guifg': '#A6ADC8', 'guibg': '#11111B' })
+call s:highlight('StatusLineNC', { 'guifg': '#313244', 'guibg': '#181825' })
+call s:link('StatusLineTerm', 'StatusLine')
+call s:link('StatusLineTermNC', 'StatusLineNC')
 
-" }}}
+" tabline
+call s:highlight('TabLine', { 'guifg': '#585B70', 'guibg': '#1E1E2E' })
+call s:highlight('TabLineFill', { 'guifg': '#11111B', 'guibg': '#11111B' })
+call s:highlight('TabLineSel', { 'guifg': '#CDD6F4', 'guibg': '#181825' })
+
+" diffs
+call s:highlight('DiffAdd', { 'guifg': '#A6E3A1' })
+call s:highlight('DiffChange', { 'guifg': '#89B4FA' })
+call s:highlight('DiffDelete', { 'guifg': '#F38BA8' })
+call s:link('DiffText', 'Normal')
+
+" folds
+call s:highlight('Folded', { 'guifg': '#3C5E7F', 'gui': 'italic' })
+call s:link('FoldColumn', 'LineNr')
+
+" completion
+call s:highlight('Pmenu', { 'guifg': '#585B70', 'guibg': '#1E1E2E' })
+call s:highlight('PmenuSel', { 'guifg': '#CDD6F4', 'guibg': '#181825' })
+call s:highlight('PmenuExtra', { 'guifg': '#313244', 'guibg': '#1E1E2E' })
+call s:highlight('PmenuSbar', { 'guibg': '#313244' })
+call s:highlight('PmenuThumb', { 'guibg': '#585B70' })
+call s:link('PmenuExtraSel', 'PmenuSel')
+call s:link('PmenuKind', 'PmenuExtra')
+call s:link('PmenuKindSel', 'PmenuKind')
+call s:link('WildMenu', 'PmenuSel')
+
+" qflist
+call s:highlight('QuickFixLine', { 'guifg': 'yellow', 'guibg': '#181825' })
+
+" spell
+call s:highlight('SpellBad', { 'guifg': '#F38BA8' })
+call s:highlight('SpellCap', { 'guifg': '#FAB387' })
+call s:link('SpellLocal', 'SpellCap')
+call s:link('SpellRare', 'SpellCap')
+
+" syntax
+call s:highlight('Boolean', { 'guifg': '#F38BA8' })
+call s:highlight('Character', { 'guifg': '#94E2D5' })
+call s:highlight('Comment', { 'guifg': '#3C5E7F', 'gui': 'italic' })
+call s:highlight('Conditional', { 'guifg': '#CBA6F7' })
+call s:highlight('Constant', { 'guifg': '#FAB387', 'gui': 'bold' })
+call s:highlight('Debug', { 'guifg': '#F38BA8', 'gui': 'italic' })
+call s:highlight('Define', { 'guifg': '#F5C2E7' })
+call s:highlight('Delimiter', { 'guifg': '#7F849C' })
+call s:highlight('Error', { 'guifg': '#F38BA8', 'gui': 'bold,italic' })
+call s:link('Exception', 'Error')
+call s:highlight('Number', { 'guifg': '#F38BA8' })
+call s:link('Float', 'Number')
+call s:highlight('Function', { 'guifg': '#89B4FA' })
+call s:highlight('Identifier', { 'guifg': '#CDD6F4' })
+call s:highlight('Include', { 'guifg': '#CBA6F7' })
+call s:highlight('Macro', { 'guifg': '#89DCEB' })
+call s:link('Operator', 'Delimiter')
+call s:link('PreCondit', 'Macro')
+call s:link('PreProc', 'Macro')
+call s:highlight('Repeat', { 'guifg': '#CBA6F7' })
+call s:highlight('Special', { 'guifg': '#74C7EC' })
+call s:link('SpecialChar', 'Special')
+call s:link('SpecialComment', 'Special')
+call s:highlight('Statement', { 'guifg': '#CBA6F7' })
+call s:highlight('StorageClass', { 'guifg': '#74C7EC' })
+call s:highlight('String', { 'guifg': '#A6E3A1' })
+call s:highlight('Todo', { 'guifg': '#F9E2AF', 'gui': 'bold' })
+call s:highlight('Type', { 'guifg': '#7480C2', 'gui': 'bold,italic' })
+call s:link('Typedef', 'Type')
+call s:link('Structure', 'Type')
+call s:highlight('Underlined', { 'gui': 'underline' })
 
 " vim: foldmethod=marker foldlevel=0

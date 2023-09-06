@@ -1,8 +1,5 @@
 source("~/.vim/after/ftplugin/javascript.vim")
 
-local typescript = require("alphakeks.typescript")
-
-vim.lsp.start(typescript.tsserver())
-
-typescript.prettier.setup()
-typescript.eslint.setup()
+require("alphakeks.tools.tsserver").setup()
+require("alphakeks.tools.prettier").setup()
+require("alphakeks.tools.eslint").setup()

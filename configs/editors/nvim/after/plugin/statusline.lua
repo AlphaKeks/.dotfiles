@@ -1,101 +1,93 @@
-local separator = "%#StatusSeparator#█"
+local separator = '%#StatusLineSeparator#█'
 
 local modes = {
-	["n"] = "NORMAL",
-	["no"] = "O-PENDING",
-	["nov"] = "O-PENDING",
-	["noV"] = "O-PENDING",
-	["no\22"] = "O-PENDING",
-	["niI"] = "NORMAL",
-	["niR"] = "NORMAL",
-	["niV"] = "NORMAL",
-	["nt"] = "NORMAL",
-	["ntT"] = "NORMAL",
-	["v"] = "VISUAL",
-	["vs"] = "VISUAL",
-	["V"] = "V-LINE",
-	["Vs"] = "V-LINE",
-	["\22"] = "V-BLOCK",
-	["\22s"] = "V-BLOCK",
-	["s"] = "SELECT",
-	["S"] = "S-LINE",
-	["\19"] = "S-BLOCK",
-	["i"] = "INSERT",
-	["ic"] = "INSERT",
-	["ix"] = "INSERT",
-	["R"] = "REPLACE",
-	["Rc"] = "REPLACE",
-	["Rx"] = "REPLACE",
-	["Rv"] = "V-REPLACE",
-	["Rvc"] = "V-REPLACE",
-	["Rvx"] = "V-REPLACE",
-	["c"] = "COMMAND",
-	["cv"] = "EX",
-	["ce"] = "EX",
-	["r"] = "REPLACE",
-	["rm"] = "MORE",
-	["r?"] = "CONFIRM",
-	["!"] = "SHELL",
-	["t"] = "TERMINAL",
-}
-
-local diagnostic_opts = {
-	{ severity = 4, name = "Hint", icon = "  " },
-	{ severity = 3, name = "Info", icon = "  " },
-	{ severity = 2, name = "Warn", icon = "  " },
-	{ severity = 1, name = "Error", icon = "  " },
+	["n"] = "normal",
+	["no"] = "op",
+	["nov"] = "op",
+	["noV"] = "op",
+	["no"] = "op",
+	["niI"] = "normal",
+	["niR"] = "normal",
+	["niV"] = "normal",
+	["v"] = "visual",
+	["vs"] = "visual",
+	["V"] = "lines",
+	["Vs"] = "lines",
+	[""] = "block",
+	["s"] = "block",
+	["s"] = "select",
+	["S"] = "select",
+	[""] = "block",
+	["i"] = "insert",
+	["ic"] = "insert",
+	["ix"] = "insert",
+	["R"] = "replace",
+	["Rc"] = "replace",
+	["Rv"] = "v-replace",
+	["Rx"] = "replace",
+	["c"] = "command",
+	["cv"] = "command",
+	["ce"] = "command",
+	["r"] = "enter",
+	["rm"] = "more",
+	["r?"] = "confirm",
+	["!"] = "shell",
+	["t"] = "term",
+	["nt"] = "term",
+	["null"] = "none",
 }
 
 local lsp_messages = {}
 
-local modules = {
-	mode = function()
-		return modes[mode()] or "UNK"
-	end,
+LeftStatusLine = function()
+	local mode = nvim_get_mode().mode
+	local mode_text = modes[mode]
 
-	lsp_info = function()
-		for message in vim.gsplit(vim.lsp.status(), ", ") do
-			table.insert(lsp_messages, message)
-		end
-
-		local latest_message = table.remove(lsp_messages, 1) or ""
-		return "%#StatusMode#" .. latest_message:gsub("%%", "%%%%")
-	end,
-
-	diagnostics = function()
-		local str = ""
-
-		for _, opts in ipairs(diagnostic_opts) do
-			local count = #vim.diagnostic.get(0, { severity = opts.severity })
-			if count > 0 then
-				str = string.format("%s%%#StatusDiagnosticSign%s#%s%s ", str, opts.name, count, opts.icon)
-			end
-		end
-
-		return str
-	end,
-
-	ruler = function()
-		return string.format("%%#StatusMode#%03d:%03d", line("."), col("."))
-	end,
-}
-
-_G.LeftStatusline = function()
-	return ("%s %s"):format(separator, modules:mode())
+	return separator .. " %#StatusLineText#" .. mode_text
 end
 
-_G.RightStatusline = function()
-	return ("%s %s %s %s"):format(modules:lsp_info(), modules:diagnostics(), modules:ruler(), separator)
+RightStatusLine = function()
+	local diagnostics = {}
+
+	local errors = #vim.diagnostic.get(0, { severity = 1 })
+	if errors > 0 then
+		table.insert(diagnostics, "%#DiagnosticSignError#  " .. tostring(errors))
+	end
+
+	local warnings = #vim.diagnostic.get(0, { severity = 2 })
+	if warnings > 0 then
+		table.insert(diagnostics, "%#DiagnosticSignWarn#  " .. tostring(warnings))
+	end
+
+	local infos = #vim.diagnostic.get(0, { severity = 3 })
+	if infos > 0 then
+		table.insert(diagnostics, "%#DiagnosticSignInfo#  " .. tostring(infos))
+	end
+
+	local hints = #vim.diagnostic.get(0, { severity = 4 })
+	if hints > 0 then
+		table.insert(diagnostics, "%#DiagnosticSignHint#  " .. tostring(hints))
+	end
+
+	for message in vim.gsplit(vim.lsp.status(), ", ") do
+		table.insert(lsp_messages, message)
+	end
+
+	local diagnostic_counts = table.concat(diagnostics, " ")
+	local ruler = string.format("%d:%d", line("."), col("."))
+	local lsp_message = if_nil(table.remove(lsp_messages, 1), ""):gsub("%%", "%%%%")
+
+	return lsp_message
+			.. "%S  "
+			.. diagnostic_counts
+			.. " %#StatusLineText#"
+			.. ruler
+			.. " "
+			.. separator
 end
+
+nvim_set_hl(0, "StatusLineSeparator", { fg = Dawn.lavender, bg = Dawn.crust })
+nvim_set_hl(0, "StatusLineText", { fg = Dawn.text, bg = Dawn.crust })
 
 vim.opt.showmode = false
-vim.opt.statusline = "%{%v:lua.LeftStatusline()%} %= %{%v:lua.RightStatusline()%}"
-
-nvim_set_hl(0, "StatusSeparator", { fg = Dawn.lavender, bg = Dawn.crust })
-nvim_set_hl(0, "StatusMode", { fg = Dawn.text, bg = Dawn.crust, bold = true })
-nvim_set_hl(0, "StatusGitBranch", { fg = Dawn.mauve, bg = Dawn.crust })
-nvim_set_hl(0, "StatusWinbar", { link = "WinBar" })
-nvim_set_hl(0, "StatusDiagnosticSignHint", { fg = Dawn.teal, bg = Dawn.crust })
-nvim_set_hl(0, "StatusDiagnosticSignInfo", { fg = Dawn.green, bg = Dawn.crust })
-nvim_set_hl(0, "StatusDiagnosticSignWarn", { fg = Dawn.yellow, bg = Dawn.crust })
-nvim_set_hl(0, "StatusDiagnosticSignError", { fg = Dawn.red, bg = Dawn.crust })
+vim.opt.statusline = "%{%v:lua.LeftStatusLine()%} %= %{%v:lua.RightStatusLine()%}"

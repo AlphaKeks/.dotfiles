@@ -1,9 +1,7 @@
-_G.Winbar = function()
-	return string.format(
-		"%%#StatusWinbar#%s  %s",
-		expand("%:p:."),
-		ShowKeys.winbar and ShowKeys.text or ""
-	)
+Winbar = function()
+	local path = expand("%:p:.")
+
+	return "%#WinBar#" .. path
 end
 
 vim.opt.winbar = "%{%v:lua.Winbar()%}"

@@ -1,4 +1,3 @@
-setl makeprg=eslint\ --format\ compact
-setl errorformat+=%f:\ line\ %l\\,\ col\ %c\\,\ %m,%-G%.%#
+setlocal commentstring=//\ %s
 
-command! Prettier %!prettier %
+command! -buffer Prettier %!prettierd %

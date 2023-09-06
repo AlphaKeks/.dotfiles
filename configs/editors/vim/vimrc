@@ -1,6 +1,8 @@
 filetype plugin indent on
+set nocompatible
 syntax on
 
-source ~/.vim/vimrc.d/options.vim
-source ~/.vim/vimrc.d/keymaps.vim
+packadd! matchit
+packadd! cfilter
 
+runtime! alphakeks/*.vim
