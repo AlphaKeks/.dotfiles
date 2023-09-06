@@ -12,7 +12,7 @@ end, {
 
 usercmd("LG", function()
 	vim.cmd.Term()
-	input("lg<CR>")
+	nvim_input("lg<CR>")
 end, {
 	desc = "Opens a terminal with lazygit in a new tab",
 })

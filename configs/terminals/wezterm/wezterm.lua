@@ -3,7 +3,7 @@ local term = require("wezterm")
 return {
 	default_prog = { "zsh" },
 	color_scheme = "Catppuccin Mocha",
-	colors = { background = "#181825" },
+	colors = { background = "#11111B" },
 	font = term.font({ family = "JetBrains Mono" }),
 	font_size = 14,
 	line_height = 1,
